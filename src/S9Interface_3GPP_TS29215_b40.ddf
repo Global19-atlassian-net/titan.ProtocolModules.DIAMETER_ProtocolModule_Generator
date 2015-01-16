@@ -1,0 +1,83 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               S9Interface_3GPP_TS29215_b40.ddf
+//  Description:        DDF for S9 according to 3GPP TS 29.215 V11.4.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: S9
+// APPLICATION-REVISION: V11_4_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.215 V11.4.0
+
+
+// 3GPP TS 29.215 V11.4.0
+// AVP: Subsession-Decision-Info (2200) 3GPP (10415) 
+// 5.3.1
+type AVP_Grouped Subsession_Decision_Info;
+
+// 3GPP TS 29.215 V11.4.0
+// AVP: Subsession-Enforcement-Info (2201) 3GPP (10415) 
+// 5.3.2
+type AVP_Grouped Subsession_Enforcement_Info;
+
+// 3GPP TS 29.215 V11.4.0
+// AVP: Subsession-Id (2202) 3GPP (10415)
+// 5.3.3
+type AVP_Unsigned32 Subsession_Id;
+
+// 3GPP TS 29.215 V11.4.0
+// AVP: Subsession-Operation (2203) 3GPP (10415) 
+// 5.3.4
+type enumerated Subsession_Operation
+{
+    TERMINATION   (0),
+    ESTABLISHMENT (1), 
+    MODIFICATION  (2)
+}
+
+// 3GPP TS 29.215 V11.4.0
+// AVP: Multiple-BBERF-Action (2204) 3GPP (10415)
+// 5.3.6
+type enumerated Multiple_BBERF_Action
+{
+   ESTABLISHMENT (0),
+   TERMINATION   (1)
+}

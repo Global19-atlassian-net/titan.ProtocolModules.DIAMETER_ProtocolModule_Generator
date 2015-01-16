@@ -1,0 +1,65 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               MobileIPv6_NAS_IETF_RFC5447.ddf
+//  Description:        DDF for Mobile IPv6 according to RFC 5447
+//  Rev:                R29A
+//  Prodnr:             CNL113462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: MIPv6
+// APPLICATION-REVISION: RFC5447
+
+// RFC 5447 4.2.1
+// AVP: MIP6-Agent-Info (486)
+type AVP_Grouped MIP6_Agent_Info
+
+// RFC 5447 4.2.2
+// AVP: MIP6-Home-Agent-Address (334)
+type AVP_Address MIP6_Home_Agent_Address
+
+// RFC 5447 4.2.3
+// AVP: MIP6-Home-Agent-Host (348)
+type AVP_Grouped MIP6_Home_Agent_Host
+
+// RFC 5447 4.2.4
+// AVP: MIP6-Home-Link-Prefix (125)
+type AVP_OctetString MIP6_Home_Link_Prefix
+
+// RFC 5447 4.2.5
+// AVP: MIP6-Feature-Vector (124)
+type AVP_Unsigned64 MIP6_Feature_Vector

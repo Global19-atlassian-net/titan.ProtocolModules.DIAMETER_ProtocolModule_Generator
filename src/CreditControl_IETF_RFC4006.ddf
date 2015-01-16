@@ -1,0 +1,385 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               CreditControl_IETF_RFC4006.ddf
+//  Description:        DDF for DCC according to RFC 4006
+//  Rev:                R29A
+//  Prodnr:             CNL 1134 62
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: DCC
+// APPLICATION-REVISION: RFC4006
+
+// AVP implementations according to: 
+// RFC 4006 - Diameter Credit Control Application
+// IS for Additional Billing for Verizon in MTAS 125/1594-FCP 101 8664 Uen PA8
+
+// RFC 4006 12.2
+type enumerated Command_Code {
+  Credit_Control (272)
+}
+
+// RFC 4006
+// AVP: CC-Correlation-Id (411)
+// 8.1
+type AVP_OctetString CC_Correlation_Id;
+
+// RFC 4006
+// AVP: CC-Input-Octets (412)
+// 8.24
+type AVP_Unsigned64 CC_Input_Octets;
+
+// RFC 4006
+// AVP: CC-Money (413)
+// 8.22
+type AVP_Grouped CC_Money;
+
+// RFC 4006
+// AVP: CC-Output-Octets (414)
+// 8.25
+type AVP_Unsigned64 CC_Output_Octets;
+
+// RFC 4006
+// AVP: CC-Request-Number (415)
+// 8.2
+type AVP_Unsigned32 CC_Request_Number;
+
+// RFC 4006
+// AVP: CC-Request-Type (416)
+// 8.3
+type enumerated CC_Request_Type
+{
+  INITIAL_REQUEST         (1),
+  UPDATE_REQUEST          (2),
+  TERMINATION_REQUEST     (3),
+  EVENT_REQUEST           (4)
+}
+
+// RFC 4006
+// AVP: CC-Service-Specific-Units (417)
+// 8.26
+type AVP_Unsigned64 CC_Service_Specific_Units;
+
+// RFC 4006
+// AVP: CC-Session-Failover (418)
+// 8.4
+type enumerated CC_Session_Failover
+{
+  FAILOVER_NOT_SUPPORTED  (0),
+  FAILOVER_SUPPORTED      (1)
+}
+
+// RFC 4006
+// AVP: CC-Sub-Session-Id (419)
+// 8.5
+type AVP_Unsigned64 CC_Sub_Session_Id;
+
+// RFC 4006
+// AVP: CC-Time (420)
+// 8.21
+type AVP_Unsigned32 CC_Time;
+
+// RFC 4006
+// AVP: CC-Total-Octets (421)
+// 8.23
+type AVP_Unsigned64 CC_Total_Octets;
+
+// RFC 4006
+// AVP: CC-Unit-Type (454)
+// 8.32
+type enumerated CC_Unit_Type
+{
+  TIME                    (0),
+  MONEY                   (1),
+  TOTAL_OCTETS            (2),
+  INPUT_OCTETS            (3),
+  OUTPUT_OCTETS           (4),
+  SERVICE_SPECIFIC_UNITS  (5)
+}
+
+// RFC 4006
+// AVP: Check-Balance-Result (422)
+// 8.6
+type enumerated Check_Balance_Result
+{
+  ENOUGH_CREDIT           (0),
+  NO_CREDIT               (1)
+}
+
+// RFC 4006
+// AVP: Cost-Information (423)
+// 8.7
+type AVP_Grouped Cost_Information;
+
+// RFC 4006
+// AVP: Cost-Unit (424)
+// 8.12
+type AVP_UTF8String Cost_Unit;
+
+// RFC 4006
+// AVP: Credit-Control (426)
+// 8.13
+type enumerated Credit_Control
+{
+  CREDIT_AUTHORIZATION    (0),
+  RE_AUTHORIZATION        (1)
+}
+
+// RFC 4006
+// AVP: Credit-Control-Failure-Handling (427)
+// 8.14
+type enumerated Credit_Control_Failure_Handling
+{
+  TERMINATE               (0),
+  CONTINUE                (1),
+  RETRY_AND_TERMINATE     (2)
+}
+
+// RFC 4006
+// AVP: Currency-Code (425)
+// 8.11
+type AVP_Unsigned32 Currency_Code;
+
+// RFC 4006
+// AVP: Direct-Debiting-Failure-Handling (428)
+// 8.15
+type enumerated Direct_Debiting_Failure_Handling
+{
+  TERMINATE_OR_BUFFER     (0),
+  CONTINUE                (1)
+}
+
+// RFC 4006
+// AVP: Exponent (429)
+// 8.9
+type AVP_Integer32 Exponent;
+
+// RFC 4006
+// AVP: Final-Unit-Action (449)
+// 8.35
+type enumerated Final_Unit_Action
+{
+  TERMINATE               (0),
+  REDIRECT                (1),
+  RESTRICT_ACCESS         (2)
+}
+
+// RFC 4006
+// AVP: Final-Unit-Indication (430)
+// 8.34
+type AVP_Grouped Final_Unit_Indication;
+
+// RFC 4006
+// AVP: Granted-Service-Unit (431)
+// 8.17
+type AVP_Grouped Granted_Service_Unit;
+
+// RFC 4006
+// AVP: G-S-U-Pool-Identifier (453)
+// 8.31
+type AVP_Unsigned32 G_S_U_Pool_Identifier;
+
+// RFC 4006
+// AVP: G-S-U-Pool-Reference (457)
+// 8.30
+type AVP_Grouped G_S_U_Pool_Reference;
+
+// RFC 4006
+// AVP: Multiple-Services-Credit-Control (456)
+// 8.16
+type AVP_Grouped Multiple_Services_Credit_Control;
+
+// RFC 4006
+// AVP: Multiple-Services-Indicator (455)
+// 8.40
+type enumerated Multiple_Services_Indicator
+{
+  MULTIPLE_SERVICES_NOT_SUPPORTED (0),
+  MULTIPLE_SERVICES_SUPPORTED     (1)
+}
+
+// RFC 4006
+// AVP: Rating-Group (432)
+// 8.29
+type AVP_Unsigned32 Rating_Group
+
+// RFC 4006
+// AVP: Redirect-Address-Type (433)
+// 8.38
+type enumerated Redirect_Address_Type
+{
+  IPV4_ADDRESS            (0),
+  IPV6_ADDRESS            (1),
+  URL                     (2),
+  SIP_URI                 (3)
+}
+
+// RFC 4006
+// AVP: Redirect-Server (434)
+type AVP_Grouped Redirect_Server;
+
+// RFC 4006
+// AVP: Redirect-Server-Address (435)
+// 8.37
+type AVP_UTF8String Redirect_Server_Address
+
+// RFC 4006
+// AVP: Requested-Action (436)
+// 8.41
+type enumerated Requested_Action
+{
+  DIRECT_DEBITING         (0),
+  REFUND_ACCOUNT          (1),
+  CHECK_BALANCE           (2),
+  PRICE_ENQUIRY           (3)  
+}
+
+// RFC 4006
+// AVP: Requested-Service-Unit (437)
+// 8.18
+type AVP_Grouped Requested_Service_Unit
+
+// RFC 4006
+// AVP: Restriction-Filter-Rule (438)
+// 8.36
+type AVP_IPFilterRule Restriction_Filter_Rule
+
+// RFC 4006
+// AVP: Service-Context-Id (461)
+// 8.42
+type AVP_UTF8String Service_Context_Id
+
+// RFC 4006
+// AVP: Service-Identifier (439)
+// 8.28
+type AVP_Unsigned32 Service_Identifier
+
+// RFC 4006
+// AVP: Service-Parameter-Info (440)
+// 8.43
+type AVP_Grouped Service_Parameter_Info
+
+// RFC 4006
+// AVP: Service-Parameter-Type (441)
+// 8.44
+type AVP_Unsigned32 Service_Parameter_Type
+
+// RFC 4006
+// AVP: Service-Parameter-Value (442)
+// 8.45
+type AVP_OctetString Service_Parameter_Value
+
+// RFC 4006
+// AVP: Subscription-Id (443)
+// 8.46
+type AVP_Grouped Subscription_Id;
+
+// RFC 4006
+// AVP: Subscription-Id-Data (444)
+// 8.48
+type AVP_UTF8String Subscription_Id_Data
+
+// RFC 4006
+// AVP: Subscription-Id-Type (450)
+// 8.47
+type enumerated Subscription_Id_Type
+{
+  END_USER_E164         (0),
+  END_USER_IMSI         (1),
+  END_USER_SIP_URI      (2),
+  END_USER_NAI          (3),
+  END_USER_PRIVATE      (4)
+}
+
+// RFC 4006
+// AVP: Tariff-Change-Usage (452)
+// 8.27
+type enumerated Tariff_Change_Usage
+{
+  UNIT_BEFORE_TARIFF_CHANGE   (0),
+  UNIT_AFTER_TARIFF_CHANGE    (1),
+  UNIT_INDETERMINATE          (2)
+}
+
+// RFC 4006
+// AVP: Tariff-Time-Change (451)
+// 8.20
+type AVP_Time Tariff_Time_Change
+
+// RFC 4006
+// AVP: Unit-Value (445)
+// 8.8
+type AVP_Grouped Unit_Value
+
+// RFC 4006
+// AVP: Used-Service-Unit (446)
+// 8.19
+type AVP_Grouped Used_Service_Unit
+
+// RFC 4006
+// AVP: User-Equipment-Info (458)
+// 8.49
+type AVP_Grouped User_Equipment_Info
+
+// RFC 4006, 125/1594-FCP 101 8664
+// AVP: User-Equipment-Info-Type (459)
+// RFC 4006 section 8.50, 125/1594-FCP 101 8664 section 3.3.12
+type enumerated User_Equipment_Info_Type
+{
+  IMEISV                (0),
+  MAC                   (1),
+  EUI64                 (2),
+  MODIFIED_EUI64        (3),
+  ESN                   (4),
+  MEID                  (5)
+}
+
+// RFC 4006
+// AVP: User-Equipment-Info-Value (460)
+// 8.51
+type AVP_OctetString User_Equipment_Info_Value
+
+// RFC 4006
+// AVP: Value-Digits (447)
+// 8.10
+type AVP_Integer64 Value_Digits
+
+// RFC 4006
+// AVP: Validity-Time (448)
+// 8.33
+type AVP_Unsigned32 Validity_Time
+

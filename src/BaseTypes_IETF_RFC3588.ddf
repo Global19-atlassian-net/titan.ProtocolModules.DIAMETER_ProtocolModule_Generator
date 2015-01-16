@@ -1,0 +1,281 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               BaseTypes_IETF_RFC3588.ddf
+//  Description:	DDF for the Diameter base types
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+//
+// External functions for encoding and decoding
+//
+
+external function f_DIAMETER_Enc(in PDU_DIAMETER pl_pdu) return octetstring;
+external function f_DIAMETER_Dec(in octetstring pl_oct) return PDU_DIAMETER;
+external function f_DIAMETER_Enc_fast(in PDU_DIAMETER pl_pdu, out octetstring pl_oct );
+external function f_DIAMETER_Dec_fast(in octetstring pl_oct, out PDU_DIAMETER pl_pdu) return integer;
+
+!1 external function f_DIAMETER_genHopByHop_oct() return UINT32;
+!1 external function f_DIAMETER_genEndToEnd_oct() return UINT32;
+!2 external function f_DIAMETER_genHopByHop_int() return UINT32;
+!2 external function f_DIAMETER_genEndToEnd_int() return UINT32;
+external function f_DIAMETER_GetAVPByListOfCodes(in octetstring pl_oct, in integerList pl_codeList) return octetstring;
+external function f_DIAMETER_GetAVPByListOfCodesCombined(in octetstring pl_oct, in integerList pl_codeList, in integerList pl_groupcodeList) return octetstring;
+external function f_DIAMETER_GetAVPByListOfCodesFromGroupedAVP(in octetstring pl_oct, in integerList pl_codeList) return octetstring;
+
+function f_get_R_bit(in PDU_DIAMETER pl_pdu) return boolean
+{
+!3   return pl_pdu.RPETxxxx[7]=='1'B;
+!4   return pl_pdu.R_bit=='1'B;
+}
+
+ function f_DIAMETER_genEndToEnd() return UINT32
+ {
+!1   return f_DIAMETER_genEndToEnd_oct()
+!2   return f_DIAMETER_genEndToEnd_int()
+}
+
+function f_DIAMETER_genHopByHop() return UINT32
+{
+!1   return f_DIAMETER_genHopByHop_oct()
+!2   return f_DIAMETER_genHopByHop_int()
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  Type: IntegerList
+//
+//  Purpose:
+//    List of integer
+//
+//  Elements:
+//    record of *integer*
+//
+// Detailed Comments:
+//    -
+//
+///////////////////////////////////////////////////////////////////////////////
+type record of integer integerList; 
+
+//
+// Basic type definitions used in AVP type definitions
+//
+
+type integer UINT8 (0..255) with { 
+	variant "FIELDLENGTH(8)" 
+	variant "BYTEORDER(last)" 
+}
+
+type integer UINT24 (0..16777215) with { 
+	variant "FIELDLENGTH(24)"
+	variant "BYTEORDER(last)" 
+}
+
+!1 type octetstring UINT32 length(4) with { 
+!1 	variant "FIELDLENGTH(4)" 
+!1 }
+
+!2 type integer UINT32 with { 
+!2 	variant "FIELDLENGTH(32)"
+!2 	variant "BYTEORDER(last)" 
+!2 	variant "COMP(nosign)" 
+!2 }
+
+
+type integer INT32 with { 
+	variant "FIELDLENGTH(32)"
+	variant "BYTEORDER(last)" 
+	variant "COMP(signbit)" 
+}
+
+!1 type octetstring INT64 length(8) with {
+!1 	variant "FIELDLENGTH(8)"
+!1 }
+
+!2 type integer INT64 with { 
+!2 	variant "FIELDLENGTH(64)"
+!2 	variant "BYTEORDER(last)" 
+!2 	variant "COMP(signbit)" 
+!2 }
+
+
+!1 type octetstring UINT64 length(8) with { 
+!1   variant "FIELDLENGTH(8)" 
+!1 }
+
+!2 type integer UINT64 with { 
+!2 	variant "FIELDLENGTH(64)"
+!2 	variant "BYTEORDER(last)" 
+!2 	variant "COMP(nosign)" 
+!2 }
+
+type float FLOAT32 with {
+        variant "FORMAT(IEEE754 float)"
+}
+
+type float FLOAT64 with {
+        variant "FORMAT(IEEE754 double)"
+}
+
+type bitstring BIT8 length(8) with { variant "FIELDLENGTH(8)" }
+!4 type bitstring BIT1 length(1) with { variant "FIELDLENGTH(1)" }
+!4 type bitstring BIT4 length(4) with { variant "FIELDLENGTH(4)" }
+!4 type bitstring BIT5 length(5) with { variant "FIELDLENGTH(5)" }
+type octetstring OCTET4 length(4) with { variant "FIELDLENGTH(4)" }
+type octetstring OCTET8 length(8) with { variant "FIELDLENGTH(8)" }
+type charstring DiameterIdentity;
+type charstring DiameterURI;
+type OCTET4 Time;
+!5 type octetstring UTF8;
+!6 type universal charstring UTF8;
+type charstring IPFilterRule;
+type charstring QoSFilterRule;
+
+//
+// 4.2. Basic AVP Data Formats
+//
+
+type octetstring AVP_OctetString;
+type INT32 AVP_Integer32;
+type INT64 AVP_Integer64;
+type UINT32 AVP_Unsigned32;
+type UINT64 AVP_Unsigned64;
+type FLOAT32 AVP_Float32;
+type FLOAT64 AVP_Float64;
+type AVP_list AVP_Grouped;
+
+//
+// 4.3. Derived AVP Data Formats
+//
+
+// http://www.iana.org/assignments/address-family-numbers (2002-05-14)
+type enumerated AddressType {
+Reserved_0 (0),
+IP (1),
+IP6 (2),
+NSAP (3),
+HDLC (4),
+BBN1822 (5),
+IEEE802 (6),
+E163 (7),
+E164 (8),
+F69 (9),
+X121 (10),
+IPX (11),
+Appletalk (12),
+Decnet_IV (13),
+Banyan_Vines (14),
+E164_NSAP (15),
+DNS (16),
+Distinguished_Name (17),
+AS_Number (18),
+XTP_IP (19),
+XTP_IP6 (20),
+XTP_native (21),
+Fibre_Channel_WW_Port (22),
+Fibre_Channel_WW_Node (23),
+GWID (24),
+Reserved_65535 (65535)
+} with {
+variant "FIELDLENGTH(16)"
+variant "BYTEORDER(last)"
+variant "COMP(nosign)"
+}
+
+type record AVP_Address {
+AddressType address_type,
+octetstring address_data
+}
+
+// Non-standard? AVP type for 4octet IPv4 addresses
+type OCTET4 AVP_IP_Address;
+
+type Time AVP_Time;
+
+// Supports only 1byte/char
+type UTF8 AVP_UTF8String;
+
+type DiameterIdentity AVP_DiameterIdentity;
+type DiameterURI AVP_DiameterURI;
+
+// Enumerated
+// Enumerations must be solved uniqly for each enumerated type AVP!
+
+type IPFilterRule AVP_IPFilterRule;
+type QoSFilterRule AVP_QoSFilterRule;
+
+type enumerated Command_Code
+{ 
+  Abort_Session         (274), // Abort-Session-Request(ASR) or 
+	                             // Abort-Session-Answer(ASA)
+  Accounting            (271), // Accounting-Request(ACR) or 
+	                             // Accounting-Answer(ACA)
+  Capabilities_Exchange (257), // Capabilities-Exchange-Request(CER) or
+                                     // Capabilities-Exchange-Answer(CEA)
+  Device_Watchdog       (280), // Device-Watchdog-Request(DWR) or 
+	                             // Device-Watchdog-Answer(DWA)
+  Disconnect_Peer       (282), // Disconnect-Peer-Request(DPR) or
+	                             // Disconnect-Peer-Answer (DPA)
+  Re_Auth               (258), // Re-Auth-Request(RAR) or Re-Auth-Answer(RAA)
+  Session_Termination   (275), // Session-Termination-Request(STR) or
+	                             // Session-Termination-Answer(STA)
+  Experimental1    (16777214), // Experimental command code
+  Experimental2    (16777215)  // Experimental command code
+}
+
+type record PDU_DIAMETER
+{
+  UINT8         version,
+  UINT24        message_length,
+!3 BIT8          RPETxxxx,
+!4 BIT1          R_bit,
+!4 BIT1          P_bit,
+!4 BIT1          E_bit,
+!4 BIT1          T_bit,
+!4 BIT4          r_bits,
+  Command_Code  command_code,        
+  OCTET4        application_id,
+  UINT32        hop_by_hop_id,
+  UINT32        end_to_end_id,
+  AVP_list      avps
+} with {
+	variant (message_length) "LENGTHTO(version, message_length, 
+!3 	RPETxxxx,
+!4  R_bit, P_bit, E_bit, T_bit, r_bits, 
+		command_code, application_id, hop_by_hop_id, end_to_end_id, avps)";
+!4 variant (R_bit, P_bit, E_bit, T_bit, r_bits) "FIELDORDER(msb)"
+}

@@ -1,0 +1,117 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               MobileIPv6_HA_IETF_RFC5778.ddf
+//  Description:        DDF for Mobile IPv6 according to RFC 5778
+//  Rev:                R29A
+//  Prodnr:             CNL113462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: MIPv6
+// APPLICATION-REVISION: RFC5778
+
+// RFC 5778 6.2
+// AVP: Service-Selection (493)
+type AVP_UTF8String Service_Selection
+
+// RFC 5778 6.3
+// AVP: MIP-MN-AAA-SPI (341)
+type AVP_Unsigned32 MIP_MN_AAA_SPI
+
+// RFC 5778 6.4
+// AVP: MIP-MN-HA-SPI (491)
+type AVP_Unsigned32 MIP_MN_HA_SPI
+
+// RFC 5778 6.5
+// AVP: MIP-Mobile-Node-Address (333)
+type AVP_Address MIP_Mobile_Node_Address
+
+// RFC 5778 6.7
+// AVP: MIP-Careof-Address (487)
+type AVP_Address MIP_Careof_Address
+
+// RFC 5778 6.8
+// AVP: MIP-Authenticator (488)
+type AVP_OctetString MIP_Authenticator
+
+// RFC 5778 6.9
+// AVP: MIP-MAC-Mobility-Data (489)
+type AVP_OctetString MIP_MAC_Mobility_Data
+
+// RFC 5778 6.10
+// AVP: MIP-Session-Key (343)
+type AVP_OctetString MIP_Session_Key
+
+// RFC 5778 6.11
+// AVP: MIP-MSA-Lifetime (367)
+type AVP_Unsigned32 MIP_MSA_Lifetime
+
+// RFC 5778 6.12
+// AVP: MIP-MN-HA-MSA (492)
+type AVP_Grouped MIP_MN_HA_MSA
+
+// RFC 5778 6.13
+// AVP: MIP-Algorithm-Type (345)
+type AVP_Unsigned32 MIP_Algorithm_Type
+
+// RFC 5778 6.14
+// AVP: MIP-Replay-Mode (346)
+type enumerated MIP_Replay_Mode
+{
+  None          (1),
+  Timestamp     (2)
+}
+
+// RFC 5778 6.16
+// AVP: MIP-Timestamp (490)
+type AVP_OctetString MIP_Timestamp
+
+// RFC 5778 6.17
+// AVP: QoS-Capability (578)
+type AVP_Grouped QoS_Capability
+
+// RFC 5778 6.18
+// AVP: QoS-Resources (508)
+type AVP_Grouped QoS_Resources
+
+// RFC 5778 6.19
+// AVP: Chargable-User-Identity (89)
+type AVP_OctetString Chargable_User_Identity
+
+// RFC 5778 6.20
+// AVP: MIP6-Auth-Mode (494)
+type AVP_Unsigned32 MIP6_Auth_Mode

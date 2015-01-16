@@ -1,0 +1,953 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Gabor Szalai - initial implementation and initial documentation
+******************************************************************************/
+
+module DIAMETER_Mapping
+{
+
+//=========================================================================
+// Import Part
+//=========================================================================
+
+import from DIAMETER_Types all;
+import from TCPasp_Types all;
+import from TCPasp_PortType all;
+import from SCTPasp_Types all;
+import from SCTPasp_PortType all;
+
+
+//=========================================================================
+// Module Parameters
+//=========================================================================
+
+modulepar
+{
+  // hostname and portnumber are mandatory parameters. They specify either
+  // Destination host and portnumber in client mode, or
+  // Listening interface and portnumber in server mode
+  charstring  tsp_hostname := "";
+  integer     tsp_portnumber := -1;
+  
+  // In client mode, this parameter enables reconnecting if the
+  // channel was closed by the other peer.
+  boolean     tsp_reconnect := true;
+    
+  // Timeouts:
+  float       tsp_reconnect_timeout := 2.0;
+  float       tsp_connect_timeout := 5.0;
+};
+
+
+//=========================================================================
+// Data Types
+//=========================================================================
+
+// PDU Type for server mode, where the client_id is included 
+// with the diameter PDU
+type record PDU_DIAMETER_Server {
+  PDU_DIAMETER  data,
+  integer       client_id
+}
+
+// ASP for Notifying users
+type record ASP_DIA_Mapping_Notification
+{
+  NotificationEnum  notification,
+  PDU_DIAMETER      pdu           optional,
+  integer           client_id     optional
+}
+
+// ASP for registering users for notifications
+type enumerated ASP_DIA_Mapping_Registration
+{
+  REGISTER,
+  REGISTER_ACK,
+  DEREGISTER,
+  DEREGISTER_ACK
+}
+
+// Incoming SCTP events are stored in this type:
+type union SCTPPortMessage
+{
+  ASP_SCTP_ASSOC_CHANGE           f_AssocChange,
+  ASP_SCTP_PEER_ADDR_CHANGE       f_PeerAddrChange,
+  ASP_SCTP_SEND_FAILED            f_SendFailed,
+  ASP_SCTP_REMOTE_ERROR           f_RemoteError,
+  ASP_SCTP_SHUTDOWN_EVENT         f_ShutdownEvent,
+  ASP_SCTP_PARTIAL_DELIVERY_EVENT f_PartialDeliveryEvent,
+  ASP_SCTP_ADAPTION_INDICATION    f_AdaptionIndication,
+  ASP_SCTP_SENDMSG_ERROR          f_SendMsgError,
+  ASP_SCTP_RESULT                 f_Result
+}
+
+// Incoming TCP events are stored in this type:
+type union TCPPortMessage
+{
+  ASP_TCP_Connected               f_Connected,
+  ASP_TCP_Close                   f_Close,
+  ASP_TCP_Listen_result           f_ListenResult,
+  ASP_TCP_Connect_result          f_ConnectResult
+}
+
+// Available notifications:
+type enumerated NotificationEnum
+{ 
+  CONNECTION_IS_UP, 
+  CONNECTION_IS_DOWN, 
+  SEND_FAILED,
+  TRANSMISSION_FAILED
+}
+
+type record RoutingTableElementType {
+  octetstring hop_by_hop_id,
+  octetstring end_to_end_id,
+  DIAMETER_CT ptcId
+}
+
+type record of RoutingTableElementType RoutingTableType;
+type record of DIAMETER_CT MappingUserTableType;
+
+
+//=========================================================================
+// Port Types
+//=========================================================================
+
+// The port type that conveys DIAMETER messages and ASP of the mapping CT
+type port DIAMETERmsg_PT message
+{
+  inout PDU_DIAMETER;
+  inout PDU_DIAMETER_Server;
+  inout ASP_DIA_Mapping_Notification;
+  inout ASP_DIA_Mapping_Registration;
+} 
+  with {extension "internal"}
+
+
+//=========================================================================
+// Component Types
+//=========================================================================
+
+// Component type for DIAMETER_Mapping users:
+type component DIAMETER_CT
+{
+  port DIAMETERmsg_PT DIA_PCO;
+}
+
+// The mapping component
+type component DIAMETER_Mapping_CT
+{
+  port DIAMETERmsg_PT DIA_PCO;
+  port TCPasp_PT      TCP_PCO;
+  port SCTPasp_PT     SCTP_PCO;
+  
+  // In client mode, the routing table keeps track of the sent diameter
+  // messages in order that the mapping component can route back the
+  // corresponding answers to the users properly.
+  var RoutingTableType      v_RoutingTable := {};
+  
+  // In client mode, this table stores the user components that subscribed
+  // to notifications
+  var MappingUserTableType  v_MappingUserTable := {};
+  
+  var TCPPortMessage        v_TCPPortMsg; //TCP Events are stored here
+  var SCTPPortMessage       v_SCTPPortMsg; //SCTP Events are stored here
+  
+  var boolean               v_State := false; //Connection state
+  
+  // Timers for reconnection mode:
+  timer Ttimeout;
+  timer Treconnect;
+}
+
+//=========================================================================
+// Constants
+//=========================================================================
+
+// This constant specifyes the upper layer protocol ID that will be
+// embedded in the SCTP messages. Since IANA hasn't assigned a value
+// for Diameter yet, 20 was chosen as an arbitrary number
+const integer c_DIAMETER_ppid := 20;
+
+//=========================================================================
+// Templates
+//=========================================================================
+
+template ASP_SCTP_Connect t_ASP_SCTP_Connect (
+  template charstring p_host, 
+  template integer p_portnum) :=
+{
+  peer_hostname := p_host,
+  peer_portnumber := p_portnum
+};
+
+template ASP_TCP_Connect t_ASP_TCP_Connect (
+  template charstring p_host, 
+  template integer p_portnum) :=
+{
+  hostname := p_host,
+  portnumber := p_portnum,
+  local_hostname := omit,
+  local_portnumber := omit
+};
+
+template ASP_TCP_Listen t_ASP_TCP_Listen (
+  template charstring p_host,
+  template integer    p_port) :=
+{
+  portnumber := p_port,
+  local_hostname := p_host
+};
+
+template ASP_SCTP_ASSOC_CHANGE t_ASP_SCTP_AssocChange (
+  template integer p_cid,
+  template SAC_STATE p_state) :=
+{
+  client_id := p_cid,
+  sac_state := p_state
+};
+
+template ASP_DIA_Mapping_Notification t_notification (
+  template NotificationEnum p_notification,
+  template PDU_DIAMETER p_pdu,
+  template integer p_cid) :=
+{
+  notification := p_notification,
+  pdu := p_pdu,
+  client_id := p_cid
+};
+
+//=========================================================================
+// Altsteps
+//=========================================================================
+
+// Altstep for handling SCTP events in server mode
+altstep as_SCTPEventHandling_Server() runs on DIAMETER_Mapping_CT
+{
+  [] SCTP_PCO.receive(ASP_SCTP_ASSOC_CHANGE:?) 
+      -> value v_SCTPPortMsg.f_AssocChange
+    {
+      if (v_SCTPPortMsg.f_AssocChange.sac_state == SCTP_COMM_LOST) {
+        DIA_PCO.send(t_notification(
+          CONNECTION_IS_DOWN, 
+          omit, 
+          v_SCTPPortMsg.f_AssocChange.client_id)
+        );
+      }
+      else if (v_SCTPPortMsg.f_AssocChange.sac_state == SCTP_COMM_UP) {
+        DIA_PCO.send(t_notification(
+          CONNECTION_IS_UP, 
+          omit, 
+          v_SCTPPortMsg.f_AssocChange.client_id)
+        );
+      }
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_SHUTDOWN_EVENT:?)
+      -> value v_SCTPPortMsg.f_ShutdownEvent
+    {
+      //There is nothing to do, an ASSOC_CHANGE must arrive before
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_ShutdownEvent);
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_RESULT:?)
+      -> value v_SCTPPortMsg.f_Result
+    {
+      // There is nothing to do: an ASSOC_CHANGE(SCTP_COMM_UP) must arrive.
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_Result);
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_SENDMSG_ERROR:?) 
+      -> value v_SCTPPortMsg.f_SendMsgError
+    {
+      DIA_PCO.send(t_notification(
+        TRANSMISSION_FAILED, 
+        f_DIAMETER_Dec(v_SCTPPortMsg.f_SendMsgError.data), 
+        v_SCTPPortMsg.f_SendMsgError.client_id));
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_SEND_FAILED:?) 
+      -> value v_SCTPPortMsg.f_SendFailed
+    {
+      DIA_PCO.send(t_notification(
+        SEND_FAILED, 
+        omit, 
+        v_SCTPPortMsg.f_SendFailed.client_id)
+      );
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_PEER_ADDR_CHANGE:?)
+      -> value v_SCTPPortMsg.f_PeerAddrChange
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_PeerAddrChange);
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_REMOTE_ERROR:?) 
+      -> value v_SCTPPortMsg.f_RemoteError
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_RemoteError); 
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_PARTIAL_DELIVERY_EVENT:?) 
+      -> value v_SCTPPortMsg.f_PartialDeliveryEvent
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_PartialDeliveryEvent);
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_ADAPTION_INDICATION:?) 
+      -> value v_SCTPPortMsg.f_AdaptionIndication
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_AdaptionIndication);
+      repeat;
+    }
+}
+
+// Altstep for handling SCTP events in client mode
+altstep as_SCTPEventHandling_Client() runs on DIAMETER_Mapping_CT
+{
+  var DIAMETER_CT   vl_dia_comp;
+  var PDU_DIAMETER  vl_dia_pdu;
+  
+  [] SCTP_PCO.receive(ASP_SCTP_ASSOC_CHANGE:?) 
+      -> value v_SCTPPortMsg.f_AssocChange
+    {
+      if (v_SCTPPortMsg.f_AssocChange.sac_state == SCTP_COMM_LOST) {
+        v_State := false;
+        if (tsp_reconnect) {
+          Treconnect.start(tsp_reconnect_timeout);
+        }
+        else { 
+          log("Warning: SCTP connection is lost."&
+              "Reconnect mode is not set. Exiting.");
+          stop;
+        }
+        if (Ttimeout.running) { Ttimeout.stop; }
+        f_sendNotificationToUsers(t_notification(CONNECTION_IS_DOWN, omit, omit));
+     }
+     else if (v_SCTPPortMsg.f_AssocChange.sac_state == SCTP_COMM_UP) {
+       v_State := true;
+       if (Treconnect.running) { Treconnect.stop;}
+       if (Ttimeout.running) { Ttimeout.stop; }
+       f_sendNotificationToUsers(t_notification(CONNECTION_IS_UP, omit, omit));
+      }
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_SHUTDOWN_EVENT:?)
+      -> value v_SCTPPortMsg.f_ShutdownEvent
+    {
+      v_State := false;
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_RESULT:?)
+      -> value v_SCTPPortMsg.f_Result
+    {
+      if (Treconnect.running) { Treconnect.stop; }
+      if (Ttimeout.running) { Ttimeout.stop; }
+      if (v_SCTPPortMsg.f_Result.error_status == false) {
+        log("SCTP connection was succesful: ", v_SCTPPortMsg.f_Result);
+        // There is nothing to do: an ASSOC_CHANGE(SCTP_COMM_UP) must arrive.
+      }
+      else {
+        log("SCTP connection was not established, error message: ",
+            v_SCTPPortMsg.f_Result.error_message);
+        // We don't have to wait for Ttimeout
+        // initiating reconnection timer:
+        v_State := false;
+        if (tsp_reconnect) {
+          Treconnect.start(tsp_reconnect_timeout);
+        }
+        else { 
+          log("Warning: SCTP connection was not established."&
+              "Reconnect mode is not set. Exiting.");
+          stop;
+        }
+      }
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_SENDMSG_ERROR:?) 
+      -> value v_SCTPPortMsg.f_SendMsgError
+    {
+      vl_dia_pdu  := f_DIAMETER_Dec(v_SCTPPortMsg.f_SendMsgError.data);
+      vl_dia_comp := f_findInRT(
+        v_RoutingTable, 
+        vl_dia_pdu.hop_by_hop_id, 
+        vl_dia_pdu.end_to_end_id
+      );
+      if (vl_dia_comp != null) {
+        DIA_PCO.send(t_notification(
+          TRANSMISSION_FAILED, 
+          vl_dia_pdu, 
+          omit)
+        ) to vl_dia_comp;
+        f_delFromRT(
+          v_RoutingTable, 
+          vl_dia_pdu.hop_by_hop_id, 
+          vl_dia_pdu.end_to_end_id
+        );
+      }
+      else {
+        log("Diameter couldn't be sent with unknown "&
+            "hop_by_hop_id and end_to_end_id:" &
+            "Dropping at SCTP SENDMSG ERROR");
+      }
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_SEND_FAILED:?) 
+      -> value v_SCTPPortMsg.f_SendFailed
+    {
+      f_sendNotificationToUsers(t_notification(SEND_FAILED, omit, omit));
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_PEER_ADDR_CHANGE:?)
+      -> value v_SCTPPortMsg.f_PeerAddrChange
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_PeerAddrChange);
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_REMOTE_ERROR:?) 
+      -> value v_SCTPPortMsg.f_RemoteError
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_RemoteError); 
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_PARTIAL_DELIVERY_EVENT:?) 
+      -> value v_SCTPPortMsg.f_PartialDeliveryEvent
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_PartialDeliveryEvent);
+      repeat;
+    }
+  [] SCTP_PCO.receive(ASP_SCTP_ADAPTION_INDICATION:?) 
+      -> value v_SCTPPortMsg.f_AdaptionIndication
+    {
+      log("This message is currently ignored: ", v_SCTPPortMsg.f_AdaptionIndication);
+      repeat;
+    }
+}
+
+// Altstep for handling TCP events in server mode
+altstep as_TCPEventHandling_Server() runs on DIAMETER_Mapping_CT
+{
+  [] TCP_PCO.receive(ASP_TCP_Connected:?) 
+      -> value v_TCPPortMsg.f_Connected
+    {
+      DIA_PCO.send(t_notification(
+        CONNECTION_IS_UP, 
+        omit, 
+        v_TCPPortMsg.f_Connected.client_id)
+      );
+      repeat;
+    }
+  [] TCP_PCO.receive(ASP_TCP_Close:?)
+      -> value v_TCPPortMsg.f_Close
+    {
+      DIA_PCO.send(t_notification(
+        CONNECTION_IS_DOWN, 
+        omit, 
+        v_TCPPortMsg.f_Close.client_id)
+      );
+      repeat;
+    }
+}
+
+// Altstep for handling TCP events in client mode
+altstep as_TCPEventHandling_Client() runs on DIAMETER_Mapping_CT
+{
+  [] TCP_PCO.receive(ASP_TCP_Connect_result:?) 
+      -> value v_TCPPortMsg.f_ConnectResult
+    {
+      if (Treconnect.running) { Treconnect.stop; }
+      if (Ttimeout.running) { Ttimeout.stop; }
+      
+      if (v_TCPPortMsg.f_ConnectResult.client_id == -1) {
+        v_State := false;
+        if (tsp_reconnect) {
+          Treconnect.start(tsp_reconnect_timeout);
+        }
+        else { 
+          log("Warning: TCP connection was not established."&
+              " Reconnect mode is not set. Exiting."); 
+          stop;
+        }
+      }
+      else {
+        v_State := true;
+        if (Treconnect.running) { Treconnect.stop;}
+        if (Ttimeout.running) { Ttimeout.stop; }
+        f_sendNotificationToUsers(t_notification(CONNECTION_IS_UP, omit, omit));
+      }
+      repeat;
+    }
+  [] TCP_PCO.receive(ASP_TCP_Close:?)
+      -> value v_TCPPortMsg.f_Close
+    {
+      v_State := false;
+      if (tsp_reconnect) {
+        Treconnect.start(tsp_reconnect_timeout);
+      }
+      else { 
+        log("Warning: TCP connection is lost."&
+          " Reconnect mode is not set. Exiting.");
+        stop;
+      }
+      if (Ttimeout.running) { Ttimeout.stop; }
+      f_sendNotificationToUsers(t_notification(CONNECTION_IS_DOWN, omit, omit));
+      repeat;
+    }
+}
+
+// Altstep for reconnection and no response timeouts
+altstep as_handleSCTPTimeouts() runs on DIAMETER_Mapping_CT
+{
+  [] Treconnect.timeout
+    {
+      log("SCTP reconnection is starting"); 
+      SCTP_PCO.send(t_ASP_SCTP_Connect(tsp_hostname, tsp_portnumber));
+      Ttimeout.start(tsp_connect_timeout);
+      repeat;
+    }
+  [] Ttimeout.timeout
+    {
+      log("SCTP connection establishment failed: no response, but trying again");
+      SCTP_PCO.send(t_ASP_SCTP_Connect(tsp_hostname, tsp_portnumber));
+      Ttimeout.start(tsp_connect_timeout);
+      repeat;
+    }
+}
+
+// Altstep for reconnection and no response timeouts
+altstep as_handleTCPTimeouts() runs on DIAMETER_Mapping_CT
+{
+  [] Treconnect.timeout
+    {
+      log("TCP reconnection is starting"); 
+      TCP_PCO.send(t_ASP_TCP_Connect(tsp_hostname, tsp_portnumber));
+      Ttimeout.start(tsp_connect_timeout);
+      repeat;
+    }
+  [] Ttimeout.timeout
+    {
+      log("TCP connection establishment failed: no response, but trying again");
+      TCP_PCO.send(t_ASP_TCP_Connect(tsp_hostname, tsp_portnumber));
+      Ttimeout.start(tsp_connect_timeout);
+      repeat;
+    }
+}
+
+// Altstep for handling mapping client database
+altstep as_handleMappingUserMessages() runs on DIAMETER_Mapping_CT
+{
+  var DIAMETER_CT vl_dia_ct;
+  
+  [] DIA_PCO.receive(ASP_DIA_Mapping_Registration:REGISTER) -> sender vl_dia_ct
+    {
+      f_putInUserTable(v_MappingUserTable, vl_dia_ct);
+      DIA_PCO.send(ASP_DIA_Mapping_Registration:REGISTER_ACK) to vl_dia_ct;
+      if (v_State == true) {
+        DIA_PCO.send(t_notification(CONNECTION_IS_UP, omit, omit)) to vl_dia_ct;
+      }
+      else {
+        DIA_PCO.send(t_notification(CONNECTION_IS_DOWN, omit, omit)) to vl_dia_ct;
+      }
+      log("Mapping client has been registered");
+      repeat;
+    }
+  [] DIA_PCO.receive(ASP_DIA_Mapping_Registration:DEREGISTER) -> sender vl_dia_ct
+    {
+      f_delFromUserTable(v_MappingUserTable, vl_dia_ct);
+      DIA_PCO.send(ASP_DIA_Mapping_Registration:DEREGISTER_ACK) to vl_dia_ct;
+      log("Mapping client has been deregistered");
+      repeat;
+    }
+}  
+
+//=========================================================================
+// Functions
+//=========================================================================
+
+// Main mapping function for client mode, over TCP
+function f_DIA_TCP_Mapping_Client() runs on DIAMETER_Mapping_CT
+{
+  var ASP_TCP       vl_TCP_msg;
+  var PDU_DIAMETER  vl_DIA_msg;
+  var DIAMETER_CT   vl_DIA_comp;
+  const octetstring cl_zero := '00000000'O;
+
+  f_initTCPConnection();
+  
+  alt {
+    [] as_TCPEventHandling_Client();
+    [] TCP_PCO.receive(ASP_TCP:?) -> value vl_TCP_msg
+      {
+        log("TCP Packet received");
+        vl_DIA_msg := f_DIAMETER_Dec(vl_TCP_msg.data);
+        vl_DIA_comp := f_findInRT(
+          v_RoutingTable, 
+          vl_DIA_msg.hop_by_hop_id, 
+          vl_DIA_msg.end_to_end_id
+        );
+        if (vl_DIA_comp != null) {
+          DIA_PCO.send(vl_DIA_msg) to vl_DIA_comp;
+          f_delFromRT(
+            v_RoutingTable, 
+            vl_DIA_msg.hop_by_hop_id, 
+            vl_DIA_msg.end_to_end_id
+          );
+          log("Diameter message sent to the corresponding component");
+        }
+        else {
+          log("Diameter message arrived with unknown"&
+              " hop_by_hop_id and end_to_end_id: dropping: ", vl_DIA_msg);
+        }
+        repeat;
+      }
+    [] as_handleTCPTimeouts()
+    [] DIA_PCO.receive(PDU_DIAMETER:?) -> value vl_DIA_msg sender vl_DIA_comp
+      {
+        log("DIA message received")
+        if (v_State == true) {
+          if (vl_DIA_msg.hop_by_hop_id == cl_zero and 
+              vl_DIA_msg.end_to_end_id == cl_zero) {
+            vl_DIA_msg.hop_by_hop_id := f_DIAMETER_genHopByHop();
+            vl_DIA_msg.end_to_end_id := f_DIAMETER_genEndToEnd();
+          }
+          vl_TCP_msg.data := f_DIAMETER_Enc(vl_DIA_msg);
+          vl_TCP_msg.client_id := omit;
+          TCP_PCO.send(vl_TCP_msg);
+          v_RoutingTable[sizeof(v_RoutingTable)] := { 
+            vl_DIA_msg.hop_by_hop_id, 
+            vl_DIA_msg.end_to_end_id,
+            vl_DIA_comp
+          }
+          log("Message sent via TCP");
+        }
+        else {
+          DIA_PCO.send(t_notification(TRANSMISSION_FAILED, vl_DIA_msg, omit))
+            to vl_DIA_comp;
+          log("Diameter message is not forwarded"&
+              " since the TCP connection is down");
+        }
+        repeat;
+      }
+    [] as_handleMappingUserMessages()
+    [] DIA_PCO.receive
+      {
+        log("Unexpected DIAMETER message is dropped"&
+            " at function f_DIA_TCP_Mapping_Client()");
+      }
+    [] TCP_PCO.receive
+      {
+        log("Unexpected TCP message is dropped"&
+            " at function f_DIA_TCP_Mapping_Client()");
+      }
+  }
+}
+
+// Main mapping function for client mode, over SCTP
+function f_DIA_SCTP_Mapping_Client() runs on DIAMETER_Mapping_CT {
+  var ASP_SCTP      vl_SCTP_msg;
+  var PDU_DIAMETER  vl_DIA_msg;
+  var DIAMETER_CT   vl_DIA_comp;
+  const octetstring cl_zero := '00000000'O;
+  
+  f_initSCTPConnection();
+
+  alt {
+    [] as_SCTPEventHandling_Client()
+    [] SCTP_PCO.receive(ASP_SCTP:?) -> value vl_SCTP_msg
+      {
+        log("SCTP packet received");
+        vl_DIA_msg := f_DIAMETER_Dec(vl_SCTP_msg.data);
+        vl_DIA_comp := f_findInRT(
+          v_RoutingTable, 
+          vl_DIA_msg.hop_by_hop_id, 
+          vl_DIA_msg.end_to_end_id
+        );
+        if (vl_DIA_comp != null) {
+          DIA_PCO.send(vl_DIA_msg) to vl_DIA_comp;
+          f_delFromRT(
+            v_RoutingTable, 
+            vl_DIA_msg.hop_by_hop_id, 
+            vl_DIA_msg.end_to_end_id
+          );
+          log("Diameter message sent to the corresponding component");
+        }
+        else {
+          log("Diameter message arrived"&
+              " with unknown hop_by_hop_id and end_to_end_id: dropping: ", vl_DIA_msg);
+        }
+        repeat;
+      }
+    [] as_handleSCTPTimeouts()
+    [] DIA_PCO.receive(PDU_DIAMETER:?) -> value vl_DIA_msg sender vl_DIA_comp
+      {
+        log("Diameter message received");
+        if (v_State == true) {
+            if (vl_DIA_msg.hop_by_hop_id == cl_zero and 
+                vl_DIA_msg.end_to_end_id == cl_zero) {
+            vl_DIA_msg.hop_by_hop_id := f_DIAMETER_genHopByHop();
+            vl_DIA_msg.end_to_end_id := f_DIAMETER_genEndToEnd();
+          }
+          vl_SCTP_msg.data := f_DIAMETER_Enc(vl_DIA_msg);
+          vl_SCTP_msg.client_id := omit;
+          vl_SCTP_msg.sinfo_stream := 0;
+          vl_SCTP_msg.sinfo_ppid := c_DIAMETER_ppid;
+          SCTP_PCO.send(vl_SCTP_msg);
+          v_RoutingTable[sizeof(v_RoutingTable)] := { 
+            vl_DIA_msg.hop_by_hop_id, 
+            vl_DIA_msg.end_to_end_id,
+            vl_DIA_comp
+          }
+          log("Diameter message sent via SCTP");
+        }
+        else {
+          DIA_PCO.send(t_notification(TRANSMISSION_FAILED, vl_DIA_msg, omit))
+            to vl_DIA_comp;
+          log("Diameter message is not forwarded"&
+              " since the SCTP connection is down");
+        }
+        repeat;
+      }
+    [] as_handleMappingUserMessages()
+    [] DIA_PCO.receive
+      {
+        log("Unexpected DIAMETER message is dropped"&
+            " at function f_DIA_SCTP_Mapping_Client()");
+      }
+    [] SCTP_PCO.receive
+      {
+        log("Unexpected SCTP message is dropped"&
+            " at function f_DIA_SCTP_Mapping_Client()");
+      }
+  }
+}
+
+// Main mapping function for server mode, over SCTP
+function f_DIA_SCTP_Mapping_Server() runs on DIAMETER_Mapping_CT {
+  var ASP_SCTP            vl_SCTP_msg;
+  var PDU_DIAMETER_Server vl_DIA_msg;
+  
+  alt
+  {
+    [] as_SCTPEventHandling_Server()
+    [] SCTP_PCO.receive(ASP_SCTP:?) -> value vl_SCTP_msg
+      {
+        log("SCTP packet received");
+        vl_DIA_msg.data := f_DIAMETER_Dec(vl_SCTP_msg.data);
+        vl_DIA_msg.client_id := vl_SCTP_msg.client_id;
+        DIA_PCO.send(vl_DIA_msg);
+        log("Diameter message sent");
+        repeat;
+      }
+    [] DIA_PCO.receive(PDU_DIAMETER_Server:?) -> value vl_DIA_msg
+      {
+        log("Diameter message received");
+        vl_SCTP_msg.data := f_DIAMETER_Enc(vl_DIA_msg.data);
+        vl_SCTP_msg.client_id := vl_DIA_msg.client_id;
+        vl_SCTP_msg.sinfo_stream := 0;
+        vl_SCTP_msg.sinfo_ppid := c_DIAMETER_ppid;
+        SCTP_PCO.send(vl_SCTP_msg);
+        log("Diameter message sent via SCTP");
+        repeat;
+      }
+    [] DIA_PCO.receive
+      {
+        log("Unexpected DIAMETER message is dropped"&
+            " at function f_DIA_SCTP_Mapping_Server()");
+      }
+    [] SCTP_PCO.receive
+      {
+        log("Unexpected SCTP message is dropped"&
+            " at function f_DIA_SCTP_Mapping_Server()");
+      }
+  }
+}  
+
+// Main mapping function for server mode, over SCTP
+function f_DIA_TCP_Mapping_Server() runs on DIAMETER_Mapping_CT
+{
+  var ASP_TCP              vl_TCP_msg;
+  var PDU_DIAMETER_Server  vl_DIA_msg;
+
+  f_initTCPListening();
+  
+  alt {
+    [] as_TCPEventHandling_Server();
+    [] TCP_PCO.receive(ASP_TCP:?) -> value vl_TCP_msg
+      {
+        log("TCP Packet received");
+        vl_DIA_msg.data := f_DIAMETER_Dec(vl_TCP_msg.data);
+        vl_DIA_msg.client_id := vl_TCP_msg.client_id;
+        DIA_PCO.send(vl_DIA_msg);
+        log("Diameter message sent");
+        repeat;
+      }
+    [] DIA_PCO.receive(PDU_DIAMETER_Server:?) -> value vl_DIA_msg
+      {
+        log("Diameter message received")
+        vl_TCP_msg.data := f_DIAMETER_Enc(vl_DIA_msg.data);
+        vl_TCP_msg.client_id := vl_DIA_msg.client_id;
+        TCP_PCO.send(vl_TCP_msg);
+        log("Diameter message sent via TCP");
+        repeat;
+      }
+    [] DIA_PCO.receive
+      {
+        log("Unexpected DIAMETER message is dropped"&
+            " at function f_DIA_TCP_Mapping_Server()");
+      }
+    [] TCP_PCO.receive
+      {
+        log("Unexpected TCP message is dropped"&
+            " at function f_DIA_TCP_Mapping_Server()");
+      }
+  }
+}
+
+ // The SCTP client port tries to connect to the configured server
+function f_initSCTPConnection() runs on DIAMETER_Mapping_CT
+{
+  log("f_initSCTPConnection is starting.");
+  SCTP_PCO.send(t_ASP_SCTP_Connect(tsp_hostname, tsp_portnumber));
+  Ttimeout.start(tsp_connect_timeout);
+}
+
+ // The TCP client port tries to connect to the configured server
+function f_initTCPConnection() runs on DIAMETER_Mapping_CT
+{
+  log("f_initTCPConnection is starting.");
+  TCP_PCO.send(t_ASP_TCP_Connect(tsp_hostname, tsp_portnumber));
+  Ttimeout.start(tsp_connect_timeout);
+}
+
+// The TCP port starts listening on the port that was specified in mod. pars.
+function f_initTCPListening() runs on DIAMETER_Mapping_CT
+{
+  
+  log("f_initTCPListening is starting.");
+  TCP_PCO.send(t_ASP_TCP_Listen(tsp_hostname, tsp_portnumber));
+  
+  Ttimeout.start(tsp_connect_timeout);
+  
+  alt
+  {
+    [] TCP_PCO.receive(ASP_TCP_Listen_result:?)
+        -> value v_TCPPortMsg.f_ListenResult
+      {
+        if (v_TCPPortMsg.f_ListenResult.portnumber != tsp_portnumber)
+        {
+          log("Warning: The acquired portnumber is not the requested");
+        }
+      }
+    [] Ttimeout.timeout
+      {
+        log("Error: Couldn't open listening TCP port");
+        setverdict(fail);
+        stop;
+      }
+    [] TCP_PCO.receive 
+      { 
+        log("Warning: Ignored TCP message at f_initTCPListening"); repeat;
+      }
+    [] DIA_PCO.receive 
+      { 
+        log("Warning: Ignored DIA message at f_initTCPListening"); repeat;
+      }
+   }
+}
+
+// There is no ASP for start listening in the SCTP port. It must be configured
+// using test port parameter in the configuration file.
+
+// Looks up a mapping user component (DIAMETER_CT) in the routing table based
+// on the hop-by-hop and end-to-end id
+function f_findInRT(
+  in RoutingTableType pl_table,
+  in octetstring pl_hop_by_hop_id,
+  in octetstring pl_end_to_end_id)
+  return DIAMETER_CT
+{
+  var integer i;
+  for( i:=0; i < sizeof(pl_table); i:= i+1) {
+    if( pl_table[i].hop_by_hop_id == pl_hop_by_hop_id and 
+        pl_table[i].end_to_end_id == pl_end_to_end_id) {
+      return pl_table[i].ptcId;
+    }
+  }
+  return null;
+}
+
+// Deletes a line from the routing table based
+// on the hop-by-hop and end-to-end id
+function f_delFromRT(
+  inout RoutingTableType pl_table,
+  in octetstring pl_hop_by_hop_id, 
+  in octetstring pl_end_to_end_id)
+{
+  var integer i, j:=0;
+  var RoutingTableType vl_table := {};
+
+  for( i:=0; i < sizeof(pl_table); i:= i+1) {
+    if(pl_table[i].hop_by_hop_id == pl_hop_by_hop_id and
+      pl_table[i].end_to_end_id == pl_end_to_end_id) {
+    } else {
+      vl_table[j] := pl_table[i];
+      j:=j+1;
+    }
+  }
+  pl_table := vl_table;
+}
+
+// Inserts a line into user table that keeps track of the mapping users
+// who want to receive notifications about the state of the client connection
+function f_putInUserTable(
+  inout MappingUserTableType p_table,
+  in DIAMETER_CT pl_ptc)
+{
+  p_table[sizeof(p_table)] := pl_ptc;
+}
+
+
+// Removes a line from the user table
+function f_delFromUserTable(
+  inout MappingUserTableType p_table,
+  in DIAMETER_CT pl_ptc)
+{
+  var integer i, j:=0;
+  var boolean vl_user_found := false;
+  var MappingUserTableType vl_table := {};
+
+  for( i:=0; i < sizeof(p_table); i:= i+1) {
+    if(p_table[i] == pl_ptc) {
+      vl_user_found := true;
+    } 
+    else {
+      vl_table[j] := p_table[i];
+      j:=j+1;
+    }
+  }
+  p_table := vl_table;
+  if (not vl_user_found) { 
+    log("Warning: user was not in the MappingUserTable (f_delFromUserTable())");
+  }
+}
+
+// Sends the notification that was passed as a parameter to all users
+// who registered at the mapping component
+function f_sendNotificationToUsers(
+  template ASP_DIA_Mapping_Notification pl_notification) 
+runs on DIAMETER_Mapping_CT
+{
+  var integer i;
+  
+  for (i:=0; i < sizeof(v_MappingUserTable); i:=i+1) {
+    DIA_PCO.send(pl_notification) to v_MappingUserTable[i];
+  }
+}
+
+} // end module

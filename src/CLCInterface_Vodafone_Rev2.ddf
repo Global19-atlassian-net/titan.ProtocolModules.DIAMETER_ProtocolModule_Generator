@@ -1,0 +1,223 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               CLCInterface_Vodafone_Rev2.ddf
+//  Description:        DDF for CLC according to Intelligent Packet Core
+//                      Vodafone Diameter CCA Specification for the CLCI 
+//                      Version 2
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: CLCI
+// APPLICATION-REVISION: V2
+
+// Dependant applications
+
+
+// Vodafone CLCI Version 2
+// AVP: Context-Type (256) Vodafone (12645) 
+// 10
+type enumerated Context_Type {
+  PRIMARY                       (0),
+  SECONDARY                     (1)
+}
+
+// Vodafone CLCI Version 2
+// AVP: Quota-Consumption-Time (257) Vodafone (12645)
+// 10
+type AVP_Unsigned32 Quota_Consumption_Time;
+
+// Vodafone CLCI Version 2
+// AVP: Quota-Holding-Time (258) Vodafone (12645)
+// 10
+type AVP_Unsigned32 Quota_Holding_Time;
+
+// Vodafone CLCI Version 2
+// AVP: Time-Quota-Threshold (259) Vodafone (12645)
+// 10
+type AVP_Unsigned32 Time_Quota_Threshold; 
+
+// Vodafone CLCI Version 2
+// AVP: Radio-Access-Technology (260) Vodafone (12645)
+// 10
+type enumerated Radio_Access_Technology {
+  UTRAN                         (1),
+  GERAN                         (2),
+  WLAN                          (3),
+  GAN                           (4),
+  HSPA_Evolution                (5),
+  EUTRAN                        (6)
+}
+
+// Vodafone CLCI Version 2
+// AVP: Reporting-Reason (261) Vodafone (12645)
+// 10
+type enumerated Reporting_Reason {
+  THRESHOLD                     (0),
+  QHT                           (1),
+  FINAL                         (2),
+  QUOTA_EXHAUSTED               (3),
+  VALIDITY_TIME                 (4),
+  OTHER_QUOTA_TYPE              (5),
+  RATING_CONDITION_CHANGE       (6),
+  FORCED_REAUTHORISATION        (7)
+}
+
+// Vodafone CLCI Version 2
+// AVP: Rulebase-Id (262) Vodafone (12645)
+// 10
+type AVP_UTF8String Rulebase_Id
+
+// Vodafone CLCI Version 2
+// AVP: Time-Of-First-Usage (263) Vodafone (12645) 
+// 10
+type AVP_Time Time_Of_First_Usage;
+
+// Vodafone CLCI Version 2
+// AVP: Time-Of-Last-Usage (264) Vodafone (12645) 
+// 10
+type AVP_Time Time_Of_Last_Usage;
+
+// Vodafone CLCI Version 2
+// AVP: Trigger (265) Vodafone (12645)  
+// 10
+type AVP_Grouped Trigger;
+
+// Vodafone CLCI Version 2
+// AVP: Trigger-Type (266) Vodafone (12645) 
+// 10
+type enumerated Trigger_Type {
+  CHANGE_IN_SGSN_IP_ADDRESS     (1),
+  CHANGEINQOS_ANY               (2),
+  CHANGEINRAT                   (4),
+  CHANGEINLOCATION_MCC          (30), // CR_TR00017107
+  CHANGEINLOCATION_MNC          (31), // CR_TR00017107
+  CHANGEINLOCATION_LAC          (33),
+  CHANGEINLOCATION_CellId       (34)
+}
+
+// Vodafone CLCI Version 2
+// AVP: User-Location-Information (267) Vodafone (12645) 
+// 10
+type AVP_OctetString User_Location_Information;
+
+// Vodafone CLCI Version 2
+// AVP: Volume-Quota-Threshold (268) Vodafone (12645) 
+// 10
+type AVP_Unsigned32 Volume_Quota_Threshold;
+
+// Vodafone CLCI Version 2
+// AVP: Unit-Quota-Threshold (273) Vodafone (12645) 
+// 10
+type AVP_Unsigned32 Unit_Quota_Threshold;
+
+// Vodafone CLCI Version 2
+// AVP: Envelope (269) Vodafone (12645)  
+// 10
+type AVP_Grouped Envelope;
+
+// Vodafone CLCI Version 2
+// AVP: Envelope-Start-Time (270) Vodafone (12645) 
+// 10
+type AVP_Time Envelope_Start_Time;
+
+// Vodafone CLCI Version 2
+// AVP: Envelope-End-Time (271) Vodafone (12645) 
+// 10
+type AVP_Time Envelope_End_Time;
+
+// Vodafone CLCI Version 2
+// AVP: Envelope-Reporting (272) Vodafone (12645) 
+// 10
+type enumerated Envelope_Reporting
+{
+  DO_NOT_REPORT_ENVELOPES       (0),
+  REPORT_ENVELOPES              (1),
+  REPORT_ENVELOPES_WITH_VOLUME  (2)
+}
+
+// Vodafone CLCI Version 2
+// AVP: Time-Quota-Mechanism (274) Vodafone (12645)  
+// 10
+type AVP_Grouped Time_Quota_Mechanism;
+
+// Vodafone CLCI Version 2
+// AVP: Time-Quota-Type (275) Vodafone (12645)  
+// 10
+type enumerated Time_Quota_Type
+{
+  PARKING_METER                 (2),
+  CONTINUOUS_TIME_PERIOD        (3)
+}
+
+// Vodafone CLCI Version 2
+// AVP: Base-Time-Interval (276) Vodafone (12645) 
+// 10
+type AVP_Unsigned32 Base_Time_Interval;
+
+// Vodafone CLCI Version 2
+// AVP: Offline-Charging (277) Vodafone (12645) 
+// 10
+type AVP_Grouped Offline_Charging
+
+// Vodafone CLCI Version 2
+// AVP: Traffic-Redirected (278) Vodafone (12645)  
+// 10
+type AVP_Grouped Traffic_Redirected
+
+// Vodafone CLCI Version 2
+// AVP: User-Agent (279) Vodafone (12645)
+// 10
+type AVP_UTF8String User_Agent
+
+// Vodafone CLCI Version 2
+// AVP: User-URL (280) Vodafone (12645) 
+// 10
+type AVP_UTF8String User_URL
+
+// Vodafone CLCI Version 2
+// AVP: URL-Append (281) Vodafone (12645) 
+// 10
+type enumerated URL_Append
+{
+  DO_NOT_APPEND_URL             (0),
+  APPEND_URL                    (1)
+}
+
+
+

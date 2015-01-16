@@ -1,0 +1,70 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               a4Interface_ETSI_ES183066_211.ddf
+//  Description:        DDF for a4 Interface according to ETSI ES 183 066 V2.1.1
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: a4
+// APPLICATION-REVISION: 
+
+// AVP implementations according to: 
+// ETSI ES 183 066 V2.1.1
+
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+// ETSI ES 283 034 V2.2.0 - e4 Interface (e4Interface_ETSI_ES283034_220.ddf)
+// ETSI ES 183 020 V1.1.1 - NGN Network Accesses (NGN_NetworkAccesses_ETSI_ES183020_111.ddf)
+// ETSI ES 183 059-1 V2.1.1 - a2 Interface (a2Interface_ETSI_ES183059_1_211.ddf)
+
+
+type enumerated Command_Code 
+{
+  User_Data (306),
+  Push_Notification (309)
+}
+
+// ETSI ES 183 066 V2.1.1
+// AVP: Data-Operation-Indicator (420) ETSI (13019)
+// 7.3.1
+type enumerated Data_Operation_Indicator 
+{
+  UPDATE (0),
+  REMOVE (1) 
+}

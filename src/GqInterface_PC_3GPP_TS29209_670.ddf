@@ -1,0 +1,232 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               GqInterface_PC_3GPP_TS29209_670.ddf
+//  Description:        DDF for Gq according to 3GPP TS 29.209 V6.7.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: GQ
+// APPLICATION-REVISION: V670
+
+// AVP implementations according to: 
+// 3GPP TS 29.209 V6.7.0 - Policy control over Gq interface
+//
+//
+// Notes:
+// Type of enumerated AVP Media-Type is changed to AVP_Unsigned32 to
+// give the ability to contain OTHER (0xFFFFFFFF) value
+//
+
+// 3GPP TS 29.209 V6.7.0  6.3
+type enumerated Command_Code 
+{
+  Authorize_Authenticate (265),
+  Re_Auth                (258),
+  Session_Termination    (275),
+  Abort_Session          (274)  
+}
+
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Abort-Cause (500) 3GPP (10415)
+// 6.5.1
+type enumerated Abort_Cause
+{
+  BEARER_RELEASED               (0),
+  INSUFFICIENT_SERVER_RESOURCES (1),
+  INSUFFICIENT_BEARER_RESOURCES (2)
+}
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Access-Network-Charging-Address (501) 3GPP (10415)
+// 6.5.2
+type AVP_Address Access_Network_Charging_Address;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Access-Network-Charging-Identifier (502) 3GPP (10415)
+// 6.5.3
+type AVP_Grouped Access_Network_Charging_Identifier;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Access-Network-Charging-Identifier-Value (503) 3GPP (10415)
+// 6.5.4
+type AVP_OctetString Access_Network_Charging_Identifier_Value;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: AF-Application-Identifier (504) 3GPP (10415)
+// 6.5.5
+type AVP_OctetString AF_Application_Identifier;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: AF-Charging-Identifier (505) 3GPP (10415)
+// 6.5.6
+type AVP_OctetString AF_Charging_Identifier;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Authorization-Token (506) 3GPP (10415)
+// 6.5.7
+type AVP_OctetString Authorization_Token;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Flow-Description (507) 3GPP (10415)
+// 6.5.8
+type AVP_IPFilterRule Flow_Description;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Flow-Grouping (508) 3GPP (10415)
+// 6.5.9
+type AVP_Grouped Flow_Grouping;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Flow-Number (509) 3GPP (10415)
+// 6.5.10
+type AVP_Unsigned32 Flow_Number;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Flows (510) 3GPP (10415)
+// 6.5.11
+type AVP_Grouped Flows;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Flow-Status (511) 3GPP (10415)
+// 6.5.12
+type enumerated Flow_Status
+{
+  ENABLED_UPLINK      (0),
+  ENABLED_DOWNLINK    (1),
+  ENABLED             (2),
+  DISABLED            (3),
+  REMOVED             (4)
+}
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Flow-Usage (512) 3GPP (10415)
+// 6.5.13
+type enumerated Flow_Usage
+{
+  NO_INFORMATION      (0),
+  RTCP                (1)
+}
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Specific-Action (513) 3GPP (10415)
+// 6.5.14
+type enumerated Specific_Action
+{
+  SERVICE_INFORMATION_REQUEST           (0),
+  CHARGING_CORRELATION_EXCHANGE         (1),
+  INDICATION_OF_LOSS_OF_BEARER          (2),
+  INDICATION_OF_RECOVERY_OF_BEARER      (3),
+  INDICATION_OF_RELEASE_OF_BEARER       (4),
+  INDICATION_OF_ESTABLISHMENT_OF_BEARER (5)
+}
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Max-Requested-Bandwidth-DL (515) 3GPP (10415)
+// 6.5.16
+type AVP_Unsigned32 Max_Requested_Bandwidth_DL;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Max-Requested-Bandwidth-UL (516) 3GPP (10415)
+// 6.5.17
+type AVP_Unsigned32 Max_Requested_Bandwidth_UL;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Media-Component-Description (517) 3GPP (10415)
+// 6.5.18
+type AVP_Grouped Media_Component_Description;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Media-Component-Number (518) 3GPP (10415)
+// 6.5.19
+type AVP_Unsigned32 Media_Component_Number;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: Media-Sub-Component (519) 3GPP (10415)
+// 6.5.20
+type AVP_Grouped Media_Sub_Component;
+
+
+// WARNING: Unsigned32 used instead of enumerated type
+// 3GPP TS 29.209 V6.7.0
+// AVP: Media-Type (520) 3GPP (10415)
+// 6.5.21
+type AVP_Unsigned32 Media_Type;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: RR-Bandwidth (521) 3GPP (10415)
+// 6.5.22
+type AVP_Unsigned32 RR_Bandwidth;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: RS-Bandwidth (522) 3GPP (10415)
+// 6.5.23
+type AVP_Unsigned32 RS_Bandwidth;
+
+
+// 3GPP TS 29.209 V6.7.0
+// AVP: SIP-Forking-Indication (523) 3GPP (10415)
+// 6.5.24
+type enumerated SIP_Forking_Indication
+{
+   SINGLE_DIALOGUE   (0),
+   SEVERAL_DIALOGUES (1) 
+}

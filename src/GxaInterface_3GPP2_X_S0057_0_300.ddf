@@ -1,0 +1,75 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               GxaInterface_3GPP2_X_S0057_0_300.ddf
+//  Description:        DDF for Gxa according to 3GPP2 X.S0057-0 v3.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: Gxa
+// APPLICATION-REVISION: V 3.0
+
+// AVP implementations according to: 
+// 3GPP2 X.S0057-0 Version 3.0 E-UTRAN - eHRPD Connectivity and Interworking:
+// Core Network Aspects
+//
+//
+// Dependant applications
+// -
+
+
+type enumerated Command_Code 
+{
+  ThreeGPP2_Update_Location        (8388626),
+  ThreeGPP2_Cancel_Location        (8388627)
+}
+
+
+
+// 3GPP2 X.S0057-0 v3.0
+// AVP: 3GPP2-BSID (9010) 3GPP2 (5535)
+// 5.6.2.1.1
+type AVP_UTF8String 3GPP2_BSID;
+
+// 3GPP2 X.S0057-0 v3.0
+// AVP: 3GPP2-Cancellation-Type (56) 3GPP2 (5535)
+// 12.4.5.2.1
+type enumerated 3GPP2_Cancellation_Type
+{
+  HSGW_LOCATION_UPDATE_PROCEDURE (0)
+}

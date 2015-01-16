@@ -1,0 +1,326 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               RxInterface_PCC_3GPP_TS29214_c10.ddf
+//  Description:        DDF for Rx according to 3GPP TS 29.214 c.1.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: RX
+// APPLICATION-REVISION: VC_1_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.214 c.1.0 - Policy and Charging Control over Rx reference point
+//
+//
+// Dependant applications
+// 3GPP TS 29.229  - Cx and Dx interfaces based on the Diameter protocol
+// TS 183.017      - DIAMETER protocol for session based policy set-up information exchange between
+//                   the Application Function (AF) and the Service Policy Decision Function (SPDF)
+// IETF RFC 3588   - Diameter Base Protocol
+// IETF RFC 4005   - Diameter Network Address Server
+// IETF RFC 4006   - Diameter Credit Control Application
+//
+// Notes: 
+// Present application has its own vendor specific Diameter application id: 16777236
+//
+// Type of enumerated AVP Media-Type is changed to AVP_Unsigned32 to
+// give the ability to contain OTHER (0xFFFFFFFF) value
+//
+
+// 3GPP TS 29.214 a.7.0 5.6
+type enumerated Command_Code
+{
+  Authorize_Authenticate (265),
+  Re_Auth                (258),
+  Session_Termination    (275),
+  Abort_Session          (274)
+}
+
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Abort-Cause (500) 3GPP (10415)
+// 5.3.1
+type enumerated Abort_Cause
+{
+  BEARER_RELEASED               (0),
+  INSUFFICIENT_SERVER_RESOURCES (1),
+  INSUFFICIENT_BEARER_RESOURCES (2),
+  PS_TO_CS_HANDOVER             (3),
+  SPONSORED_DATA_CONNECTIVITY_DISALLOWED (4)
+}
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Access-Network-Charging-Address (501) 3GPP (10415)
+// 5.3.2
+type AVP_Address Access_Network_Charging_Address;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Access-Network-Charging-Identifier (502) 3GPP (10415)
+// 5.3.3
+type AVP_Grouped Access_Network_Charging_Identifier;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Access-Network-Charging-Identifier-Value (503) 3GPP (10415)
+// 5.3.4
+type AVP_OctetString Access_Network_Charging_Identifier_Value;
+
+
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: AF-Application-Identifier (504) 3GPP (10415)
+// 5.3.5
+type AVP_OctetString AF_Application_Identifier;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: AF-Charging-Identifier (505) 3GPP (10415)
+// 5.3.6
+type AVP_OctetString AF_Charging_Identifier;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Codec-Data  (524) 3GPP (10415)
+// 5.3.7
+type AVP_OctetString Codec_Data;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Flow-Description (507) 3GPP (10415)
+// 5.3.8
+type AVP_IPFilterRule Flow_Description;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Flow-Number (509) 3GPP (10415)
+// 5.3.9
+type AVP_Unsigned32 Flow_Number;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Flows (510) 3GPP (10415)
+// 5.3.10
+type AVP_Grouped Flows;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Flow-Status (511) 3GPP (10415)
+// 5.3.11
+type enumerated Flow_Status
+{
+  ENABLED_UPLINK      (0),
+  ENABLED_DOWNLINK    (1),
+  ENABLED             (2),
+  DISABLED            (3),
+  REMOVED             (4)
+}
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Flow-Usage (512) 3GPP (10415)
+// 5.3.12
+type enumerated Flow_Usage
+{
+  NO_INFORMATION      (0),
+  RTCP                (1),
+  AF_SIGNALLING       (2)
+}
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Specific-Action (513) 3GPP (10415)
+// 5.3.13
+type enumerated Specific_Action
+{
+  CHARGING_CORRELATION_EXCHANGE         (1),
+  INDICATION_OF_LOSS_OF_BEARER          (2),
+  INDICATION_OF_RECOVERY_OF_BEARER      (3),
+  INDICATION_OF_RELEASE_OF_BEARER       (4),
+  INDICATION_OF_ESTABLISHMENT_OF_BEARER (5),
+  IP_CAN_CHANGE                         (6),
+  INDICATION_OF_OUT_OF_CREDIT           (7),
+  INDICATION_OF_SUCCESSFUL_RESOURCES_ALLOCATION (8),
+  INDICATION_OF_FAILED_RESOURCES_ALLOCATION (9),
+  INDICATION_OF_LIMITED_PCC_DEPLOYMENT (10),
+  USAGE_REPORT                         (11)
+}
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Max-Requested-Bandwidth-DL (515) 3GPP (10415)
+// 5.3.14
+type AVP_Unsigned32 Max_Requested_Bandwidth_DL;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Max-Requested-Bandwidth-UL (516) 3GPP (10415)
+// 5.3.15
+type AVP_Unsigned32 Max_Requested_Bandwidth_UL;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Media-Component-Description (517) 3GPP (10415)
+// 5.3.16
+type AVP_Grouped Media_Component_Description;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Media-Component-Number (518) 3GPP (10415)
+// 5.3.17
+type AVP_Unsigned32 Media_Component_Number;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Media-Sub-Component (519) 3GPP (10415)
+// 5.3.18
+type AVP_Grouped Media_Sub_Component;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Media-Type (520) 3GPP (10415)
+// 5.3.19
+type AVP_Unsigned32 Media_Type;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: RR-Bandwidth (521) 3GPP (10415)
+// 5.3.20
+type AVP_Unsigned32 RR_Bandwidth;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: RS-Bandwidth (522) 3GPP (10415)
+// 5.3.21
+type AVP_Unsigned32 RS_Bandwidth;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: SIP-Forking-Indication (523) 3GPP (10415)
+// 5.3.22
+type enumerated SIP_Forking_Indication
+{
+   SINGLE_DIALOGUE   (0),
+   SEVERAL_DIALOGUES (1) 
+}
+
+// 3GPP TS 29.214 a.7.0
+// AVP:  Service-URN (525) 3GPP (10415)
+// 5.3.23
+type AVP_OctetString Service_URN;
+
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Acceptable-Service-Info (526) 3GPP (10415)
+// 5.3.24
+type AVP_Grouped Acceptable_Service_Info;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Service-Info-Status (527) 3GPP (10415)
+// 5.3.25
+type enumerated Service_Info_Status 
+{
+  FINAL_SERVICE_INFORMATION       (0),	
+  PRELIMINARY_SERVICE_INFORMATION (1)
+}
+
+// 3GPP TS 29.214 a.7.0
+// AVP: AF-Signalling-Protocol (529) 3GPP (10415)
+// 5.3.26
+type enumerated AF_Signalling_Protocol 
+{
+  NO_INFORMATION      (0),	
+  SIP (1)
+}
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Sponsored-Connectivity-Data (530) 3GPP (10415)
+// 5.3.27
+type AVP_Grouped Sponsored_Connectivity_Data;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Sponsor-Identity (531) 3GPP (10415)
+// 5.3.28
+type AVP_UTF8String Sponsor_Identity;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Application-Service-Provider-Identity (532) 3GPP (10415)
+// 5.3.29
+type AVP_UTF8String Application_Service_Provider_Identity;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: MPS-Identifier (528) 3GPP (10415)
+// 5.3.30
+type AVP_OctetString MPS_Identifier;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Min-Requested-Bandwidth-DL (534) 3GPP (10415)
+// 5.3.31
+type AVP_Unsigned32 Min_Requested_Bandwidth_DL;
+
+// 3GPP TS 29.214 a.7.0
+// AVP: Min-Requested-Bandwidth-UL (535) 3GPP (10415)
+// 5.3.32
+type AVP_Unsigned32 Min_Requested_Bandwidth_UL;
+
+// 3GPP TS 29.214 c.1.0
+// AVP: Required-Access-Info (536) 3GPP (10415)
+// 5.3.34
+type enumerated Required_Access_Info 
+{
+  USER_LOCATION      (0),	
+  MS_TIME_ZONE (1)
+}
+
+// 3GPP TS 29.214 c.1.0
+// AVP: Rx-Request-Type (533) 3GPP (10415)
+// 5.3.31
+type enumerated Rx_Request_Type 
+{
+  INITIAL_REQUEST      (0),	
+  UPDATE_REQUEST (1)
+}
+
+// 3GPP TS 29.214 c.1.0
+// AVP: Ip-Domain-Id (537) 3GPP (10415)
+// 5.3.35
+type AVP_OctetString Ip_Domain_Id;

@@ -1,0 +1,84 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               Vodafone_Specific.ddf
+//  Description:        Vodafone specific AVPs
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: V
+// APPLICATION-REVISION:
+
+
+// AVP: Bearer-Authorization-Decision (500) Vodafone (12645)  
+type enumerated Bearer_Authorization_Decision
+{
+  BEARER_AUTHORIZED  (0),
+  INVALID_BINDING    (1),
+  INVALID_UPDATE     (2)
+}
+
+// AVP: Maximum-Authorized-Qos (501) Vodafone (12645)  
+type AVP_Grouped Maximum_Authorized_Qos
+
+
+// AVP: Maximum-Qos-Class (502) Vodafone (12645)  
+type enumerated Maximum_Qos_Class
+{
+  TRAFFIC_CLASS_A  (0),
+  TRAFFIC_CLASS_B  (1),
+  TRAFFIC_CLASS_C  (2),
+  TRAFFIC_CLASS_D  (3),
+  TRAFFIC_CLASS_E  (4),
+  TRAFFIC_CLASS_F  (5)
+}
+
+// AVP: Policy-Service-Status (503) Vodafone (12645)  
+type enumerated Policy_Service_Status
+{
+  AVAILABLE_NO_AF_SESSIONS      (0),
+  AVAILABLE_ACTIVE_AF_SESSIONS  (1),
+  UE_NOT_SERVED_HERE            (2)
+}
+
+// AVP: Remove-After-Timer-DL (504) Vodafone (12645)
+type AVP_Unsigned32 Remove_After_Timer_DL;
+
+// AVP: Remove-After-Timer-UL (505) Vodafone (12645)
+type AVP_Unsigned32 Remove_After_Timer_UL;
+

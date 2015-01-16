@@ -1,0 +1,1707 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               ChargingApplications_3GPP_TS32299_9110.ddf
+//  Description:        DDF for Diameter Charging Application 3GPP TS 32.299 V9.11.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: DCA
+// APPLICATION-REVISION: V9_11_0
+
+// AVP implementations according to: 
+// 3GPP TS 32.299 V9.11.0 - Telecommunication management; Charging management;
+//
+//
+// Dependant applications
+// 3GPP TS 29.229  - Cx and Dx interfaces based on the Diameter protocol
+// IETF RFC 3588   - Diameter Base Protocol
+// RFC 4006 - Diameter Credit Control Application
+//
+// Notes:
+// 
+
+
+// 3GPP TS 32.299 V9.11.0 
+type enumerated Command_Code {  
+  Accounting     (271),
+  Re_Auth        (258)
+}
+
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Access-Network-Information (1263) 3GPP (10415)
+// 7.2.1
+type AVP_OctetString Access_Network_Information;	 	
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Account-Expiration  (2309) 3GPP (10415)
+// 7.2.2
+type AVP_Time Account_Expiration;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Accumulated-Cost (2052) 3GPP (10415)
+// 7.2.3
+type AVP_Grouped Accumulated_Cost;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Adaptations (1217) 3GPP (10415)
+// 7.2.4
+type enumerated Adaptations
+{
+  YES (0),
+  NO  (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Additional-Content-Information (1207) 3GPP (10415)
+// 7.2.5
+type AVP_Grouped Additional_Content_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Additional-Type-Information (1205) 3GPP (10415)
+// 7.2.6
+type AVP_UTF8String Additional_Type_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Address-Data (897) 3GPP (10415)
+// 7.2.7
+type AVP_UTF8String Address_Data;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Address-Domain (898) 3GPP (10415)
+// 7.2.8
+type AVP_Grouped Address_Domain;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Address-Type (899) 3GPP (10415)
+// 7.2.9
+type enumerated Address_Type
+{
+  E_MAIL_ADDRESS         (0),
+  MSISDN                 (1),
+  IPV4_ADDRESS           (2),
+  IPV6_ADDRESS           (3),
+  NUMERIC_SHORTCODE      (4),
+  ALPHANUMERIC_SHORTCODE (5),
+  OTHER                  (6),
+  IMSI                   (7)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Addressee-Type (1208) 3GPP (10415)
+// 7.2.10
+type enumerated Addressee_Type
+{
+  TO  (0),
+  CC  (1),
+  BCC (2)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AF-Correlation-Information (1276) 3GPP (10415)
+// 7.2.11
+type AVP_Grouped AF_Correlation_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Alternate-Charged-Party-Address (1280) 3GPP (10415)
+// 7.2.12
+type AVP_UTF8String Alternate_Charged_Party_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Cost-Information (2053) 3GPP (10415)
+// 7.2.13
+type AVP_Grouped AoC_Cost_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Format (2310) 3GPP (10415)
+// 7.2.14
+type enumerated AoC_Format
+{
+  MONETARY  (0),
+  NON_MONETARY  (1),
+  CAI (2)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Information (2054) 3GPP (10415)
+// 7.2.15
+type AVP_Grouped AoC_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Request-Type (2055) 3GPP (10415)
+// 7.2.16
+type enumerated AoC_Request_Type
+{
+  AoC_NOT_REQUESTED     (0),
+  AoC_FULL              (1),
+  AoC_COST_ONLY         (2),
+  AoC_TARIFF_ONLY       (3)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Service (2311) 3GPP (10415)
+// 7.2.17
+type AVP_Grouped AoC_Service;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Service-Obligatory-Type (2312) 3GPP (10415)
+// 7.2.18
+type enumerated AoC_Service_Obligatory_Type
+{
+  NON_BINDING   (0),
+  BINDING       (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Service-Type (2313) 3GPP (10415)
+// 7.2.19
+type enumerated AoC_Service_Type
+{
+  NONE   (0),
+  AOC_S  (1),
+  AOC_D  (2),
+  AOC_E  (3)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: AoC-Subscription-Information (2314) 3GPP (10415)
+// 7.2.20
+type AVP_Grouped AoC_Subscription_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Applic-ID (1218) 3GPP (10415)
+// 7.2.21
+type AVP_UTF8String Applic_ID;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Application-provided-Called-Party-Address (837) 3GPP (10415)
+// 7.2.22
+type AVP_UTF8String Application_provided_Called_Party_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Application-Server (836) 3GPP (10415)
+// 7.2.23
+type AVP_UTF8String Application_Server;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Application-Server-Information (850) 3GPP (10415)
+// 7.2.24
+type AVP_Grouped Application_Server_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Associated-Party-Address (2035) 3GPP (10415)
+// 7.2.25
+type AVP_UTF8String Associated_Party_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Associated-URI (856) 3GPP (10415)
+// 7.2.26
+type AVP_UTF8String Associated_URI;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Authorised-QoS (849) 3GPP (10415)
+// 7.2.27
+type AVP_UTF8String Authorised_QoS;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Aux-Applic-Info (1219) 3GPP (10415)
+// 7.2.28
+type AVP_UTF8String Aux_Applic_Info;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Base-Time-Interval (1265) 3GPP (10415)
+// 7.2.29
+type AVP_Unsigned32 Base_Time_Interval;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Bearer-Service (854) 3GPP (10415)
+// 7.2.30
+type AVP_OctetString Bearer_Service;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Called-Asserted-Identity (1250) 3GPP (10415)
+// 7.2.31
+type AVP_UTF8String Called_Asserted_Identity;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Called-Party-Address (832) 3GPP (10415)
+// 7.2.32
+type AVP_UTF8String Called_Party_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Calling-Party-Address (831) 3GPP (10415)
+// 7.2.33
+type AVP_UTF8String Calling_Party_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Carrier-Select-Routing-Information (2023) 3GPP (10415)
+// 7.2.34
+type AVP_UTF8String Carrier_Select_Routing_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Cause-Code (861) 3GPP (10415)
+// 7.2.35
+type AVP_Integer32 Cause_Code;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: CG-Address (846) 3GPP (10415)
+// 7.2.36
+type AVP_Address CG_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Change-Condition  (2037) 3GPP (10415)
+// 7.2.37
+type AVP_Integer32 Change_Condition;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Change-Time  (2038) 3GPP (10415)
+// 7.2.38
+type AVP_Time Change_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Charged-Party (857) 3GPP (10415)
+// 7.2.39
+type AVP_UTF8String Charged_Party;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Charging-Characteristics-Selection-Mode (2066) 3GPP (10415)
+// 7.2.39A
+type enumerated Charging_Characteristics_Selection_Mode
+{
+  SERVING_NODE_SUPPLIED (0),
+  SUBSCRIPTION_SPECIFIC (1),
+  APN_SPECIFIC (2),
+  HOME_DEFAULT (3),
+  ROAMING_DEFAULT (4),
+  VISITING_DEFAULT (5)
+}
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Class-Identifier (1214) 3GPP (10415)
+// 7.2.40
+type enumerated Class_Identifier
+{
+  PERSONAL      (0),
+  ADVERTISMENT  (1),
+  INFORMATIONAL (2),
+  AUTO          (3)
+}
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Client-Address (2018) 3GPP (10415)
+// 7.2.41
+type AVP_Address Client_Address;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Content-Class (1220) 3GPP (10415)
+// 7.2.42
+type enumerated Content_Class
+{
+  TEXT          (0),
+  IMAGE_BASIC   (1),
+  IMAGE_RICH    (2),
+  VIDEO_BASIC   (3),
+  VIDEO_RICH    (4),
+  MEGAPIXEL     (5),
+  CONTENT_BASIC (6),
+  CONTENT_RICH  (7)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Content-Disposition (828) 3GPP (10415)
+// 7.2.43
+type AVP_UTF8String Content_Disposition;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Content-Length (827) 3GPP (10415)
+// 7.2.44
+type AVP_Unsigned32 Content_Length;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Content-Size (1206) 3GPP (10415)
+// 7.2.45
+type AVP_Unsigned32 Content_Size;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Content-Type (826) 3GPP (10415)
+// 7.2.46
+type AVP_UTF8String Content_Type;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: CSG-Access-Mode (2317) 3GPP (10415)
+// 7.2.46A
+type enumerated CSG_Access_Mode
+{
+  CLOSED_MODE (0),
+  HYBRID_MODE (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: CSG-Membership-Indication (2318) 3GPP (10415)
+// 7.2.46B
+type enumerated CSG_Membership_Indication
+{
+  NOT_CSG_MEMBER (0),
+  CSG_MEMBER (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Current-Tariff (2056) 3GPP (10415)
+// 7.2.47
+type AVP_Grouped Current_Tariff;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: CUG-Information (2304) 3GPP (10415)
+// 7.2.48
+type AVP_OctetString CUG_Information;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Data-Coding-Scheme (2001) 3GPP (10415)
+// 7.2.49
+type AVP_Integer32 Data_Coding_Scheme;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: DCD-Information (2115) 3GPP (10415)
+// 7.2.50
+type AVP_Grouped DCD_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Deferred-Location-Event-Type (1230) 3GPP (10415)
+// 7.2.51
+type AVP_UTF8String Deferred_Location_Event_Type;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Delivery-Report-Requested (1216) 3GPP (10415)
+// 7.2.52
+type enumerated Delivery_Report_Requested
+{
+  NO  (0),
+  YES (1)
+}
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Destination-Interface (2002) 3GPP (10415)
+// 7.2.53
+type AVP_Grouped Destination_Interface;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Diagnostics (2039) 3GPP (10415)
+// 7.2.54
+type AVP_Integer32 Diagnostics;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Domain-Name (1200) 3GPP (10415)
+// 7.2.55
+type AVP_UTF8String Domain_Name;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: DRM-Content (1221) 3GPP (10415)
+// 7.2.56
+type enumerated DRM_Content
+{
+  NO  (0),
+  YES (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Dynamic-Address-Flag (2051) 3GPP (10415)
+// 7.2.57
+type enumerated Dynamic_Address_Flag
+{
+  STATIC    (0),
+  DYNAMIC   (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Early-Media-Description (1272) 3GPP (10415)
+// 7.2.58
+type AVP_Grouped Early_Media_Description;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Envelope (1266) 3GPP (10415)
+// 7.2.59
+type AVP_Grouped Envelope;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Envelope-End-Time (1267) 3GPP (10415)
+// 7.2.60
+type AVP_Time Envelope_End_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Envelope-Reporting (1268) 3GPP (10415)
+// 7.2.61
+type enumerated Envelope_Reporting
+{
+  DO_NOT_REPORT_ENVELOPES                 (0),
+  REPORT_ENVELOPES                        (1),
+  REPORT_ENVELOPES_WITH_VOLUME            (2),
+  REPORT_ENVELOPES_WITH_EVENTS            (3),
+  REPORT_ENVELOPES_WITH_VOLUME_AND_EVENTS (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Envelope-Start-Time (1269) 3GPP (10415)
+// 7.2.62
+type AVP_Time Envelope_Start_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Event (825) 3GPP (10415)
+// 7.2.63
+type AVP_UTF8String Event;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Event-Charging-TimeStamp (1258) 3GPP (10415)
+// 7.2.64
+type AVP_Time Event_Charging_TimeStamp;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Event-Type (823) 3GPP (10415)
+// 7.2.65
+type AVP_Grouped Event_Type;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Expires (888) 3GPP (10415)
+// 7.2.66
+type AVP_Unsigned32 Expires;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: File-Repair-Supported (1224) 3GPP (10415)
+// 7.2.67
+type enumerated File_Repair_Supported
+{
+  SUPPORTED     (1),
+  NOT_SUPPORTED (2)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: GGSN-Address (847) 3GPP (10415)
+// 7.2.68
+type AVP_Address GGSN_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: IM-Information (2110) 3GPP (10415)
+// 7.2.69
+type AVP_Grouped IM_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Incremental-Cost (2062) 3GPP (10415)
+// 7.2.70
+type AVP_Grouped Incremental_Cost;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Interface-Id (2003) 3GPP (10415)
+// 7.2.71
+type AVP_UTF8String Interface_Id;		
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Interface-Port (2004) 3GPP (10415)
+// 7.2.72
+type AVP_UTF8String Interface_Port;		
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Interface-Text (2005) 3GPP (10415)
+// 7.2.73
+type AVP_UTF8String Interface_Text;		
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Interface-Type (2006) 3GPP (10415)
+// 7.2.74
+type enumerated Interface_Type;	
+{
+  UNKNOWN                 (0),
+  MOBILE_ORIGINATING      (1),
+  MOBILE_TERMINATING      (2),
+  APPLICATION_ORIGINATING (3),
+  APPLICATION_TERMINATION (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: IMS-Charging-Identifier (841) 3GPP (10415)
+// 7.2.75
+type AVP_UTF8String IMS_Charging_Identifier;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: IMS-Communication-Service-Identifier (1281) 3GPP (10415)
+// 7.2.76
+type AVP_UTF8String IMS_Communication_Service_Identifier;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: IMS-Information (876) 3GPP (10415)
+// 7.2.77
+type AVP_Grouped IMS_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: IMSI-Unauthenticated-Flag (2308) 3GPP (10415)
+// 7.2.78
+type enumerated IMSI_Unauthenticated_Flag;	
+{
+  AUTHENTICATED    (0),
+  UNAUTHENTICATED  (1)
+}
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Incoming-Trunk-Group-Id (852) 3GPP (10415)
+// 7.2.79
+type AVP_UTF8String Incoming_Trunk_Group_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Inter-Operator-Identifier (838) 3GPP (10415)
+// 7.2.80
+type AVP_Grouped Inter_Operator_Identifier;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-APN (1231) 3GPP (10415)
+// 7.2.81
+type AVP_UTF8String LCS_APN;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Client-Dialed-By-MS (1233) 3GPP (10415)
+// 7.2.82
+type AVP_UTF8String LCS_Client_Dialed_By_MS;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Client-External-ID (1234) 3GPP (10415)
+// 7.2.83
+type AVP_UTF8String LCS_Client_External_ID;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Client-Id (1232) 3GPP (10415)
+// 7.2.84
+type AVP_Grouped LCS_Client_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Client-Name (1235) 3GPP (10415)
+// 7.2.85
+type AVP_Grouped LCS_Client_Name;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Client-Type (1241) 3GPP (10415)
+// 7.2.86
+type enumerated LCS_Client_Type
+{
+  EMERGENCY_SERVICES        (0),
+  VALUE_ADDED_SERVICES      (1),
+  PLMN_OPERATOR_SERVICES    (2),
+  LAWFUL_INTERCEPT_SERVICES (3)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Data-Coding-Scheme (1236) 3GPP (10415)
+// 7.2.87
+type AVP_UTF8String LCS_Data_Coding_Scheme;		
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Format-Indicator (1237) 3GPP (10415)
+// 7.2.88
+type enumerated LCS_Format_Indicator
+{
+  LOGICAL_NAME   (0),
+  EMAIL_ADDRESS  (1),
+  MSISDN         (2),
+  URL		 (3),
+  SIP_URL        (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Information (878) 3GPP (10415)
+// 7.2.89
+type AVP_Grouped LCS_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Name-String (1238) 3GPP (10415)
+// 7.2.90
+type AVP_UTF8String LCS_Name_String;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Requestor-Id (1239) 3GPP (10415)
+// 7.2.91
+type AVP_Grouped LCS_Requestor_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: LCS-Requestor-Id-String (1240) 3GPP (10415)
+// 7.2.92
+type AVP_UTF8String LCS_Requestor_Id_String;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Local-Sequence-Number (2063) 3GPP (10415)
+// 7.2.93
+type AVP_Unsigned32 Local_Sequence_Number;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Location-Estimate-Type (1243) 3GPP (10415)
+// 7.2.95
+type enumerated Location_Estimate_Type 
+{
+  CURRENT_LOCATION            (0),
+  CURRENT_LAST_KNOWN_LOCATION (1),
+  INITIAL_LOCATION            (2),
+  ACTIVATE_DEFERRED_LOCATION  (3),
+  CANCEL_DEFERRED_LOCATION    (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Location-Type (1244) 3GPP (10415)
+// 7.2.96
+type AVP_Grouped Location_Type;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Low-Balance-Indication (2020) 3GPP (10415)
+// 7.2.97
+type enumerated Low_Balance_Indication
+{
+  NOT_APPLICABLE (0),
+  YES            (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MBMS-GW-Address (2307) 3GPP (10415)
+// 7.2.98
+type AVP_Address MBMS_GW_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MBMS-Information (880) 3GPP (10415)
+// 7.2.99
+type AVP_Grouped MBMS_Information;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MBMS-User-Service-Type (1225) 3GPP (10415)
+// 7.2.100
+type enumerated MBMS_User_Service_Type
+{
+  DOWNLOAD  (1),
+  STREAMING (2)
+}		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Media-Initiator-Flag (882) 3GPP (10415)
+// 7.2.101
+type enumerated Media_Initiator_Flag
+{
+  CALLED_PARTY   (0),
+  CALLING_PARTY  (1),
+  UNKNOWN        (2)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Media-Initiator-Party (1288) 3GPP (10415)
+// 7.2.102
+type AVP_UTF8String Media_Initiator_Party;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Message-Body (889) 3GPP (10415)
+// 7.2.103
+type AVP_Grouped Message_Body;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Message-Class (1213) 3GPP (10415)
+// 7.2.104
+type AVP_Grouped Message_Class;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Message-ID (1210) 3GPP (10415)
+// 7.2.105
+type AVP_UTF8String Message_ID;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Message-Size (1212) 3GPP (10415)
+// 7.2.106
+type AVP_Unsigned32 Message_Size;	 	
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Message-Type (1211) 3GPP (10415)
+// 7.2.107
+type enumerated Message_Type
+{
+  M_SEMD_REQ          (1),
+  M_SEMD_CONF         (2),
+  M_NOTIFICATION_IND  (3),
+  M_NOTIFYRESP_IND    (4),
+  M_RETRIEVE_CONF     (5),
+  M_ACKNOWLEDGE_IND   (6),
+  M_DELIVERY_IND      (7),
+  M_READ_REC_IND      (8),
+  M_READ_ORIG_IND     (9),
+  M_FORWARD_REQ      (10),
+  M_FORWARD_CONF     (11),
+  M_MBOX_STORE_CONF  (12),
+  M_MBOX_VIEW_CONF   (13),
+  M_MBOX_UPLOAD_CONF (14),
+  M_MBOX_DELETE_CONF (15)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MM-Content-Type (1203) 3GPP (10415)
+// 7.2.108
+type AVP_Grouped MM_Content_Type;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MMBox-Storage-Requested (1248) 3GPP (10415)
+// 7.2.109
+type enumerated MMBox_Storage_Requested
+{
+  NO  (0),
+  YES (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MMS-Information (877) 3GPP (10415)
+// 7.2.110
+type AVP_Grouped MMS_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: MMTel-Information (2030) 3GPP (10415)
+// 7.2.111
+type AVP_Grouped MMTel_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Next-Tariff (2057) 3GPP (10415)
+// 7.2.112
+type AVP_Grouped Next_Tariff;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Node-Functionality (862) 3GPP (10415)
+// 7.2.113
+type enumerated Node_Functionality
+{
+  S_CSCF  (0),
+  P_CSCF  (1),
+  I_CSCF  (2),
+  MRFC    (3),
+  MGCF    (4),
+  BGCF    (5),
+  AS      (6),
+  IBCF    (7),
+  S_GW    (8),
+  P_GW    (9),
+  HSGW    (10)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Node-Id (2064) 3GPP (10415)
+// 7.2.114
+type AVP_UTF8String Node_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Number-Of-Diversions (2034) 3GPP (10415)
+// 7.2.115
+type AVP_Unsigned32 Number_Of_Diversions;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Number-of-Messages-Sent (2019) 3GPP (10415)
+// 7.2.116
+type AVP_Unsigned32 Number_of_Messages_Sent;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Number-Of-Participants (885) 3GPP (10415)
+// 7.2.117
+type AVP_Unsigned32 Number_Of_Participants;
+			
+// 3GPP TS 32.299 V9.11.0
+// AVP: Number-Of-Received-Talk-Bursts (1282) 3GPP (10415)
+// 7.2.118
+type AVP_Unsigned32 Number_Of_Received_Talk_Bursts;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Number-Of-Talk-Bursts (1283) 3GPP (10415)
+// 7.2.119
+type AVP_Unsigned32 Number_Of_Talk_Bursts;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Number-Portability-Routing-Information (2024) 3GPP (10415)
+// 7.2.120
+type AVP_UTF8String Number_Portability_Routing_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Offline-Charging (1278) 3GPP (10415)
+// 7.2.121
+type AVP_Grouped Offline_Charging;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Online-Charging-Flag (2303) 3GPP (10415)
+// 7.2.122
+type enumerated Online_Charging_Flag
+{
+  ECF_ADDRESS_NOT_PROVIDED  (0),
+  ECF_ADDRESS_PROVIDED  (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Originating-IOI (839) 3GPP (10415)
+// 7.2.123
+type AVP_UTF8String Originating_IOI;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Originator (864) 3GPP (10415)
+// 7.2.124
+type enumerated Originator
+{
+  CALLING_PARTY	(0),
+  CALLED_PARTY 	(1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Originator-Address (886) 3GPP (10415)
+// 7.2.125
+type AVP_Grouped Originator_Address;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Originator-Interface (2009) 3GPP (10415)
+// 7.2.126
+type AVP_Grouped Originator_Interface;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Originator-Received-Address (2027) 3GPP (10415)
+// 7.2.127 
+type AVP_Grouped Originator_Received_Address;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Originating-SCCP-Address (2008) 3GPP (10415)
+// 7.2.128
+type AVP_Address Originating_SCCP_Address;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Outgoing-Session-Id (2320) 3GPP (10415)
+// 7.2.128A
+type AVP_UTF8String Outgoing_Session_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Outgoing-Trunk-Group-Id (853) 3GPP (10415)
+// 7.2.129
+type AVP_UTF8String Outgoing_Trunk_Group_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Participants-Involved (887) 3GPP (10415)
+// 7.2.130
+type AVP_UTF8String Participants_Involved;	
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Participant-Group (1260) 3GPP (10415)
+// 7.2.131
+type AVP_Grouped Participant_Group;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Participant-Access-Priority (1259) 3GPP (10415)
+// 7.2.132
+type enumerated Participant_Access_Priority
+{
+  PRE_EMPTIVE_PRIORITY (1),
+  HIGH_PRIORITY        (2),
+  NORMAL_PRIORITY      (3),
+  LOW_PRIORITY         (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Participant-Action-Type (2049) 3GPP (10415)
+// 7.2.133
+type enumerated Participant_Action_Type
+{
+  CREATE_CONF       (0),
+  JOIN_CONF         (1),
+  INVITE_INTO_CONF  (2),
+  QUIT_CONF         (3)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PDG-Address (895) 3GPP (10415)
+// 7.2.134
+type AVP_Address PDG_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PDG-Charging-Id (896) 3GPP (10415)
+// 7.2.135
+type AVP_Unsigned32 PDG_Charging_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PDP-Address (1227) 3GPP (10415)
+// 7.2.137
+type AVP_Address PDP_Address;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PDP-Context-Type (1247) 3GPP (10415)
+// 7.2.138
+type enumerated PDP_Context_Type
+{
+  PRIMARY   (0),
+  SECONDARY (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Change-Conditions (1261) 3GPP (10415)
+// 7.2.139
+type enumerated PoC_Change_Conditions
+{
+  SERVICE_CHANGE                 (0),
+  VOLUME_LIMIT                   (1),
+  TIME_LIMIT                     (2),
+  NUMBER_OF_TALK_BURST_LIMIT     (3),
+  NUMBER_OF_ACTIVE_PARTICIPANTS  (4),
+  TARIFF_TIME                    (5)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Change-Time (1262) 3GPP (10415)
+// 7.2.140
+type AVP_Time PoC_Change_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Controlling-Address (858) 3GPP (10415)
+// 7.2.141
+type AVP_UTF8String PoC_Controlling_Address;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Event-Type (2025) 3GPP (10415)
+// 7.2.142
+type enumerated PoC_Event_Type
+{
+  NORMAL                         (0),
+  INSTANT_PERSONAL_ALERT_EVENT   (1),
+  POC_GROUP_ADVERTISEMENT_EVENT  (2),
+  EARLY_SESSION_SETTING_UP_EVENT (3),
+  POC_TALK_BURST                 (4)
+}
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Group-Name (859) 3GPP (10415)
+// 7.2.143
+type AVP_UTF8String PoC_Group_Name;	
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Information (879) 3GPP (10415)
+// 7.2.144
+type AVP_Grouped PoC_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Server-Role	 (883) 3GPP (10415)
+// 7.2.145
+type enumerated PoC_Server_Role	
+{
+  PARTICIPATING_POC_SERVER  (0),
+  CONTROLLING_POC_SERVER    (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Session-Id (1229) 3GPP (10415)
+// 7.2.146
+type AVP_UTF8String PoC_Session_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Session-Initiation-Type (1277) 3GPP (10415)
+// 7.2.147
+type enumerated PoC_Session_Initiation_Type
+{
+  PRE_ESTABLISHED (0),
+  ON_DEMAND       (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-Session-Type (884) 3GPP (10415)
+// 7.2.148
+type enumerated PoC_Session_Type
+{
+  ONE_TO_ONE_POC_SESSION         (0),
+  CHAT_POC_GROUP_SESSION         (1),
+  PRE_ARRANGED_POC_GROUP_SESSION (2),
+  AD_HOC_POC_GROUP_SESSION       (3)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-User-Role (1252) 3GPP (10415)
+// 7.2.149
+type AVP_Grouped PoC_User_Role;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-User-Role-IDs (1253) 3GPP (10415)
+// 7.2.150
+type AVP_UTF8String PoC_User_Role_IDs;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PoC-User-Role-info-Units (1254) 3GPP (10415)
+// 7.2.151
+type enumerated PoC_User_Role_info_Units
+{
+  MODERATOR           (1),
+  DISPATCHER          (2),
+  SESSION_OWNER       (3),
+  SESSION_PARTICIPANT (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Positioning-Data (1245) 3GPP (10415)
+// 7.2.152
+type AVP_UTF8String Positioning_Data;		 	
+
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Preferred-AoC-Currency (2315) 3GPP (10415)
+// 7.2.153
+type AVP_Unsigned32 Preferred_AoC_Currency;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Priority (1209) 3GPP (10415)
+// 7.2.154
+type enumerated Priority
+{
+  LOW    (0),
+  NORMAL (1),
+  HIGH   (2)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PS-Append-Free-Format-Data (867) 3GPP (10415)
+// 7.2.155
+type enumerated PS_Append_Free_Format_Data
+{
+  APPEND    (0),
+  OVERWRITE (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PS-Free-Format-Data (866) 3GPP (10415)
+// 7.2.156
+type AVP_OctetString PS_Free_Format_Data;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PS-Furnish-Charging-Information (865) 3GPP (10415)
+// 7.2.157
+type AVP_Grouped PS_Furnish_Charging_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PS-Information (874) 3GPP (10415)
+// 7.2.158
+type AVP_Grouped PS_Information;
+				
+// 3GPP TS 32.299 V9.11.0
+// AVP: Quota-Consumption-Time (881) 3GPP (10415)
+// 7.2.159
+type AVP_Unsigned32 Quota_Consumption_Time;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Quota-Holding-Time (871) 3GPP (10415)
+// 7.2.160
+type AVP_Unsigned32 Quota_Holding_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Rate-Element (2058) 3GPP (10415)
+// 7.2.161
+type AVP_Grouped Rate_Element;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Read-Reply-Report-Requested (1222) 3GPP (10415)
+// 7.2.162
+type enumerated Read_Reply_Report_Requested
+{
+  NO  (0),
+  YES (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Reason-Code (2316) 3GPP (10415)
+// 7.2.163
+type enumerated Reason_Code
+{
+  UNKNOWN                      (0),
+  USAGE                        (1),
+  COMMUNICATION_ATTEMPT_CHARGE (2),
+  SETUP_CHARGE                 (3),
+  ADD_ON_CHARGE                (4)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Real-Time-Tariff-Information (2305) 3GPP (10415)
+// 7.2.164
+type AVP_Grouped Real_Time_Tariff_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Received-Talk-Burst-Time (1284) 3GPP (10415)
+// 7.2.165
+type AVP_Unsigned32 Received_Talk_Burst_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Received-Talk-Burst-Volume (1285) 3GPP (10415)
+// 7.2.166
+type AVP_Unsigned32 Received_Talk_Burst_Volume;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Recipient-Address (1201) 3GPP (10415)
+// 7.2.167
+type AVP_Grouped Recipient_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Recipient-Info (2026) 3GPP (10415)
+// 7.2.168
+type AVP_Grouped Recipient_Info;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Recipient-Received-Address (2028) 3GPP (10415)
+// 7.2.169
+type AVP_Grouped Recipient_Received_Address;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Recipient-SCCP-Address (2010) 3GPP (10415)
+// 7.2.170
+type AVP_Address Recipient_SCCP_Address;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Refund-Information (2022) 3GPP (10415)
+// 7.2.171
+type AVP_OctetString Refund_Information;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Remaining-Balance (2021) 3GPP (10415)
+// 7.2.172
+type AVP_Grouped Remaining_Balance;
+
+// 3GPP TS 32.299 V8.5.0
+// AVP: Reply-Applic-ID (1223) 3GPP (10415)
+// 7.2.173
+type AVP_UTF8String Reply_Applic_ID;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Reply-Path-Requested (2011) 3GPP (10415)
+// 7.2.174
+type enumerated Reply_Path_Requested
+{
+  NO_REPLY_PATH_SET (0),
+  REPLY_PATH_SET    (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Reporting-Reason (872) 3GPP (10415)
+// 7.2.175
+type enumerated Reporting_Reason
+{
+  THRESHOLD                (0),
+  QHT                      (1),
+  FINAL                    (2),
+  QUOTA_EXHAUSTED          (3),
+  VALIDITY_TIME            (4),
+  OTHER_QUOTA_TYPE         (5),
+  RATING_CONDITION_CHANGE  (6),
+  FORCED_REAUTHORISATION   (7),
+  POOL_EXHAUSTED           (8)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Requested-Party-Address (1251) 3GPP (10415)
+// 7.2.176
+type AVP_UTF8String Requested_Party_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Role-Of-Node (829) 3GPP (10415)
+// Note: not compatible with V9.2.0 or before (see spec.)
+// 7.2.177
+type enumerated Role_Of_Node
+{
+  ORIGINATING_ROLE  (0),
+  TERMINATING_ROLE  (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Scale-Factor (2059) 3GPP (10415)
+// 7.2.178
+type AVP_Grouped Scale_Factor;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Answer-Timestamp (1275) 3GPP (10415)
+// 7.2.179
+type AVP_Time SDP_Answer_Timestamp;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Media-Component (843) 3GPP (10415)
+// 7.2.180
+type AVP_Grouped SDP_Media_Component;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Media-Description (845) 3GPP (10415)
+// 7.2.181
+type AVP_UTF8String SDP_Media_Description;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Media-Name (844) 3GPP (10415)
+// 7.2.182
+type AVP_UTF8String SDP_Media_Name;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Offer-Timestamp (1274) 3GPP (10415)
+// 7.2.183
+type AVP_Time SDP_Offer_Timestamp;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Session-Description (842) 3GPP (10415)
+// 7.2.184
+type AVP_UTF8String SDP_Session_Description;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-TimeStamps (1273) 3GPP (10415)
+// 7.2.185
+type AVP_Grouped SDP_TimeStamps;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SDP-Type (2036) 3GPP (10415)
+// 7.2.186
+type enumerated SDP_Type
+{
+  SDP_OFFER  (0),
+  SDP_ANSWER (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Served-Party-IP-Address	(848) 3GPP (10415)
+// 7.2.187
+type AVP_Address Served_Party_IP_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Data-Container (2040) 3GPP (10415)
+// 7.2.189
+type AVP_Grouped Service_Data_Container;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Id (855) 3GPP (10415)
+// 7.2.190
+type AVP_UTF8String Service_Id;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Generic-Information (1256) 3GPP (10415)
+// 7.2.191
+type AVP_Grouped Service_Generic_Information;	 			
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Information (873) 3GPP (10415)
+// 7.2.192
+type AVP_Grouped Service_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Mode (2032) 3GPP (10415)
+// 7.2.193
+type AVP_Unsigned32 Service_Mode;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Specific-Data (863) 3GPP (10415)
+// 7.2.194
+type AVP_UTF8String Service_Specific_Data;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Specific-Info (1249) 3GPP (10415)
+// 7.2.195
+type AVP_Grouped Service_Specific_Info;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Specific-Type (1257) 3GPP (10415)
+// 7.2.196
+type AVP_Unsigned32 Service_Specific_Type;	
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Service-Type (2031) 3GPP (10415)
+// 7.2.197
+type AVP_Unsigned32 Service_Type;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Serving-Node-Type (2047) 3GPP (10415)
+// 7.2.198
+type enumerated Serving_Node_Type
+{
+  SGSN      (0),
+  PMIPSGW   (1),
+  GTPSGW    (2),
+  ePDG      (3),
+  hSGW      (4),
+  MME       (5)
+}
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: SGSN-Address (1228) 3GPP (10415)
+// 7.2.199
+type AVP_Address SGSN_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SGW-Change (2065) 3GPP (10415)
+// 7.2.200
+type enumerated SGW_Change
+{
+  ACR_Start_NOT_due_to_SGW_Change      (0),
+  ACR_Start_due_to_SGW_Change          (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SIP-Method (824) 3GPP (10415)
+// 7.2.201
+type AVP_UTF8String SIP_Method;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SIP-Request-Timestamp (834) 3GPP (10415)
+// 7.2.202
+type AVP_Time SIP_Request_Timestamp;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SIP-Request-Timestamp-Fraction (2301) 3GPP (10415)
+// 7.2.203
+type AVP_Unsigned32 SIP_Request_Timestamp_Fraction;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SIP-Response-Timestamp (835) 3GPP (10415)
+// 7.2.204
+type AVP_Time SIP_Response_Timestamp;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SIP-Response-Timestamp-Fraction (2302) 3GPP (10415)
+// 7.2.205
+type AVP_Unsigned32 SIP_Response_Timestamp_Fraction;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SM-Discharge-Time (2012) 3GPP (10415)
+// 7.2.206
+type AVP_Time SM_Discharge_Time;		
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: SM-Message-Type (2007) 3GPP (10415)
+// 7.2.207
+type enumerated SM_Message_Type
+{
+  SUBMISSION         (0),
+  DELIVERY_REPORT    (1),
+  SM_SERVICE_REQUEST (2)
+}		
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SM-Protocol-ID (2013) 3GPP (10415)
+// 7.2.208
+type AVP_OctetString SM_Protocol_ID;		
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SM-Status (2014) 3GPP (10415)
+// 7.2.209
+type AVP_OctetString SM_Status;		
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SM-User-Data-Header (2015) 3GPP (10415)
+// 7.2.210
+type AVP_OctetString SM_User_Data_Header;		
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SMS-Information (2000) 3GPP (10415)
+// 7.2.211
+type AVP_Grouped SMS_Information;		
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SMS-Node (2016) 3GPP (10415)
+// 7.2.212
+type enumerated SMS_Node
+{
+  SMS_ROUTER              (0),
+  IP_SM_GW                (1),
+  SMS_ROUTER_AND_IP_SM_GW (2),
+  SMS_SC                  (3)
+}		
+
+// WARNING: Unsigned32 used instead of enumerated type
+// 3GPP TS 32.299 V9.11.0
+// AVP: SM-Service-Type (2029) 3GPP (10415)
+// 7.2.213
+type AVP_Unsigned32 SM_Service_Type;
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: SMSC-Address (2017) 3GPP (10415)
+// 7.2.214
+type AVP_Address SMSC_Address;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Start-Time (2041) 3GPP (10415)
+// 7.2.215
+type AVP_Time Start_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Stop-Time (2042) 3GPP (10415)
+// 7.2.216
+type AVP_Time Stop_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Submission-Time (1202) 3GPP (10415)
+// 7.2.217
+type AVP_Time Submission_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Subscriber-Role (2033) 3GPP (10415)
+// 7.2.218
+type enumerated Subscriber_Role
+{
+  ORIGINATING (0),
+  TERMINATING (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Supplementary-Service (2048) 3GPP (10415)
+// 7.2.219
+type AVP_Grouped Supplementary_Service;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Talk-Burst-Exchange (1255) 3GPP (10415)
+// 7.2.220
+type AVP_Grouped Talk_Burst_Exchange;	 	
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Talk-Burst-Time (1286) 3GPP (10415)
+// 7.2.221
+type AVP_Unsigned32 Talk_Burst_Time;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Talk-Burst-Volume (1287) 3GPP (10415)
+// 7.2.222
+type AVP_Unsigned32 Talk_Burst_Volume;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Tariff-Information (2060) 3GPP (10415)
+// 7.2.223
+type AVP_Grouped Tariff_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Tariff-XML (2306) 3GPP (10415)
+// 7.2.224
+type AVP_UTF8String Tariff_XML;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Terminating-IOI (840) 3GPP (10415)
+// 7.2.225
+type AVP_UTF8String Terminating_IOI;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time_First_Usage (2043) 3GPP (10415)
+// 7.2.226
+type AVP_Time Time_First_Usage;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time_Last_Usage (2044) 3GPP (10415)
+// 7.2.227
+type AVP_Time Time_Last_Usage;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time-Quota-Mechanism (1270) 3GPP (10415)
+// 7.2.228
+type AVP_Grouped Time_Quota_Mechanism;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time-Quota-Threshold (868) 3GPP (10415)
+// 7.2.229
+type AVP_Unsigned32 Time_Quota_Threshold;		
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time-Quota-Type (1271) 3GPP (10415)
+// 7.2.230
+type enumerated Time_Quota_Type
+{
+  DISCRETE_TIME_PERIOD    (0),
+  CONTINUOUS_TIME_PERIOD  (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time-Stamps (833) 3GPP (10415)
+// 7.2.231
+type AVP_Grouped Time_Stamps;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Time-Usage (2045) 3GPP (10415)
+// 7.2.232
+type AVP_Unsigned32 Time_Usage;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Traffic-Data-Volumes (2046) 3GPP (10415)
+// 7.2.233
+type AVP_Grouped Traffic_Data_Volumes;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Token-Text (1215) 3GPP (10415)
+// 7.2.234
+type AVP_UTF8String Token_Text;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Trigger (1264) 3GPP (10415)
+// 7.2.235
+type AVP_Grouped Trigger;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Trigger-Type (870) 3GPP (10415)
+// 7.2.236
+type enumerated Trigger_Type 
+{
+  CHANGE_IN_SGSN_IP_ADDRESS                     (1),
+  CHANGE_IN_QOS                                 (2),
+  CHANGE_IN_LOCATION                            (3),
+  CHANGE_IN_RAT                                 (4),
+  CHANGEINQOS_TRAFFIC_CLASS                    (10),
+  CHANGEINQOS_RELIABILITY_CLASS                (11),
+  CHANGEINQOS_DELAY_CLASS                      (12),
+  CHANGEINQOS_PEAK_THROUGHPUT                  (13),
+  CHANGEINQOS_PRECEDENCE_CLASS                 (14),
+  CHANGEINQOS_MEAN_THROUGHPUT                  (15),
+  CHANGEINQOS_MAXIMUM_BIT_RATE_FOR_UPLINK      (16),
+  CHANGEINQOS_MAXIMUM_BIT_RATE_FOR_DOWNLINK    (17),
+  CHANGEINQOS_RESIDUAL_BER                     (18),
+  CHANGEINQOS_SDU_ERROR_RATIO                  (19),
+  CHANGEINQOS_TRANSFER_DELAY                   (20),
+  CHANGEINQOS_TRAFFIC_HANDLING_PRIORITY        (21),
+  CHANGEINQOS_GUARANTEED_BIT_RATE_FOR_UPLINK   (22),
+  CHANGEINQOS_GUARANTEED_BIT_RATE_FOR_DOWNLINK (23),
+  CHANGEINLOCATION_MCC                         (30),
+  CHANGEINLOCATION_MNC                         (31),
+  CHANGEINLOCATION_RAC                         (32),
+  CHANGEINLOCATION_LAC                         (33),
+  CHANGEINLOCATION_CellId                      (34),
+  CHANGE_IN_MEDIA_COMPOSITION                  (40),
+  CHANGE_IN_PARTICIPANTS_NMB                   (50),
+  CHANGE_IN_THRSHLD_OF_PARTICIPANTS_NMB        (51),
+  CHANGE_IN_USER_PARTICIPATING_TYPE            (52),
+  CHANGE_IN_SERVICE_CONDITION                  (60),
+  CHANGE_IN_SERVING_NODE                       (61),
+  CHANGE_IN_USER_CSG_INFORMATION               (70)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Trunk-Group-Id (851) 3GPP (10415)
+// 7.2.237
+type AVP_Grouped Trunk_Group_Id;		
+
+// WARNING: Unsigned32 used instead of enumerated type
+// 3GPP TS 32.299 V9.11.0
+// AVP: Type-Number (1204) 3GPP (10415)
+// 7.2.238
+type AVP_Unsigned32 Type_Number;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Unit-Cost (2061) 3GPP (10415)
+// 7.2.239
+type AVP_Grouped Unit_Cost;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Unit-Quota-Threshold (1226) 3GPP (10415)
+// 7.2.240
+type AVP_Unsigned32 Unit_Quota_Threshold;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: User-CSG-Information (2319) 3GPP (10415)
+// 7.2.240A
+type AVP_Grouped User_CSG_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: User-Participating-Type (1279) 3GPP (10415)
+// 7.2.241
+type enumerated User_Participating_Type
+{
+  NORMAL     (0),
+  NW_POC_BOX (1),
+  UE_POC_BOX (2)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: User-Session-Id (830) 3GPP (10415)
+// 7.2.242
+type AVP_UTF8String User_Session_Id;
+		
+// 3GPP TS 32.299 V9.11.0
+// AVP: Volume-Quota-Threshold (869) 3GPP (10415)
+// 7.2.243
+type AVP_Unsigned32 Volume_Quota_Threshold;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: WAG-Address (890) 3GPP (10415)
+// 7.2.244
+type AVP_Address WAG_Address;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: WAG-PLMN-Id (891) 3GPP (10415)
+// 7.2.245
+type AVP_OctetString WAG_PLMN_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: WLAN-Information (875) 3GPP (10415)
+// 7.2.246
+type AVP_Grouped WLAN_Information;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: WLAN-Radio-Container (892) 3GPP (10415)
+// 7.2.247
+type AVP_Grouped WLAN_Radio_Container;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: WLAN-Session-Id (1246) 3GPP (10415)
+// 7.2.248
+type AVP_Unsigned32 WLAN_Session_Id;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: WLAN-Technology (893) 3GPP (10415)
+// 7.2.249
+type AVP_Unsigned32 WLAN_Technology;	
+	
+// 3GPP TS 32.299 V9.11.0
+// AVP: WLAN-UE-Local-IPAddress (894) 3GPP (10415)
+// 7.2.250
+type AVP_Address WLAN_UE_Local_IPAddress;
+
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Dynamic-Address-Flag-Extension (2068) 3GPP (10415)
+// 7.2.39B
+type enumerated Dynamic_Address_Flag_Extension {
+  STATIC    (0),
+  DYNAMIC   (1)
+}
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Initial-IMS-Charging-Identifier (2321) 3GPP (10415)
+// 7.2.79A
+type AVP_UTF8String Initial_IMS_Charging_Identifier;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: Location-Estimate (1242) 3GPP (10415)
+// 7.2.94
+type AVP_OctetString Location_Estimate;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: PDN-Connection-Charging-ID (2050) 3GPP (10415)
+// 7.2.136
+type AVP_Unsigned32 PDN_Connection_Charging_ID;
+
+// 3GPP TS 32.299 V9.11.0
+// AVP: SGW-Address (2067) 3GPP (10415)
+// 7.2.199A
+type AVP_Address SGW_Address;
+
+
+
+
+

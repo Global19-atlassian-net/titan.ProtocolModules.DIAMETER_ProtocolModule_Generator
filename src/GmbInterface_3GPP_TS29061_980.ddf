@@ -1,0 +1,249 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               GmbInterface_3GPP_TS29061_980.ddf
+//  Description:        DDF for Gmb according to 3GPP TS 29.061 V9.8.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: GMB
+// APPLICATION-REVISION: V9_8_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.061 V9.8.0 - Interworking between the Public Land Mobile Network 
+// (PLMN) supporting packet based services and Packet Data Networks (PDN)
+//
+//
+// Dependant applications
+// IETF RFC 3588  - Diameter Base Protocol
+// IETF RFC 4005  - Diameter Network Address Server
+//
+// Notes: 
+// Present application has its own vendor specific Diameter application id: 16777223
+//
+
+// 3GPP TS 29.061 V9.8.0 17.6
+type enumerated Command_Code 
+{
+  Authorize_Authenticate (265),
+  Re_Auth                (258),
+  Session_Termination    (275),
+  Abort_Session          (274)
+}
+
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: TMGI (900) 3GPP (10415)
+// 17.7.2
+type AVP_OctetString TMGI;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: Required-MBMS-Bearer-Capabilities (901) 3GPP (10415)
+// 17.7.3
+type AVP_UTF8String Required_MBMS_Bearer_Capabilities;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-StartStop-Indication (902) 3GPP (10415)
+// 17.7.5
+type enumerated MBMS_StartStop_Indication
+{
+  START              (0),
+  STOP               (1),
+  UPDATE             (2)
+}
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Service-Area (903) 3GPP (10415)
+// 17.7.6
+type AVP_OctetString MBMS_Service_Area;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Session-Duration (904) 3GPP (10415)
+// 17.7.7
+type AVP_OctetString MBMS_Session_Duration;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-IMSI (1) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_IMSI;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: Alternative-APN (905) 3GPP (10415)
+// 17.7.8
+type AVP_UTF8String Alternative_APN;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Service-Type (906) 3GPP (10415)
+// 17.7.9
+type enumerated MBMS_Service_Type
+{
+  MULTICAST              (0),
+  BROADCAST              (1)
+}
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-SGSN-Address (6) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_SGSN_Address;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-SGSN-IPv6-Address (15) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_SGSN_IPv6_Address;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-2G-3G-Indicator (907) 3GPP (10415)
+// 17.7.10
+type enumerated MBMS_2G_3G_Indicator
+{
+  TwoG                    (0),
+  ThreeG                  (1),
+  TwoG_AND_ThreeG         (2)
+}
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Session-Identity (908) 3GPP (10415)
+// 17.7.11
+type AVP_OctetString MBMS_Session_Identity;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: RAI (909) 3GPP (10415)
+// 17.7.12
+type AVP_UTF8String RAI;
+
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-IMEISV (20) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_IMEISV;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-RAT-Type (21) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_RAT_Type;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-User-Location-Info (22) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_User_Location_Info;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: 3GPP-MS-TimeZone (23) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_MS_TimeZone;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: Additional-MBMS-Trace-Info (910) 3GPP (10415)
+// 17.7.13
+type AVP_OctetString Additional_MBMS_Trace_Info;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Time-To-Data-Transfer (911) 3GPP (10415)
+// 17.7.14
+type AVP_OctetString MBMS_Time_To_Data_Transfer;
+
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Session-Repetition-Number (912) 3GPP (10415)
+// 17.7.15
+type AVP_OctetString MBMS_Session_Repetition_Number;
+
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Required-QoS (913) 3GPP (10415)
+// 17.7.16
+type AVP_UTF8String MBMS_Required_QoS;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Counting-Information (914) 3GPP (10415)
+// 17.7.17
+type enumerated MBMS_Counting_Information
+{
+  COUNTING_NOT_APPLICABLE              (0),
+  COUNTING_APPLICABLE                  (1)
+}
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-User-Data-Mode-Indication (915) 3GPP (10415)
+// 17.7.18
+type enumerated MBMS_User_Data_Mode_Indication
+{
+  Unicast                (0),
+  Multicast_and_Unicast  (1)
+}
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-GGSN-Address (916) 3GPP (10415)
+// 17.7.19
+type AVP_OctetString MBMS_GGSN_Address;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-GGSN-IPv6-Address (917) 3GPP (10415)
+// 17.7.20
+type AVP_OctetString MBMS_GGSN_IPv6_Address;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-BMSC-SSM-IP-Address (918) 3GPP (10415)
+// 17.7.21
+type AVP_OctetString MBMS_BMSC_SSM_IP_Address;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-BMSC-SSM-IPv6-Address (919) 3GPP (10415)
+// 17.7.22
+type AVP_OctetString MBMS_BMSC_SSM_IPv6_Address;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-Flow-Identifier (920) 3GPP (10415)
+// 17.7.23
+type AVP_OctetString MBMS_Flow_Identifier;
+
+// 3GPP TS 29.061 V9.8.0
+// AVP: CN-IP-Multicast-Distribution (921) 3GPP (10415)
+// 17.7.24
+type enumerated CN_IP_Multicast_Distribution
+{
+  NO_IP_MULTICAST (0),
+  IP_MULTICAST    (1)
+}
+
+// WARNING: Unsigned32 used instead of enumerated type
+// 3GPP TS 29.061 V9.8.0
+// AVP: MBMS-HC-Indicator (922) 3GPP (10415)
+// 17.7.25
+type AVP_Unsigned32 MBMS_HC_Indicator;

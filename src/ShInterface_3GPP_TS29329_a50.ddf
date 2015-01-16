@@ -1,0 +1,217 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               ShInterface_3GPP_TS29329_a50.ddf
+//  Description:        DDF for Sh Interface according to 3GPP 29.329 v10.5.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: Sh
+// APPLICATION-REVISION: v10_5_0
+
+// AVP implementations according to: 
+// 3GPP 29.329 v10.5.0 - Sh Interface based on the Diameter PROTOCOL
+//
+//
+// Dependant applications
+// 3GPP TS 29.229  - Cx and Dx interfaces based on the Diameter protocol
+// IETF RFC 3588   - Diameter Base Protocol
+//
+// Notes: 
+// Present application has its own vendor specific Diameter application id: 16777217
+//
+
+// 3GPP 29.329 v10.5.0  6.1
+type enumerated Command_Code 
+{
+  User_Data              (306),
+  Profile_Update         (307),
+  Subscribe_Notification (308),
+  Push_Notification      (309)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: User-Identity (700) 3GPP (10415)
+// 6.3.1
+type AVP_Grouped User_Identity;
+
+// 3GPP 29.329 v10.5.0
+// AVP: MSISDN (701) 3GPP (10415)
+// 6.3.2
+type AVP_OctetString MSISDN;
+
+// 3GPP 29.329 v10.5.0
+// AVP: User-Data (702) 3GPP (10415)
+// 6.3.3
+type AVP_OctetString User_Data;
+
+// 3GPP 29.329 v10.5.0
+// AVP: Data-Reference (703) 3GPP (10415)
+// 6.3.4
+type enumerated Data_Reference
+{
+  REPOSITORY_DATA                        (0),
+  IMS_PUBLIC_IDENTITY                   (10),
+  IMS_USER_STATE                        (11),
+  S_CSCF_NAME                           (12),
+  INITIAL_FILTER_CRITERIA               (13),
+  LOCATION_INFORMATION                  (14),
+  USER_STATE                            (15),
+  CHARGING_INFORMATION                  (16),
+  MSISDN                                (17),
+  PSI_ACTIVATION                        (18),
+  DSAI                                  (19),
+  ALIASES_REPOSITORY_DATA               (20),
+  SERVICE_LEVEL_TRACE_INFO              (21),
+  IP_ADDRESS_SECURE_BINDING_INFORMATION (22),
+  SERVICE_PRIORITY_LEVEL                (23),
+  SMS_REGISTRATION_INFO                 (24),
+  UE_REACHABILITY_FOR_IP                (25),
+  TADS_INFORMATION                      (26),
+  STN_SR                                (27),
+  UE_SRVCC_CAPABILITY                   (28),
+  EXTENDED_PRIORITY                     (29),
+  CSRN                                  (30)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Service-Indication (704) 3GPP (10415)
+// 6.3.5
+type AVP_OctetString Service_Indication;
+
+// 3GPP 29.329 v10.5.0
+// AVP: Subs-Req-Type (705) 3GPP (10415)
+// 6.3.6
+type enumerated Subs_Req_Type
+{
+  SUBSCRIBE               (0),
+  UNSUBSCRIBE             (1)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Requested-Domain (706) 3GPP (10415)
+// 6.3.7
+type enumerated Requested_Domain
+{
+  CS_DOMAIN               (0),
+  PS_DOMAIN               (1)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Current-Location (707) 3GPP (10415)
+// 6.3.8
+type enumerated Current_Location
+{
+  DO_NOT_NEED_INITIATE_ACTIVE_LOCATION_RETRIEVAL  (0),
+  INITIATE_ACTIVE_LOCATION_RETRIEVAL              (1)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Identity-Set (708) 3GPP (10415)
+// 6.3.10
+type enumerated Identity_Set
+{
+  ALL_IDENTITIES          (0),
+  REGISTERED_IDENTITES    (1),
+  IMPLICIT_IDENTITIES     (2),
+  ALIAS_IDENTITIES        (3)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Expiry-Time (709) 3GPP (10415)
+// 6.3.16
+type AVP_Time Expiry_Time;
+
+// 3GPP 29.329 v10.5.0
+// AVP: Send-Data-Indication (710) 3GPP (10415)
+// 6.3.17
+type enumerated Send_Data_Indication
+{
+  USER_DATA_NOT_REQUESTED (0),
+  USER_DATA_REQUESTED     (1)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: DSAI-Tag (711) 3GPP (10415)
+// 6.3.18
+type AVP_OctetString DSAI_Tag;
+
+// 3GPP 29.329 v10.5.0
+// AVP: One-Time-Notification (712) 3GPP (10415)
+// 6.3.22
+type enumerated One_Time_Notification
+{
+  ONE_TIME_NOTIFICATION_REQUESTED (0)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Requested-Nodes (713) 3GPP (10415)
+// 6.3.7A
+type AVP_Unsigned32 Requested_Nodes
+
+// 3GPP 29.329 v10.5.0
+// AVP: Serving-Node-Indication (714) 3GPP (10415)
+// 6.3.23
+type enumerated Serving_Node_Indication
+{
+  ONLY_SERVING_NODES_REQUIRED     (0)
+}
+
+// 3GPP 29.329 v10.5.0
+// AVP: Repository-Data-ID (715) 3GPP (10415)
+// 6.3.24
+type AVP_Grouped  Repository_Data_ID;
+
+// 3GPP 29.329 v10.5.0
+// AVP: Sequence-Number (716) 3GPP (10415)
+// 6.3.25
+type AVP_Unsigned32 Sequence_Number;
+
+// 3GPP 29.329 v10.5.0
+// AVP: Pre-paging-Supported (717) 3GPP (10415)
+// 6.3.26
+type enumerated Pre_paging_Supported
+{
+  PREPAGING_NOT_SUPPORTED (0),
+  PREPAGING_SUPPORTED (1)
+}
+
+
+
+
+

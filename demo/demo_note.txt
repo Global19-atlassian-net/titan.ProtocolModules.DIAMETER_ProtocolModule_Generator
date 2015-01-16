@@ -1,0 +1,13 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Gabor Szalai - initial implementation and initial documentation
+******************************************************************************/
+
+This demo shows how to use create DIAMETER server or client uding TCP or SCTP 
+test port and the generated DIAMETER_types.ttcn

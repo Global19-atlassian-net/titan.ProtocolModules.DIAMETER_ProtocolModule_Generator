@@ -1,0 +1,375 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               CxDxInterface_3GPP_TS29229_880.ddf
+//  Description:        DDF for CxDx according to 3GPP TS 29.229 V8.8.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: CxDx
+// APPLICATION-REVISION: V8_8_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.229 V8.8.0 - Cx and Dx interfaces based on the Diameter protocol
+//
+//
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+// IETF RFC 4005   - Diameter Network Access Server Application
+// IETF RFC 5090 (Obsoletes: 4590)   - RADIUS Extension for Digest Authentication
+//
+// Notes: 
+// Present application has its own vendor specific Diameter application id: 16777216
+//
+
+// 3GPP TS 29.229 V8.8.0 6.1
+type enumerated Command_Code {
+  User_Authorization       (300),
+  Server_Assignment        (301),
+  Location_Info            (302),
+  Multimedia_Auth          (303),
+  Registration_Termination (304),
+  Push_Profile             (305)
+}
+
+
+
+// 3GPP 29.229 V8.8.0
+// AVP: Visited-Network-Identifier (600) 3GPP (10415)
+// 6.3.1
+type AVP_OctetString Visited_Network_Identifier;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Public-Identity (601) 3GPP (10415)
+// 6.3.2
+type AVP_UTF8String Public_Identity;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Server-Name (602) 3GPP (10415)
+// 6.3.3
+type AVP_UTF8String Server_Name;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Server-Capabilities (603) 3GPP (10415)
+// 6.3.4
+type AVP_Grouped Server_Capabilities;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Mandatory-Capability (604) 3GPP (10415)
+// 6.3.5
+type AVP_Unsigned32 Mandatory_Capability;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Optional-Capability (605) 3GPP (10415)
+// 6.3.6
+type AVP_Unsigned32 Optional_Capability;
+
+// 3GPP 29.229 V8.8.0
+// AVP: User-Data (606) 3GPP (10415)
+// 6.3.7
+type AVP_OctetString User_Data;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Number-Auth-Items (607) 3GPP (10415)
+// 6.3.8
+type AVP_Unsigned32 SIP_Number_Auth_Items;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Authentication-Scheme (608) 3GPP (10415)
+// 6.3.9
+type AVP_UTF8String SIP_Authentication_Scheme;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Authenticate (609) 3GPP (10415)
+// 6.3.10
+type AVP_OctetString SIP_Authenticate;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Authorization (610) 3GPP (10415)
+// 6.3.11
+type AVP_OctetString SIP_Authorization;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Authentication-Context (611) 3GPP (10415)
+// 6.3.12
+type AVP_OctetString SIP_Authentication_Context;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Auth-Data-Item (612) 3GPP (10415)
+// 6.3.13
+type AVP_Grouped SIP_Auth_Data_Item;
+
+// 3GPP 29.229 V8.8.0
+// AVP: SIP-Item-Number (613) 3GPP (10415)
+// 6.3.14
+type AVP_Unsigned32 SIP_Item_Number;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Server-Assignment-Type (614) 3GPP (10415)
+// 6.3.15
+type enumerated Server_Assignment_Type
+{
+  NO_ASSIGNMENT                             (0),
+  REGISTRATION                              (1),
+  RE_REGISTRATION                           (2),
+  UNREGISTERED_USER                         (3),
+  TIMEOUT_DEREGISTRATION                    (4),
+  USER_DEREGISTRATION                       (5),
+  TIMEOUT_DEREGISTRATION_STORE_SERVER_NAME  (6),
+  USER_DEREGISTRATION_STORE_SERVER_NAME     (7),
+  ADMINISTRATIVE_DEREGISTRATION             (8),
+  AUTHENTICATION_FAILURE                    (9),
+  AUTHENTICATION_TIMEOUT                   (10),
+  DEREGISTRATION_TOO_MUCH_DATA             (11),
+  AAA_USER_DATA_REQUEST                    (12),
+  PGW_UPDATE                               (13)
+}
+
+// 3GPP 29.229 V8.8.0
+// AVP: Deregistration-Reason (615) 3GPP (10415)
+// 6.3.16
+type AVP_Grouped Deregistration_Reason;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Reason-Code (616) 3GPP (10415)
+// 6.3.17
+type enumerated Reason_Code
+{
+  PERMANENT_TERMINATION (0),
+  NEW_SERVER_ASSIGNED   (1),
+  SERVER_CHANGE         (2),
+  REMOVE_S_CSCF         (3)
+}
+
+// 3GPP 29.229 V8.8.0
+// AVP: Reason-Info (617) 3GPP (10415)
+// 6.3.18
+type AVP_UTF8String Reason_Info;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Charging-Information (618) 3GPP (10415)
+// 6.3.19
+type AVP_Grouped Charging_Information;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Primary-Event-Charging-Function-Name (619) 3GPP (10415)
+// 6.3.20
+type AVP_DiameterURI Primary_Event_Charging_Function_Name;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Secondary-Event-Charging-Function-Name (620) 3GPP (10415)
+// 6.3.21
+type AVP_DiameterURI Secondary_Event_Charging_Function_Name;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Primary-Charging-Collection-Function-Name (621) 3GPP (10415)
+// 6.3.22
+type AVP_DiameterURI Primary_Charging_Collection_Function_Name;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Secondary-Charging-Collection-Function-Name (622) 3GPP (10415)
+// 6.3.23
+type AVP_DiameterURI Secondary_Charging_Collection_Function_Name;
+
+// 3GPP 29.229 V8.8.0
+// AVP: User-Authorization-Type (623) 3GPP (10415)
+// 6.3.24
+type enumerated User_Authorization_Type
+{
+  REGISTRATION                  (0),
+  DE_REGISTRATION               (1),
+  REGISTRATION_AND_CAPABILITIES (2)
+}
+
+// 3GPP 29.229 V8.8.0
+// AVP: User-Data-Already-Available (624) 3GPP (10415)
+// 6.3.26
+type enumerated User_Data_Already_Available
+{
+  USER_DATA_NOT_AVAILABLE     (0),
+  USER_DATA_ALREADY_AVAILABLE (1)
+}
+
+// 3GPP 29.229 V8.8.0
+// AVP: Confidentiality-Key (625) 3GPP (10415)
+// 6.3.27
+type AVP_OctetString Confidentiality_Key;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Integrity-Key (626) 3GPP (10415)
+// 6.3.28
+type AVP_OctetString Integrity_Key;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Supported-Features (628) 3GPP (10415)
+// 6.3.29
+type AVP_Grouped Supported_Features;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Feature-List-ID (629) 3GPP (10415)
+// 6.3.30
+type AVP_Unsigned32 Feature_List_ID;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Feature-List (630) 3GPP (10415)
+// 6.3.31
+type AVP_Unsigned32 Feature_List;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Supported-Applications (631) 3GPP (10415)
+// 6.3.32
+type AVP_Grouped Supported_Applications;
+
+// 3GPP 29.229 V8.8.0
+// AVP: Associated-Identities (632) 3GPP (10415)
+// 6.3.33
+type AVP_Grouped Associated_Identities;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Originating-Request (633) 3GPP (10415)
+// 6.3.34
+type enumerated Originating_Request
+{
+  ORIGINATING (0)
+}
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Wildcarded-PSI (634) 3GPP (10415)
+// 6.3.35
+type AVP_UTF8String Wildcarded_PSI;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: SIP-Digest-Authenticate (635) 3GPP (10415)
+// 6.3.36
+type AVP_Grouped SIP_Digest_Authenticate;
+
+// 3GPP 29.229 v8.8.0
+// AVP: Line-Identifier (500) ETSI (13019)
+// 6.3.42
+type AVP_OctetString Line_Identifier;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Wildcarded-IMPU (636) 3GPP (10415)
+// 6.3.43
+type AVP_UTF8String Wildcarded_IMPU;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: UAR-Flags (637) 3GPP (10415)
+// 6.3.44
+type AVP_Unsigned32 UAR_Flags;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Loose-Route-Indication (638) 3GPP (10415)
+// 6.3.45
+type enumerated Loose_Route_Indication
+{
+  LOOSE_ROUTE_NOT_REQUIRED (0),
+  LOOSE_ROUTE_REQUIRED     (1)
+}
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: SCSCF-Restoration-Info (639) 3GPP (10415)
+// 6.3.46
+type AVP_Grouped SCSCF_Restoration_Info;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Path (640) 3GPP (10415)
+// 6.3.47
+type AVP_OctetString Path;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Contact (641) 3GPP (10415)
+// 6.3.48
+type AVP_OctetString Contact;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Subscription-Info (642) 3GPP (10415)
+// 6.3.49
+type AVP_Grouped Subscription_Info;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Call-ID-SIP-Header (643) 3GPP (10415)
+// 6.3.49.1
+type AVP_OctetString Call_ID_SIP_Header;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: From-SIP-Header (644) 3GPP (10415)
+// 6.3.49.2
+type AVP_OctetString From_SIP_Header;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: To-SIP-Header (645) 3GPP (10415)
+// 6.3.49.3
+type AVP_OctetString To_SIP_Header;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Record-Route (646) 3GPP (10415)
+// 6.3.49.4
+type AVP_OctetString Record_Route;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Associated-Registered-Identities (647) 3GPP (10415)
+// 6.3.50
+type AVP_Grouped Associated_Registered_Identities;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Multiple-Registration-Indication (648) 3GPP (10415)
+// 6.3.51
+type enumerated Multiple_Registration_Indication
+{
+  NOT_MULTIPLE_REGISTRATION (0),
+  MULTIPLE_REGISTRATION     (1)
+}
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Restoration-Info (649) 3GPP (10415)
+// 6.3.52
+type AVP_Grouped Restoration_Info;
+
+// 3GPP TS 29.229 V8.8.0
+// AVP: Session-Priority (650) 3GPP (10415)
+// 6.3.56
+type enumerated Session_Priority
+{
+  PRIORITY_0 (0),
+  PRIORITY_1 (1),
+  PRIORITY_2 (2),
+  PRIORITY_3 (3),
+  PRIORITY_4 (4)
+}

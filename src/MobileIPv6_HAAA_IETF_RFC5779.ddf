@@ -1,0 +1,59 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               MobileIPv6_HAAA_IETF_RFC5779.ddf
+//  Description:        DDF for Mobile IPv6 according to RFC 5779
+//  Rev:                R29A
+//  Prodnr:             CNL113462
+///////////////////////////////////////////////
+
+// RFC 5779 5.2
+// AVP: PMIP6-IPv4-Home-Address (505)
+type  AVP_Address PMIP6_IPv4_Home_Address;
+
+// RFC 5779 5.4
+// AVP: PMIP6-DHCP-Server-Address (504)
+type  AVP_Address PMIP6_DHCP_Server_Address;
+
+// RFC 5779 5.6
+// AVP: Mobile-Node-Identifier (506)
+type AVP_UTF8String Mobile_Node_Identifier;
+
+// RFC 5779 5.9
+// AVP: Service-Configuration (507)
+type AVP_Grouped Service_Configuration;
+

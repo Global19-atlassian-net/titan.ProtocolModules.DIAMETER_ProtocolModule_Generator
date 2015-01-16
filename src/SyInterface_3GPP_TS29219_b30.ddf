@@ -1,0 +1,85 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               SyInterface_3GPP_TS29219_b30.ddf
+//  Description:        DDF for Sy Interface according to 3GPP 29.219 v11.3.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: Sy
+// APPLICATION-REVISION: v11_3_0
+
+// AVP implementations according to: 
+// 3GPP 29.219 v11.3.0 - Sy Interface based on the Diameter PROTOCOL
+//
+//
+//
+
+// 3GPP 29.219 v11.3.0  5.6.1
+type enumerated Command_Code 
+{
+  Session_Termination          (275),
+  ThreeGPP_Spending_Limit               (8388635),
+  ThreeGPP_Spending_Status_Notification (8388636)
+}
+
+// 3GPP 29.219 v11.3.0
+// AVP: Policy-Counter-Identifier (2901) 3GPP (10415)
+// 5.3.1
+type AVP_UTF8String Policy_Counter_Identifier;
+
+// 3GPP 29.219 v11.3.0
+// AVP: Policy-Counter-Status (2902) 3GPP (10415)
+// 5.3.2
+type AVP_UTF8String Policy_Counter_Status;
+
+// 3GPP 29.219 v11.3.0
+// AVP: Policy-Counter-Status-Report (2903) 3GPP (10415)
+// 5.3.3
+type AVP_Grouped Policy_Counter_Status_Report;
+
+
+// 3GPP 29.219 v11.3.0
+// AVP: SL-Request-Type (2904) 3GPP (10415)
+// 5.3.4
+type enumerated SL_Request_Type
+{
+  INITIAL_REQUEST (0),
+  INTERMEDIATE_REQUEST (1)
+}
+

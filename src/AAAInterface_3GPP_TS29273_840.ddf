@@ -1,0 +1,71 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               AAAInterface_3GPP_TS29273_840.ddf
+//  Description:        DDF for EPS AAA according to 3GPP TS 29.273 V8.4.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: AAA
+// APPLICATION-REVISION: V8_4_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.273 V8.4.0 - EPS AAA interfaces based on the Diameter protocol
+// Statement of Compiance  X/174 02-AXB 250 20 Uen PA2
+
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+// IETF RFC 4005   - Diameter Network Access Server Application
+
+// 3GPP TS 32.273 V8.4.0  9.2.2
+type enumerated Command_Code {  
+  AA                    (265),
+  Session_Termination   (275), 
+  Abort_Session         (274)  
+}
+
+// 3GPP 29.273 V8.4.0
+// AVP: MIP6-Agent-Info (486)
+// 9.2.3.2.2
+type AVP_Grouped MIP6_Agent_Info
+
+// 3GPP 29.273 V8.4.0
+// AVP: MIP6-Feature-Vector (124)
+// 9.2.3.2.3
+type AVP_Unsigned64 MIP6_Feature_Vector

@@ -1,0 +1,65 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               Verizon_Specific_AVPs.ddf
+//  Description:        Verizon specific AVP definitions
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: V
+// APPLICATION_REVISION: V1
+
+// Verizon Idle-To-Connected-Transition-Count
+// AVP: Idle-To-Connected-Transition-Count (5001) Verizon (12951)
+type AVP_Unsigned32 Idle_To_Connected_Transition_Count;
+
+// Verizon Connected-Duration
+// AVP: Connected-Duration (5002) Verizon (12951)
+type AVP_Unsigned32 Connected_Duration;
+
+// Verizon Charging-Gateway-Function-Host
+// AVP: Charging-Gateway-Function-Host (6068) Verizon (12951)
+type AVP_OctetString Charging_Gateway_Function_Host;
+
+// Verizon Operator-String
+// AVP: Operator-String (6079) Verizon (12951)
+type AVP_UTF8String Operator_String;
+
+// Verizon Charging-Group-ID 
+// AVP: Charging-Group-ID  (6069) Verizon (12951)
+type AVP_UTF8String Charging_Group_ID;

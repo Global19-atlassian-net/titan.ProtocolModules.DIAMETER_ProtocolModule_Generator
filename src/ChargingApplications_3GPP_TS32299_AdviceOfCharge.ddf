@@ -1,0 +1,110 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               ChargingApplication_3GPP_TS32299_AdviceOfCharge.ddf
+//  Description:        DDF for Diameter Charging Application
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: DCA
+// APPLICATION-REVISION:
+
+// AVP implementations according to: 
+// 3GPP TS 32.299 - Telecommunication management; Charging management;
+//
+// Dependant applications
+// 3GPP TS 29.229  - Cx and Dx interfaces based on the Diameter protocol
+// IETF RFC 3588   - Diameter Base Protocol
+// RFC 4006 - Diameter Credit Control Application
+//
+// Notes:
+//
+
+
+type enumerated Command_Code {  
+  Credit_Control (272)
+}
+
+
+// AVP: Apply-Tariff-Immediate (2190) 3GPP (10415)
+type enumerated Apply_Tariff_Immediate
+{
+  START_TARIFF_IMMEDIATELY  (0),
+  WAIT_FOR_START            (1)
+}
+
+// AVP: Apply-Tariff-Restart (2191) 3GPP (10415)
+type enumerated Apply_Tariff_Restart
+{
+  NO_RESTART  (0),
+  RESTART     (1)
+}
+
+// AVP: Connection-Attempt-Charge (2192) 3GPP (10415)
+type AVP_Grouped Connection_Attempt_Charge;
+
+// AVP: Network-Identification (2193) 3GPP (10415)
+type AVP_UTF8String Network_Identification;
+
+// AVP: Origination-Identification (2194) 3GPP (10415)
+type AVP_Grouped Origination_Identification;
+
+// AVP: Preferred-Currency-Code (2195) 3GPP (10415)
+type AVP_Unsigned32 Preferred_Currency_Code;
+
+// AVP: Purpose (2196) 3GPP (10415)
+type enumerated Purpose
+{
+  NEW_TARIFF    (0),
+  ADD_ON_CHARGE (1)
+}
+
+// AVP: Reference-ID (2197) 3GPP (10415)
+type AVP_Unsigned32 Reference_ID;
+
+// AVP: Set-Up-Charge (2198) 3GPP (10415)
+type AVP_Grouped Set_Up_Charge;
+
+// AVP: Tariff-Expiry-Policy (2199) 3GPP (10415)
+type enumerated Tariff_Expiry_Policy
+{
+  CYCLE                       (0),
+  DEFINED_BY_NETWORK_OPERATOR (1)
+}
+

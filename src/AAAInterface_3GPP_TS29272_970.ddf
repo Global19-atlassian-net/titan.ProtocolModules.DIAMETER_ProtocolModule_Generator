@@ -1,0 +1,719 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               AAAInterface_3GPP_TS29272_970.ddf
+//  Description:        DDF for S6a/S6d and S13 Interfaces according to 3GPP TS 29.272 V9.7.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+
+
+// APPLICATION-NAME: AAA
+// APPLICATION-REVISION: V9_7_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.272 V9.7.0 - Evolved Packet System (EPS); Mobility Management Entity (MME) and Serving GPRS Support Node (SGSN) related interfaces based on Diameter protocol
+
+// 3GPP TS 29.272 V9.7.0
+// 7.2.2
+type enumerated Command_Code 
+{
+  Update_Location            (316),
+  Cancel_Location            (317),
+  Authentication_Information (318),
+  Insert_Subscriber_Data     (319),
+  Delete_Subscriber_Data     (320),
+  Purge_UE                   (321),
+  Reset                      (322),
+  Notify                     (323),
+  ME_Identity_Check          (324)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.2
+// AVP: Subscription-Data (1400) 3GPP (10415)
+type AVP_Grouped Subscription_Data
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.3
+// AVP: Terminal-Information (1401) 3GPP (10415)
+type AVP_Grouped Terminal_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.4
+// AVP: IMEI (1402) 3GPP (10415)
+type AVP_UTF8String IMEI
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.5
+// AVP: Software-Version (1403) 3GPP (10415)
+type AVP_UTF8String Software_Version
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.77
+// AVP: QoS-Subscribed (1404) 3GPP (10415)
+type AVP_OctetString QoS_Subscribed
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.7
+// AVP: ULR-Flags (1405) 3GPP (10415)
+type AVP_Unsigned32 ULR_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.8
+// AVP: ULA-Flags (1406) 3GPP (10415)
+type AVP_Unsigned32 ULA_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.9
+// AVP: Visited-PLMN-Id (1407) 3GPP (10415) 
+type AVP_OctetString Visited_PLMN_Id
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.11
+// AVP: Requested-EUTRAN-Authentication-Info (1408) 3GPP (10415)
+type AVP_Grouped Requested_EUTRAN_Authentication_Info
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.12
+// AVP: Requested-UTRAN-GERAN-Authentication-Info (1409) 3GPP (10415)
+type AVP_Grouped Requested_UTRAN_GERAN_Authentication_Info
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.14
+// AVP: Number-Of-Requested-Vectors (1410) 3GPP (10415)
+type AVP_Unsigned32 Number_Of_Requested_Vectors
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.15
+// AVP: Re-Synchronization-Info (1411) 3GPP (10415)
+type AVP_OctetString Re_Synchronization_Info
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.16
+// AVP: Immediate-Response-Preferred (1412) 3GPP (10415)
+type AVP_Unsigned32 Immediate_Response_Preferred
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.17
+// AVP: Authentication-Info (1413) 3GPP (10415)
+type AVP_Grouped Authentication_Info
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.18
+// AVP: E-UTRAN-Vector (1414) 3GPP (10415)
+type AVP_Grouped E_UTRAN_Vector
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.19
+// AVP: UTRAN-Vector (1415) 3GPP (10415)
+type AVP_Grouped UTRAN_Vector
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.20
+// AVP: GERAN-Vector (1416) 3GPP (10415)
+type AVP_Grouped GERAN_Vector
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.21
+// AVP: Network-Access-Mode (1417) 3GPP (10415)
+type enumerated Network_Access_Mode
+{
+  PACKET_AND_CIRCUIT (0),
+  Reserved           (1),
+  ONLY_PACKET        (2)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.22
+// AVP: HPLMN-ODB (1418) 3GPP (10415)
+type AVP_Unsigned32 HPLMN_ODB
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.23
+// AVP: Item-Number (1419) 3GPP (10415)
+type AVP_Unsigned32 Item_Number
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.24
+// AVP: Cancellation-Type (1420) 3GPP (10415)
+type enumerated Cancellation_Type
+{
+  MME_UPDATE_PROCEDURE     (0),
+  SGSN_UPDATE_PROCEDURE    (1),
+  SUBSCRIPTION_WITHDRAWAL  (2),
+  UPDATE_PROCEDURE_IWF     (3),
+  INITIAL_ATTACH_PROCEDURE (4)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.25
+// AVP: DSR-Flags (1421) 3GPP (10415)
+type AVP_Unsigned32 DSR_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.26
+// AVP: DSA-Flags (1422) 3GPP (10415)
+type AVP_Unsigned32 DSA_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.27
+// AVP: Context-Identifier (1423) 3GPP (10415)
+type AVP_Unsigned32 Context_Identifier
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.29
+// AVP: Subscriber-Status (1424) 3GPP (10415)
+type enumerated Subscriber_Status
+{
+  SERVICE_GRANTED             (0),
+  OPERATOR_DETERMINED_BARRING (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.30
+// AVP: Operator-Determined-Barring (1425) 3GPP (10415)
+type AVP_Unsigned32 Operator_Determined_Barring
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.31
+// AVP: Access-Restriction-Data (1426) 3GPP (10415)
+type AVP_Unsigned32 Access_Restriction_Data
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.32
+// AVP: APN-OI-Replacement (1427) 3GPP (10415)
+type AVP_UTF8String APN_OI_Replacement
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.33
+// AVP: All-APN-Configurations-Included-Indicator (1428) 3GPP (10415)
+type enumerated All_APN_Configurations_Included_Indicator
+{
+  All_APN_CONFIGURATIONS_INCLUDED            (0),
+  MODIFIED_ADDED_APN_CONFIGURATIONS_INCLUDED (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.34
+// AVP: APN-Configuration-Profile (1429) 3GPP (10415)
+type AVP_Grouped APN_Configuration_Profile
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.35
+// AVP: APN-Configuration (1430) 3GPP (10415)
+type AVP_Grouped APN_Configuration
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.37
+// AVP: EPS-Subscribed-QoS-Profile (1431) 3GPP (10415)
+type AVP_Grouped EPS_Subscribed_QoS_Profile
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.38
+// AVP: VPLMN-Dynamic-Address-Allowed (1432) 3GPP (10415)
+type enumerated VPLMN_Dynamic_Address_Allowed
+{
+  NOTALLOWED (0),
+  ALLOWED    (1)  
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.39
+// AVP: STN-SR (1433) 3GPP (10415)
+type AVP_OctetString STN_SR
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.83
+// AVP: Alert-Reason (1434) 3GPP (10415)
+type enumerated Alert_Reason
+{
+  UE_PRESENT          (0),
+  UE_MEMORY_AVAILABLE (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.41
+// AVP: AMBR (1435) 3GPP (10415)
+type AVP_Grouped AMBR
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.78
+// AVP: CSG-Subscription-Data (1436) 3GPP (10415)
+type AVP_Grouped CSG_Subscription_Data
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.79
+// AVP: CSG-Id (1437) 3GPP (10415)
+type AVP_Unsigned32 CSG_Id
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.44
+// AVP: PDN-GW-Allocation-Type (1438) 3GPP (10415)
+type enumerated PDN_GW_Allocation_Type
+{
+  STATIC  (0),
+  DYNAMIC (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.80
+// AVP: Expiration-Date (1439) 3GPP (10415)
+type AVP_Time Expiration_Date
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.46
+// AVP: RAT-Frequency-Selection-Priority-ID (1440) 3GPP (10415)
+type AVP_Unsigned32 RAT_Frequency_Selection_Priority_ID
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.47
+// AVP: IDA-Flags (1441) 3GPP (10415)
+type AVP_Unsigned32 IDA_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.48
+// AVP: PUA-Flags (1442) 3GPP (10415)
+type AVP_Unsigned32 PUA_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.49
+// AVP: NOR-Flags (1443) 3GPP (10415)
+type AVP_Unsigned32 NOR_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.50
+// AVP: User-Id (1444) 3GPP (10415)
+type AVP_UTF8String User_Id
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.51
+// AVP: Equipment-Status (1445) 3GPP (10415)
+type enumerated Equipment_Status
+{
+  WHITELISTED (0),
+  BLACKLISTED (1),
+  GREYLISTED  (2)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.52
+// AVP: Regional-Subscription-Zone-Code (1446) 3GPP (10415)
+type AVP_OctetString Regional_Subscription_Zone_Code
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.53
+// AVP: RAND (1447) 3GPP (10415)
+type AVP_OctetString RAND
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.54
+// AVP: XRES (1448) 3GPP (10415)
+type AVP_OctetString XRES
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.55
+// AVP: AUTN (1449) 3GPP (10415)
+type AVP_OctetString AUTN
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.56
+// AVP: KASME (1450) 3GPP (10415)
+type AVP_OctetString KASME
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.98
+// AVP: Trace-Collection-Entity (1452) 3GPP (10415)
+type AVP_Address Trace_Collection_Entity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.59
+// AVP: Kc (1453) 3GPP (10415)
+type AVP_OctetString Kc
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.60
+// AVP: SRES (1454) 3GPP (10415)
+type AVP_OctetString SRES
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.62
+// AVP: PDN-Type (1456) 3GPP (10415)
+type enumerated PDN_Type
+{
+  IPv4 (0),
+  IPv6 (1),
+  IPv4v6 (2),
+  IPv4_OR_IPv6 (3)  
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.81
+// AVP: Roaming-Restricted-Due-To-Unsupported-Feature (1457) 3GPP (10415)
+type enumerated Roaming_Restricted_Due_To_Unsupported_Feature
+{
+  Roaming_Restricted_Due_To_Unsupported_Feature (0)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.63
+// AVP: Trace-Data (1458) 3GPP (10415)
+type AVP_Grouped Trace_Data
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.64
+// AVP: Trace-Reference (1459) 3GPP (10415)
+type AVP_OctetString Trace_Reference
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.67
+// AVP: Trace-Depth (1462) 3GPP (10415)
+// FS 3.3.2.10
+type AVP_Unsigned32 Trace_Depth
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.68
+// AVP: Trace-NE-Type-List (1463) 3GPP (10415)
+type AVP_OctetString Trace_NE_Type_List
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.69
+// AVP: Trace-Interface-List (1464) 3GPP (10415)
+type AVP_OctetString Trace_Interface_List
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.70
+// AVP: Trace-Event-List (1465) 3GPP (10415)
+type AVP_OctetString Trace_Event_List
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.71
+// AVP: OMC-Id (1466) 3GPP (10415)
+type AVP_OctetString OMC_Id
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.72
+// AVP: GPRS-Subscription-Data (1467) 3GPP (10415)
+type AVP_Grouped GPRS_Subscription_Data
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.73
+// AVP: Complete-Data-List-Included-Indicator (1468) 3GPP (10415)
+type enumerated Complete_Data_List_Included_Indicator
+{
+  All_PDP_CONTEXTS_INCLUDED            (0),
+  MODIFIED_ADDED_PDP_CONTEXTS_INCLUDED (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.74
+// AVP: PDP-Context (1469) 3GPP (10415)
+type AVP_Grouped PDP_Context
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.75
+// AVP: PDP-Type (1470) 3GPP (10415)
+type AVP_OctetString PDP_Type
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.6
+// AVP: 3GPP2-MEID (1471) 3GPP (10415)
+type AVP_OctetString 3GPP2_MEID
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.82
+// AVP: Specific-APN-Info (1472) 3GPP (10415)
+type AVP_Grouped Specific_APN_Info
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.84
+// AVP: LCS-Info (1473) 3GPP (10415)
+type AVP_Grouped LCS_Info
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.85
+// AVP: GMLC-Number (1474) 3GPP (10415)
+type AVP_OctetString GMLC_Number
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.86
+// AVP: LCS-PrivacyException (1475) 3GPP (10415)
+type AVP_Grouped LCS_PrivacyException
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.87
+// AVP: SS-Code (1476) 3GPP (10415)
+type AVP_OctetString SS_Code
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.88
+// AVP: SS-Status (1477) 3GPP (10415)
+type AVP_Grouped SS_Status
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.89
+// AVP: Notification-To-UE-User (1478) 3GPP (10415)
+type enumerated Notification_To_UE_User
+{
+  NOTIFY_LOCATION_ALLOWED                             (0),
+  NOTIFYANDVERIFY_LOCATION_ALLOWED_IF_NO_RESPONSE     (1),
+  NOTIFYANDVERIFY_LOCATION_NOT_ALLOWED_IF_NO_RESPONSE (2),
+  LOCATION_NOT_ALLOWED                                (3)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.90
+// AVP: External-Client (1479) 3GPP (10415)
+type AVP_Grouped External_Client
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.91
+// AVP: Client-Identity (1480) 3GPP (10415)
+type AVP_OctetString Client_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.92
+// AVP: GMLC-Restriction (1481) 3GPP (10415)
+type enumerated GMLC_Restriction
+{
+  GMLC_LIST    (0),
+  HOME_COUNTRY (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.93
+// AVP: PLMN-Client (1482) 3GPP (10415)
+type enumerated PLMN_Client
+{
+  BROADCAST_SERVICE            (0),
+  O_AND_M_HPLMN                (1),
+  O_AND_M_VPLMN                (2),
+  ANONYMOUS_LOCATION           (3),
+  TARGET_UE_SUBSCRIBED_SERVICE (4)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.94
+// AVP: Service-Type (1483) 3GPP (10415)
+type AVP_Grouped Service_Type
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.95
+// AVP: ServiceTypeIdentity (1484) 3GPP (10415)
+type AVP_Unsigned32 ServiceTypeIdentity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.96
+// AVP: MO-LR (1485) 3GPP (10415)
+type AVP_Grouped MO_LR
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.99
+// AVP: Teleservice-List (1486) 3GPP (10415)
+type AVP_Grouped Teleservice_List
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.100
+// AVP: TS-Code (1487) 3GPP (10415)
+type AVP_OctetString TS_Code
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.101
+// AVP: Call-Barring-Infor-List (1488) 3GPP (10415)
+type AVP_Grouped Call_Barring_Infor_List
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.102
+// AVP: SGSN-Number (1489) 3GPP (10415)
+type AVP_OctetString SGSN_Number
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.103
+// AVP: IDR-Flags (1490) 3GPP (10415)
+type AVP_Unsigned32 IDR_Flags
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.104
+// AVP: ICS-Indicator (1491) 3GPP (10415)
+type enumerated ICS_Indicator
+{
+  FALSE (0),
+  TRUE  (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.106
+// AVP: IMS-Voice-Over-PS-Sessions-Supported (1492) 3GPP (10415)
+type enumerated IMS_Voice_Over_PS_Sessions_Supported
+{
+  NOT_SUPPORTED (0),
+  SUPPORTED     (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.107
+// AVP: Homogeneous-Support-of-IMS-Voice-Over-PS-Sessions (1493) 3GPP (10415)
+type enumerated Homogeneous_Support_of_IMS_Voice_Over_PS_Sessions
+{
+  NOT_SUPPORTED (0),
+  SUPPORTED     (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.108
+// AVP: Last-UE-Activity-Time (1494) 3GPP (10415)
+type AVP_Time Last_UE_Activity_Time
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.110
+// AVP: EPS-User-State (1495) 3GPP (10415)
+type AVP_Grouped EPS_User_State
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.111
+// AVP: EPS-Location-Information (1496) 3GPP (10415)
+type AVP_Grouped EPS_Location_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.112
+// AVP: MME-User-State (1497) 3GPP (10415)
+type AVP_Grouped MME_User_State
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.113
+// AVP: SGSN-User-State (1498) 3GPP (10415)
+type AVP_Grouped SGSN_User_State
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.114
+// AVP: User-State (1499) 3GPP (10415)
+type enumerated User_State
+{
+  DETACHED                           (0),
+  ATTACHED_NOT_REACHABLE_FOR_PAGING  (1),
+  ATTACHED_REACHABLE_FOR_PAGING      (2),
+  CONNECTED_NOT_REACHABLE_FOR_PAGING (3),
+  CONNECTED_REACHABLE_FOR_PAGING     (4),
+  NETWORK_DETERMINED_NOT_REACHABLE   (5)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.115
+// AVP: MME-Location-Information (1600) 3GPP (10415)
+type AVP_Grouped MME_Location_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.116
+// AVP: SGSN-Location-Information (1601) 3GPP (10415)
+type AVP_Grouped SGSN_Location_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.117
+// AVP: E-UTRAN-Cell-Global-Identity (1602) 3GPP (10415)
+type AVP_OctetString E_UTRAN_Cell_Global_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.118
+// AVP: Tracking-Area-Identity (1603) 3GPP (10415)
+type AVP_OctetString Tracking_Area_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.119
+// AVP: Cell-Global-Identity (1604) 3GPP (10415)
+type AVP_OctetString Cell_Global_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.120
+// AVP: Routing-Area-Identity (1605) 3GPP (10415)
+type AVP_OctetString Routing_Area_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.121
+// AVP: Location-Area-Identity (1606) 3GPP (10415)
+type AVP_OctetString Location_Area_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.122
+// AVP: Service-Area-Identity (1607) 3GPP (10415)
+type AVP_OctetString Service_Area_Identity
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.123
+// AVP: Geographical-Information (1608) 3GPP (10415)
+type AVP_OctetString Geographical_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.124
+// AVP: Geodetic-Information (1609) 3GPP (10415)
+type AVP_OctetString Geodetic_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.125
+// AVP: Current-Location-Retrieved (1610) 3GPP (10415)
+type enumerated Current_Location_Retrieved
+{
+  ACTIVE_LOCATION_RETRIEVAL (0)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.126
+// AVP: Age-Of-Location-Information (1611) 3GPP (10415)
+type AVP_Unsigned32 Age_Of_Location_Information
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.127
+// AVP: Active-APN (1612) 3GPP (10415)
+type AVP_Grouped Active_APN
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.128
+// AVP: Error-Diagnostic (1614) 3GPP (10415)
+type enumerated Error_Diagnostic
+{
+  GPRS_DATA_SUBSCRIBED    (0),
+  NO_GPRS_DATA_SUBSCRIBED (1)
+}
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.75A
+// AVP: Ext-PDP-Type (1620) 3GPP (10415)
+type AVP_OctetString Ext_PDP_Type
+
+
+// 3GPP TS 29.272 V9.7.0
+// 7.3.129
+// AVP: Ext-PDP-Address (1621) 3GPP (10415)
+type AVP_Address Ext_PDP_Address

@@ -1,0 +1,151 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               GqInterface_S3_ETSI_TS183017_231.ddf
+//  Description:        DDF for Gq according to ETSI TS 183.017 V2.3.1
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: GQ
+// APPLICATION-REVISION: V231
+
+// AVP implementations according to: 
+// ETSI TS 183.017 V2.3.1 - DIAMETER protocol for session based policy set-up information exchange between
+//                          the Application Function (AF) and the Service Policy Decision Function (SPDF)
+//
+//
+// Dependant applications
+// 3GPP TS 29.209  - Policy control over Gq interface
+// 3GPP TS 29.214  - Policy and Charging Control over Rx reference point
+// ES 283.034      - e4 interface based on DIAMETER protocol
+// IETF RFC 3588   - Diameter Base Protocol
+// IETF RFC 4005   - Diameter Network Address Server
+
+// 3GPP TS 29.209 V6.7.0  6.3
+type enumerated Command_Code 
+{
+  Authorize_Authenticate (265),
+  Re_Auth                (258),
+  Session_Termination    (275),
+  Abort_Session          (274)  
+}
+
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Binding-information (450) ETSI (13019)
+// 7.3.1
+type AVP_Grouped Binding_information;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Binding-input-list (451) ETSI (13019)
+// 7.3.2
+type AVP_Grouped Binding_input_list;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Binding-output-list (452) ETSI (13019)
+// 7.3.3
+type AVP_Grouped Binding_output_list;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: V6-transport-address (453) ETSI (13019)
+// 7.3.4
+type AVP_Grouped V6_transport_address;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: V4-transport-address (454) ETSI (13019)
+// 7.3.5
+type AVP_Grouped V4_transport_address;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Port-number (455) ETSI (13019)
+// 7.3.6
+type AVP_Unsigned32 Port_number;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Reservation-class (456) ETSI (13019)
+// 7.3.7
+type AVP_Unsigned32 Reservation_class;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Latching-indication (457) ETSI (13019)
+// 7.3.8
+type enumerated Latching_indication
+{
+  LATCH   (0),
+  RELATCH (1)
+}
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Reservation-priority (458) ETSI (13019)
+// 7.3.9
+type enumerated Reservation_priority
+{
+  DEFAULT        (0),
+  PRIORITY_ONE   (1),
+  PRIORITY_TWO   (2),
+  PRIORITY_THREE (3),
+  PRIORITY_FOUR  (4),
+  PRIORITY_FIVE  (5),
+  PRIORITY_SIX   (6),
+  PRIORITY_SEVEN (7)
+}
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Service-Class (459) ETSI (13019)
+// 7.3.33
+type AVP_UTF8String Service_Class;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Authorization-Package-Id (461) ETSI (13019)
+// 7.3.37
+type AVP_UTF8String Authorization_Package_Id;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Media-Authorization-Context-Id (462) ETSI (13019)
+// 7.3.38
+type AVP_UTF8String Media_Authorization_Context_Id;
+
+// ETSI TS 183.017 V2.3.1
+// AVP: Overbooking-indicator (460) ETSI (13019)
+// 7.3.35
+type enumerated Overbooking_indicator
+{
+  OVERBOOKING_NOT_REQUIRED (0),
+  OVERBOOKING_REQUIRED     (1)
+}

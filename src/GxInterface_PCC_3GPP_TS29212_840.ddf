@@ -1,0 +1,555 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               GxInterface_PCC_3GPP_TS29212_840.ddf
+//  Description:        DDF for Gx according to 3GPP TS 29.212 V8.4.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: PCC
+// APPLICATION-REVISION: V8_4_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.212 V8.4.0 - Policy and Charging Control over Gx interface
+//
+//
+// Dependant applications 
+// 3GPP TS 29.061  - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
+// 3GPP TS 29.214  - Policy and Charging Control over Rx reference points
+// 3GPP TS 29.229  - Cx and Dx interfaces based on the Diameter protocol
+// IETF RFC 3588   - Diameter Base Protocol
+// IETF RFC 4005   - Diameter Network Address Server
+// IETF RFC 4006   - Diameter Credit Control Application
+// 3GPP2 X.S0011-D - (3GPP2-BSID AVP reused for Gxx interface)
+//
+// Notes: 
+// Present application is based on 3GPP TS 29.210 V6.7.0 but has its own vendor 
+// specific Diameter application with application id: 16777238
+//
+
+// 3GPP TS 29.212 V8.4.0 5.6 
+type enumerated Command_Code {
+  Credit_Control (272),
+  Re_Auth        (258)
+}
+
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Access-Network-Charging-Identifier-Gx (1022) 3GPP (10415)
+// 5.3.22
+type AVP_Grouped Access_Network_Charging_Identifier_Gx;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Allocation-Retention-Priority (1034) 3GPP (10415)
+// 5.3.32
+type AVP_Grouped Allocation_Retention_Priority;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: AN-GW-Address (1050) 3GPP (10415)
+// 5.3.49
+type AVP_Address AN_GW_Address;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: APN-Aggregate-Max-Bitrate-DL (1040) 3GPP (10415)
+// 5.3.39
+type AVP_Unsigned32 APN_Aggregate_Max_Bitrate_DL;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: APN-Aggregate-Max-Bitrate-UL (1041) 3GPP (10415)
+// 5.3.40
+type AVP_Unsigned32 APN_Aggregate_Max_Bitrate_UL;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Bearer-Control-Mode (1023) 3GPP (10415)
+// 5.3.23
+type enumerated Bearer_Control_Mode
+{
+  UE_ONLY  (0),
+  RESERVED (1),
+  UE_NW    (2)
+}
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Bearer-Identifier (1020) 3GPP (10415)
+// 5.3.20
+type AVP_OctetString Bearer_Identifier;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Bearer-Operation (1021) 3GPP (10415)
+// 5.3.21
+type enumerated Bearer_Operation
+{
+  TERMINATION   (0),
+  ESTABLISHMENT (1),
+  MODIFICATION  (2)
+}
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Bearer-Usage (1000) 3GPP (10415)
+// 5.3.1
+type enumerated Bearer_Usage
+{
+  GENERAL        (0),
+  IMS_SIGNALLING (1)
+}
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Charging-Rule-Install (1001) 3GPP (10415)
+// 5.3.2
+type AVP_Grouped Charging_Rule_Install;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Charging-Rule-Remove (1002) 3GPP (10415)
+// 5.3.3
+type AVP_Grouped Charging_Rule_Remove;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Charging-Rule-Definition (1003) 3GPP (10415)
+// 5.3.4
+type AVP_Grouped Charging_Rule_Definition;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Charging-Rule-Base-Name (1004) 3GPP (10415)
+// 5.3.5
+type AVP_UTF8String Charging_Rule_Base_Name;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Charging-Rule-Name (1005) 3GPP (10415)
+// 5.3.6
+type AVP_OctetString Charging_Rule_Name;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Charging-Rule-Report (1018) 3GPP (10415)
+// 5.3.18
+type AVP_Grouped Charging_Rule_Report;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: CoA-IP-Address (1035) 3GPP (10415)
+// 5.3.33
+type AVP_Address CoA_IP_Address;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: CoA-Information (1039) 3GPP (10415)
+// 5.3.37
+type AVP_Grouped CoA_Information;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Default-EPS-Bearer-QoS (1049) 3GPP (10415)
+// 5.3.48
+type AVP_Grouped Default_EPS_Bearer_QoS;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Event-Report-Indication (1033) 3GPP (10415)
+// 5.3.30
+type AVP_Grouped Event_Report_Indication;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Event-Trigger (1006) 3GPP (10415)
+// 5.3.7
+type enumerated Event_Trigger
+{
+  SGSN_CHANGE                         (0),
+  QOS_CHANGE                          (1),
+  RAT_CHANGE                          (2),
+  TFT_CHANGE                          (3),
+  PLMN_CHANGE                         (4),
+  LOSS_OF_BEARER                      (5),
+  RECOVERY_OF_BEARER                  (6),
+  IP_CAN_CHANGE                       (7),
+  QOS_CHANGE_EXCEEDING_AUTHORIZATION (11),
+  RAI_CHANGE                         (12),
+  USER_LOCATION_CHANGE               (13),
+  NO_EVENT_TRIGGERS                  (14),
+  OUT_OF_CREDIT                      (15),
+  REALLOCATION_OF_CREDIT             (16),
+  REVALIDATION_TIMEOUT               (17),
+  UE_IP_ADDRESS_ALLOCATE             (18),
+  UE_IP_ADDRESS_RELEASE              (19),
+  DEFAULT_EPS_BEARER_QOS_CHANGE      (20),
+  AN_GW_CHANGE                       (21),
+  SUCCESSFUL_RESOURCE_ALLOCATION     (22),
+  RESOURCE_MODIFICATION_REQUEST      (23)
+}
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Flow-Information (1058) 3GPP (10415)
+// 5.3.53
+type AVP_Grouped Flow_Information;
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Flow-Label (1057) 3GPP (10415)
+// 5.3.52
+type AVP_OctetString Flow_Label;
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: IP-CAN-Type (1027) 3GPP (10415)
+// 5.3.27
+type enumerated IP_CAN_Type
+{
+  threeGPP_GPRS (0),
+  DOCSIS        (1),
+  xDSL          (2),
+  WiMAX         (3),
+  threeGPP2     (4),
+  threeGPP_EPS  (5)
+}
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Guaranteed-Bitrate-DL (1025) 3GPP (10415)
+// 5.3.25
+type AVP_Unsigned32 Guaranteed_Bitrate_DL;
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Guaranteed-Bitrate-UL (1026) 3GPP (10415)
+// 5.3.26
+type AVP_Unsigned32 Guaranteed_Bitrate_UL;
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Metering-Method (1007) 3GPP (10415)
+// 5.3.8
+type enumerated Metering_Method
+{
+  DURATION            (0),
+  VOLUME              (1),
+  DURATION_VOLUME     (2)
+}
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Network-Request-Support (1024) 3GPP (10415)
+// 5.3.24
+type enumerated Network_Request_Support
+{
+  NETWORK_REQUEST_NOT_SUPPORTED (0),
+  NETWORK_REQUEST_SUPPORTED (1) 
+}
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Offline (1008) 3GPP (10415)
+// 5.3.9
+type enumerated Offline
+{
+  DISABLE_OFFLINE     (0),
+  ENABLE_OFFLINE      (1)
+}
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Online (1009) 3GPP (10415)
+// 5.3.10
+type enumerated Online
+{
+  DISABLE_ONLINE      (0),
+  ENABLE_ONLINE       (1)
+}
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Packet-Filter-Content (1059) 3GPP (10415)
+// 5.3.54
+type AVP_IPFilterRule Packet_Filter_Content;
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Packet-Filter-Identifier (1060) 3GPP (10415)
+// 5.3.55
+type AVP_OctetString Packet_Filter_Identifier;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Packet-Filter-Information (1061) 3GPP (10415)
+// 5.3.56
+type AVP_Grouped Packet_Filter_Information;
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Packet-Filter-Operation (1062) 3GPP (10415)
+// 5.3.57
+type enumerated Packet_Filter_Operation
+{
+  DELETION  (0),
+  ADDITION  (1),
+  MODIFICATION (2)
+}
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Precedence (1010) 3GPP (10415)
+// 5.3.11
+type AVP_Unsigned32 Precedence;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Pre-emption-Capability (1047) 3GPP (10415)
+// 5.3.46
+type enumerated Pre_emption_Capability
+{
+  PRE_EMPTION_CAPABILITY_ENABLED  (0),
+  PRE_EMPTION_CAPABILITY_DISABLED (1)
+}
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Pre-emption-Vulnerability (1048) 3GPP (10415)
+// 5.3.47
+type enumerated Pre_emption_Vulnerability
+{
+  PRE_EMPTION_VULNERABILITY_ENABLED  (0),
+  PRE_EMPTION_VULNERABILITY_DISABLED (1)
+}
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Priority-Level (1046) 3GPP (10415)
+// 5.3.45
+type AVP_Unsigned32 Priority_Level;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Reporting-Level (1011) 3GPP (10415)
+// 5.3.12
+type enumerated Reporting_Level
+{
+  SERVICE_IDENTIFIER_LEVEL (0),
+  RATING_GROUP_LEVEL       (1)
+}
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: PCC-Rule-Status (1019) 3GPP (10415)
+// 5.3.19
+type enumerated PCC_Rule_Status
+{
+  ACTIVE               (0),
+  INACTIVE             (1),
+  TEMPORARILY_INACTIVE (2)  
+}
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Session-Release-Cause (1045) 3GPP (10415)
+// 5.3.44
+type enumerated Session_Release_Cause
+{
+  UNSPECIFIED_REASON            (0),
+  UE_SUBSCRIPTION_REASON        (1),
+  INSUFFICIENT_SERVER_RESOURCES (2)
+}
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Class-Identifier (1028) 3GPP (10415)
+// 5.3.17
+type AVP_Unsigned32 QoS_Class_Identifier;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Information (1016) 3GPP (10415)
+// 5.3.16
+type AVP_Grouped QoS_Information;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Negotiation (1029) 3GPP (10415)
+// 5.3.28
+type enumerated QoS_Negotiation
+{
+  NO_QoS_NEGOTIATION        (0),
+  QoS_NEGOTIATION_SUPPORTED (1)
+}
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Upgrade (1030) 3GPP (10415)
+// 5.3.29
+type enumerated QoS_Upgrade
+{
+  QoS_UPGRADE_NOT_SUPPORTED (0),
+  QoS_UPGRADE_SUPPORTED     (1)
+}
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Resource-Allocation-Notification (1051) 3GPP (10415)
+// 5.3.50
+type enumerated Resource_Allocation_Notification
+{
+  ENABLE_NOTIFICATION (0)
+}
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Rule-Failure-Code (1031) 3GPP (10415)
+// 5.3.38
+type enumerated Rule_Failure_Code
+{
+  UNKNOWN_RULE_NAME        		(1),
+  RATING_GROUP_ERROR       		(2),
+  SERVICE_IDENTIFIER_ERROR 		(3),
+  GW_PCEF_MALFUNCTION      		(4),
+  RESOURCES_LIMITATION     		(5),
+  MAX_NR_BEARERS_REACHED   		(6),
+  UNKNOWN_BEARER_ID        		(7),
+  MISSING_BEARER_ID        		(8),
+  MISSING_FLOW_DESCRIPTION 		(9),
+  RESOURCE_ALLOCATION_FAILURE 	       (10),
+  UNSUCCESSFUL_QOS_VALIDATION          (11)
+}
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Security-Parameter-Index (1056) 3GPP (10415)
+// 5.3.51
+type AVP_OctetString Security_Parameter_Index;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: TFT-Filter (1012) 3GPP (10415)
+// 5.3.13
+type AVP_IPFilterRule TFT_Filter;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: TFT-Packet-Filter-Information (1013) 3GPP (10415)
+// 5.3.14
+type AVP_Grouped TFT_Packet_Filter_Information;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: ToS-Traffic-Class (1014) 3GPP (10415)
+// 5.3.15
+type AVP_OctetString ToS_Traffic_Class;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Tunnel-Header-Filter (1036) 3GPP (10415)
+// 5.3.34
+type AVP_IPFilterRule Tunnel_Header_Filter;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: Tunnel-Header-Length (1037) 3GPP (10415)
+// 5.3.35
+type AVP_Unsigned32 Tunnel_Header_Length;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Tunnel-Information (1038) 3GPP (10415)
+// 5.3.36
+type AVP_Grouped Tunnel_Information;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: RAT-Type (1032) 3GPP (10415)
+// 5.3.31
+type enumerated RAT_Type 
+{
+  WLAN              (0),
+  UTRAN          (1000),
+  GERAN          (1001),
+  GAN            (1002),
+  HSPA_EVOLUTION (1003),
+  EUTRAN         (1004),
+  CDMA2000_1X    (2000),
+  HRPD           (2001),
+  UMB            (2002)
+}
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Revalidation-Time (1042) 3GPP (10415)
+// 5.3.41
+type AVP_Time Revalidation_Time;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Rule-Activation-Time (1043) 3GPP (10415)
+// 5.3.42
+type AVP_Time Rule_Activation_Time;
+
+
+// 3GPP TS 29.212 V8.4.0
+// AVP: Rule-DeActivation-Time (1044) 3GPP (10415)
+// 5.3.43
+type AVP_Time Rule_DeActivation_Time;
+
+
+
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Rule-Install (1051) 3GPP (10415)
+// 5a.3.1
+//type AVP_Grouped QoS_Rule_Install;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Rule-Remove (1052) 3GPP (10415)
+// 5a.3.2
+type AVP_Grouped QoS_Rule_Remove;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Rule-Definition (1053) 3GPP (10415)
+// 5a.3.3
+type AVP_Grouped QoS_Rule_Definition;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Rule-Name (1054) 3GPP (10415)
+// 5a.3.4
+type AVP_OctetString QoS_Rule_Name;
+
+
+// 3GPP TS 29.212 V8.4.0 
+// AVP: QoS-Rule-Report (1055) 3GPP (10415)
+// 5a.3.5
+type AVP_Grouped QoS_Rule_Report;
+

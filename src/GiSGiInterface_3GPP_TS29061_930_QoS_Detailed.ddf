@@ -1,0 +1,371 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               GiSGiInterface_3GPP_TS29061_930_QoS_Detailed.ddf
+//  Description:        DDF for Gi/SGi according to 3GPP TS 29.061 V9.3.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: GI
+// APPLICATION-REVISION: V9_3_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.061 V9.3.0 - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
+//
+//
+// Dependant applications
+// -
+
+// 3GPP TS 29.061 V9.3.0 16a.4
+type enumerated Command_Code 
+{
+  Authorize_Authenticate (265),
+  Session_Termination    (275),
+  Abort_Session          (274),
+  Accounting             (271)
+}
+
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-IMSI (1) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_IMSI;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Charging-Id (2) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_Charging_Id;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-PDP-Type (3) 3GPP (10415)
+// 16.4.7
+type enumerated 3GPP_PDP_Type
+{
+  IPv4   (0),
+  PPP    (1),
+  IPv6   (2),
+  IPv4v6 (3)
+}
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-CG-Address (4) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_CG_Address;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-GPRS-Negotiated-QoS-Profile (5) 3GPP (10415)
+// 16.4.7
+type GPRS_Negotiated_QoS_Profile 3GPP_GPRS_Negotiated_QoS_Profile;
+
+// EXT_CC: GiSGiInterface_3GPP_TS29061_930_QoS_Detailed.tpl
+
+modulepar boolean Negotiated_QoS_Profile_decode_as_detailed:=false;
+
+type union GPRS_Negotiated_QoS_Profile{
+  AVP_UTF8String                       raw_QoS_Profile,
+  GPRS_Negotiated_QoS_Profile_detailed QoS_Profile_detailed
+}
+
+type record GPRS_Negotiated_QoS_Profile_detailed{
+  charstring        qos_profile_header length(3),
+  AVP_qos_profile   qos_profile_data
+} with {
+  variant (qos_profile_data) "CROSSTAG(
+                                rel98, qos_profile_header=\"98-\";
+                                rel99, qos_profile_header=\"99-\";
+                                rel05, qos_profile_header=\"05-\";
+                                rel07, qos_profile_header=\"07-\";
+                                
+                              )"
+}
+
+type union AVP_qos_profile
+{
+  qos_rel98_t  rel98,
+  qos_rel99_t  rel99,
+  qos_rel05_t  rel05,
+  qos_rel07_t  rel07
+}
+
+type bitstring BITSTR1 length(1) with { variant "FIELDLENGTH(1)" };
+type bitstring BITSTR2 length(2) with { variant "FIELDLENGTH(2)" };
+type bitstring BITSTR3 length(3) with { variant "FIELDLENGTH(3)" };
+type bitstring BITSTR4 length(4) with { variant "FIELDLENGTH(4)" };
+type bitstring BITSTR5 length(5) with { variant "FIELDLENGTH(5)" };
+type bitstring BITSTR6 length(6) with { variant "FIELDLENGTH(6)" };
+type octetstring OCTSTR1 length(1) with { variant "FIELDLENGTH(1)" };
+
+type record qos_rel98_t // 3GPP 24.008 v3.0.0
+{
+  BITSTR3                reliabilityClass,
+  BITSTR3                delayClass,
+  BITSTR2                spare1,  // '00'B
+  BITSTR3                precedenceClass,
+  BITSTR1                spare2,
+  BITSTR4                peakThroughput,
+  BITSTR5                meanThroughput,
+  BITSTR3                spare3
+} with {variant ""}
+
+type record qos_rel99_t // 3GPP 24.008 v4.16.0
+{
+  BITSTR3                reliabilityClass,
+  BITSTR3                delayClass,
+  BITSTR2                spare1,  // '00'B
+  BITSTR3                precedenceClass,
+  BITSTR1                spare2,
+  BITSTR4                peakThroughput,
+  BITSTR5                meanThroughput,
+  BITSTR3                spare3,
+  BITSTR3                deliverErroneusSDU,
+  BITSTR2                deliveryOrder,
+  BITSTR3                trafficClass,
+  OCTSTR1                maxSDUSize,
+  OCTSTR1                maxBitrateUplink,
+  OCTSTR1                maxBitrateDownlink,
+  BITSTR4                sduErrorRatio,
+  BITSTR4                residualBER,
+  BITSTR2                trafficHandlingPriority,
+  BITSTR6                transferDelay,
+  OCTSTR1                guaranteedBitRateUplink,
+  OCTSTR1                guaranteedBitRateDownlink
+} with {variant ""}
+
+type record qos_rel05_t // 3GPP 24.008 v6.12.0
+{
+  BITSTR3                reliabilityClass,
+  BITSTR3                delayClass,
+  BITSTR2                spare1,  // '00'B
+  BITSTR3                precedenceClass,
+  BITSTR1                spare2,
+  BITSTR4                peakThroughput,
+  BITSTR5                meanThroughput,
+  BITSTR3                spare3,
+  BITSTR3                deliverErroneusSDU,
+  BITSTR2                deliveryOrder,
+  BITSTR3                trafficClass,
+  OCTSTR1                maxSDUSize,
+  OCTSTR1                maxBitrateUplink,
+  OCTSTR1                maxBitrateDownlink,
+  BITSTR4                sduErrorRatio,
+  BITSTR4                residualBER,
+  BITSTR2                trafficHandlingPriority,
+  BITSTR6                transferDelay,
+  OCTSTR1                guaranteedBitRateUplink,
+  OCTSTR1                guaranteedBitRateDownlink,
+  BITSTR4                sourceStatisticsDescriptor,
+  BITSTR1                signallingIndication,
+  BITSTR3                spare4,
+  OCTSTR1                maxBitRateDownlinkExtended,
+  OCTSTR1                guaranteedBitRateDownlinkExtended
+} with {variant ""}
+
+type record qos_rel07_t
+{
+  BITSTR3                reliabilityClass,
+  BITSTR3                delayClass,
+  BITSTR2                spare1,  // '00'B
+  BITSTR3                precedenceClass,
+  BITSTR1                spare2,
+  BITSTR4                peakThroughput,
+  BITSTR5                meanThroughput,
+  BITSTR3                spare3,
+  BITSTR3                deliverErroneusSDU optional,
+  BITSTR2                deliveryOrder optional,
+  BITSTR3                trafficClass optional,
+  OCTSTR1                maxSDUSize optional,
+  OCTSTR1                maxBitrateUplink optional,
+  OCTSTR1                maxBitrateDownlink optional,
+  BITSTR4                sduErrorRatio optional,
+  BITSTR4                residualBER optional,
+  BITSTR2                trafficHandlingPriority optional,
+  BITSTR6                transferDelay optional,
+  OCTSTR1                guaranteedBitRateUplink optional,
+  OCTSTR1                guaranteedBitRateDownlink optional,
+  BITSTR4                sourceStatisticsDescriptor optional,
+  BITSTR1                signallingIndication optional,
+  BITSTR3                spare4 optional,
+  OCTSTR1                maxBitRateDownlinkExtended optional,
+  OCTSTR1                guaranteedBitRateDownlinkExtended optional,
+  OCTSTR1                maxBitRateUplinkExtended optional,
+  OCTSTR1                guaranteedBitRateUplinkExtended  optional
+} with {variant ""}
+
+external function f_decode_qos_rel98(in octetstring stream, out qos_rel98_t pdu) return integer
+with { extension "prototype(backtrack) decode(RAW)" };
+external function f_decode_qos_rel99(in octetstring stream, out qos_rel99_t pdu) return integer
+with { extension "prototype(backtrack) decode(RAW)" };
+external function f_decode_qos_rel05(in octetstring stream, out qos_rel05_t pdu) return integer
+with { extension "prototype(backtrack) decode(RAW)" };
+external function f_decode_qos_rel07(in octetstring stream, out qos_rel07_t pdu) return integer
+with { extension "prototype(backtrack) decode(RAW)" };
+external function f_enc_AVP_qos_profile(in AVP_qos_profile pdu) return octetstring
+with { extension "prototype(convert) encode(RAW)" };
+
+external function f_handle_QoS_Profile(inout GPRS_Negotiated_QoS_Profile pl_pdu)
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-SGSN-Address (6) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_SGSN_Address;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-GGSN-Address (7) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_GGSN_Address;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-IMSI-MCC-MNC (8) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_IMSI_MCC_MNC;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-GGSN-MCC-MNC (9) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_GGSN_MCC_MNC;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-NSAPI (10) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_NSAPI;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Session-Stop-Indicator (11) 3GPP (10415)
+type AVP_UTF8String 3GPP_Session_Stop_Indicator;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Selection-Mode (12) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_Selection_Mode;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Charging-Characteristics (13) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_Charging_Characteristics;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-CG-IPv6-Address (14) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_CG_IPv6_Address;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-SGSN-IPv6-Address (15) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_SGSN_IPv6_Address;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-GGSN-IPv6-Address (16) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_GGSN_IPv6_Address;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-IPv6-DNS-Servers (17) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_IPv6_DNS_Servers;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-SGSN-MCC-MNC (18) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String 3GPP_SGSN_MCC_MNC;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-IMEISV (20) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_IMEISV;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-RAT-Type (21) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_RAT_Type;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-User-Location-Info (22) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_User_Location_Info;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-MS-TimeZone (23) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_MS_TimeZone;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-CAMEL-Charging-Info (24) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_CAMEL_Charging_Info;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Packet-Filter (25) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_Packet_Filter;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Negotiated-DSCP (26) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_Negotiated_DSCP;
+
+
+// 3GPP TS 29.061 V9.3.0
+// AVP: 3GPP-Allocate-IP-Type (27) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString 3GPP_Allocate_IP_Type;
+

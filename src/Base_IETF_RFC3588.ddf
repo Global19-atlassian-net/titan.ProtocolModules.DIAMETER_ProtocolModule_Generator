@@ -1,0 +1,368 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               Base_IETF_RFC3588.ddf
+//  Description:	DDF for the Diameter base AVPs
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: BASE
+// APPLICATION-REVISION: RFC3588
+
+//
+// 4.5. Diameter Base Protocol AVPs
+//
+
+// RFC 3588 3.1
+type enumerated Command_Code 
+{
+  Abort_Session         (274),
+  Accounting            (271),
+  Capabilities_Exchange (257),
+  Device_Watchdog       (280),
+  Disconnect_Peer       (282),
+  Re_Auth               (258),
+  Session_Termination   (275)
+}
+   
+
+
+// RFC 3588 
+// AVP: Acct-Interim-Interval (85)
+// 9.8.2
+type AVP_Unsigned32 Acct_Interim_Interval;
+
+// RFC 3588 
+// AVP: Accounting-Realtime-Required (483)
+// 9.8.7
+type enumerated Accounting_Realtime_Required
+{
+  DELIVER_AND_GRANT (1),
+  GRANT_AND_STORE   (2),
+  GRANT_AND_LOSE    (3)
+} 
+
+// RFC 3588 
+// AVP: Acct-Multi-Session-Id (50)
+// 9.8.5
+type AVP_UTF8String Acct_Multi_Session_Id;
+
+// RFC 3588 
+// AVP: Accounting-Record-Number (485)
+// 9.8.3
+type AVP_Unsigned32 Accounting_Record_Number;
+
+// RFC 3588 
+// AVP: Accounting-Record-Type (480)
+// 9.8.1
+type enumerated Accounting_Record_Type
+{
+  EVENT_RECORD                   (1),
+  START_RECORD                   (2),
+  INTERIM_RECORD                 (3),
+  STOP_RECORD                    (4)
+}
+
+// RFC 3588 
+// AVP: Accounting-Session-Id (44)
+// 9.8.4
+type AVP_OctetString Accounting_Session_Id;
+
+// RFC 3588 
+// AVP: Accounting-Sub-Session-Id (287)
+// 9.8.6
+type AVP_Unsigned64 Accounting_Sub_Session_Id;
+
+// RFC 3588 
+// AVP: Acct-Application-Id (259)
+// 6.9
+type AVP_Unsigned32 Acct_Application_Id;
+
+// RFC 3588 
+// AVP: Auth-Application-Id (258)
+// 6.8
+type AVP_Unsigned32 Auth_Application_Id;
+
+// RFC 3588 
+// AVP: Auth-Request-Type (274) 
+// 8.7
+type enumerated Auth_Request_Type
+{
+  AUTHENTICATE_ONLY         (1),
+  AUTHORIZE_ONLY            (2),
+  AUTHORIZE_AUTHENTICATE    (3)
+}
+
+// RFC 3588 
+// AVP: Authorization-Lifetime (291)
+// 8.9
+type AVP_Unsigned32 Authorization_Lifetime;
+
+// RFC 3588 
+// AVP: Auth-Grace-Period (276)
+// 8.10
+type AVP_Unsigned32 Auth_Grace_Period;
+     
+// RFC 3588 
+// AVP: Auth-Session-State (277)
+// 8.11
+type enumerated Auth_Session_State
+{
+  STATE_MAINTAINED         (0),
+  NO_STATE_MAINTAINED      (1)
+}
+
+// RFC 3588 
+// AVP: Re-Auth-Request-Type (285) 
+// 8.12
+type enumerated Re_Auth_Request_Type
+{
+  AUTHORIZE_ONLY         (0),
+  AUTHORIZE_AUTHENTICATE (1)
+}
+
+// RFC 3588 
+// AVP: Class (25)
+// 8.20
+type AVP_OctetString Class;
+
+// RFC 3588 
+// AVP: Destination-Host (293)
+// 6.5
+type AVP_DiameterIdentity Destination_Host;
+
+// RFC 3588 
+// AVP: Destination-Realm (283)
+// 6.6
+type AVP_DiameterIdentity Destination_Realm;
+
+// RFC 3588 
+// AVP: Disconnect-Cause (273)
+// 5.4.3
+type enumerated Disconnect_Cause
+{
+  REBOOTING                  (0),
+  BUSY                       (1),
+  DO_NOT_WANT_TO_TALK_TO_YOU (2)
+}
+
+// RFC 3588 
+// AVP: E2E-Sequence (300)
+// 6.15
+type AVP_Grouped E2E_Sequence;
+
+// RFC 3588 
+// AVP: Error-Message (281)
+// 7.3
+type AVP_UTF8String Error_Message;
+
+// RFC 3588 
+// AVP: Error-Reporting-Host (294) 
+// 7.4
+type AVP_DiameterIdentity Error_Reporting_Host;
+
+// RFC 3588 
+// AVP: Event-Timestamp (55)
+// 8.21
+type AVP_Time Event_Timestamp;
+
+// RFC 3588 
+// AVP: Experimental-Result (297)
+// 7.6
+type AVP_Grouped Experimental_Result;
+
+// RFC 3588 
+// AVP: Experimental-Result-Code (298)
+// 7.7
+type AVP_Unsigned32 Experimental_Result_Code;
+
+// RFC 3588 
+// AVP: Failed-AVP (279)
+// 7.5
+type AVP_Grouped Failed_AVP;
+
+// RFC 3588 
+// AVP: Firmware-Revision (267)
+// 5.3.4
+type AVP_Unsigned32 Firmware_Revision;
+
+// RFC 3588 
+// AVP: Host-IP-Address (257)
+// 5.3.5
+type AVP_Address Host_IP_Address;
+
+// RFC 3588 
+// AVP: Inband-Security-Id (299)
+// 6.10
+type AVP_Unsigned32 Inband_Security_Id;
+
+// RFC 3588 
+// AVP: Multi-Round-Time-Out (272)
+// 8.19
+type AVP_Unsigned32 Multi_Round_Time_Out;
+
+// RFC 3588 
+// AVP: Origin-Host (264)
+// 6.3
+type AVP_DiameterIdentity Origin_Host;
+
+// RFC 3588 
+// AVP: Origin-Realm (296)
+// 6.4
+type AVP_DiameterIdentity Origin_Realm;
+
+// RFC 3588 
+// AVP: Origin-State-Id (278)
+// 8.16
+type AVP_Unsigned32 Origin_State_Id;
+
+// RFC 3588 
+// AVP: Product-Name (269)
+// 5.3.7
+type AVP_UTF8String Product_Name;
+
+// RFC 3588 
+// AVP: Proxy-Host (280)
+// 6.7.3
+type AVP_DiameterIdentity Proxy_Host;
+
+// RFC 3588 
+// AVP: Proxy-Info (284)
+// 6.7.2
+type AVP_Grouped Proxy_Info;
+
+// RFC 3588 
+// AVP: Proxy-State (33)
+// 6.7.4
+type AVP_OctetString Proxy_State;
+
+// RFC 3588 
+// AVP: Redirect-Host (292)
+// 6.12
+type AVP_DiameterURI Redirect_Host;
+
+// RFC 3588 
+// AVP: Redirect-Host-Usage (261)
+// 6.13
+type enumerated Redirect_Host_Usage
+{
+  DONT_CACHE            (0),
+  ALL_SESSION           (1),
+  ALL_REALM             (2),
+  REALM_AND_APPLICATION (3),
+  ALL_APPLICATION       (4),
+  ALL_HOST              (5),
+  ALL_USER              (6)
+}
+
+// RFC 3588 
+// AVP: Redirect-Max-Cache-Time (262)
+// 6.14
+type AVP_Unsigned32 Redirect_Max_Cache_Time;
+
+// RFC 3588 
+// AVP: Result-Code (268)
+// 7.1
+type AVP_Unsigned32 Result_Code;
+
+// RFC 3588 
+// AVP: Route-Record (282)
+// 6.7.1
+type AVP_DiameterIdentity Route_Record;
+
+// RFC 3588 
+// AVP: Session-Id (263)
+// 8.8
+type AVP_UTF8String Session_Id;
+
+// RFC 3588 
+// AVP: Session-Timeout (27)
+// 8.13
+type AVP_Unsigned32 Session_Timeout;
+
+// RFC 3588 
+// AVP: Session-Binding (270)
+// 8.17
+type AVP_Unsigned32 Session_Binding;
+
+// RFC 3588 
+// AVP: Session-Server-Failover (271)
+// 8.18
+type enumerated Session_Server_Failover
+{
+  REFUSE_SERVICE                 (0),
+  TRY_AGAIN                      (1),
+  ALLOW_SERVICE                  (2),
+  TRY_AGAIN_ALLOW_SERVICE        (3)
+}
+
+// RFC 3588 
+// AVP: Supported-Vendor-Id (265)
+// 5.3.6
+type AVP_Unsigned32 Supported_Vendor_Id;
+
+// RFC 3588 
+// AVP: Termination-Cause (295)
+// 8.15
+type enumerated Termination_Cause
+{
+  DIAMETER_LOGOUT                (1),
+  DIAMETER_SERVICE_NOT_PROVIDED  (2),
+  DIAMETER_BAD_ANSWER            (3),
+  DIAMETER_ADMINISTRATIVE        (4),
+  DIAMETER_LINK_BROKEN           (5),
+  DIAMETER_AUTH_EXPIRED          (6),
+  DIAMETER_USER_MOVED            (7),
+  DIAMETER_SESSION_TIMEOUT       (8)
+}
+
+// RFC 3588 
+// AVP: User-Name (1)
+// 8.14
+type AVP_UTF8String User_Name;			
+
+// RFC 3588 
+// AVP: Vendor-Id (266)
+// 5.3.3
+type AVP_Unsigned32 Vendor_Id;
+
+// RFC 3588 
+// AVP: Vendor-Specific-Application-Id (260)
+// 6.11
+type AVP_Grouped Vendor_Specific_Application_Id;
+

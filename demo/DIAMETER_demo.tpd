@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2014 Ericsson
+
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+ -->
+<TITAN_Project_File_Information version="1.0">
+  <ProjectName>DIAMETER_demo</ProjectName>
+  <ReferencedProjects>
+    <ReferencedProject name="SCTPasp_CNL113469" projectLocationURI="../../../TestPorts/SCTPasp_CNL113469/SCTPasp_CNL113469.tpd"/>
+    <ReferencedProject name="TCPasp_CNL113347" projectLocationURI="../../../TestPorts/TCPasp_CNL113347/TCPasp_CNL113347.tpd"/>
+  </ReferencedProjects>
+  <Files>
+    <FileResource projectRelativePath="DIAMETER_EncDec.cc" relativeURI="../src/DIAMETER_EncDec.cc"/>
+    <FileResource projectRelativePath="DIAMETER_Demo.ttcn" relativeURI="DIAMETER_Demo.ttcn"/>
+    <FileResource projectRelativePath="DIAMETER_Mapping.ttcn" relativeURI="DIAMETER_Mapping.ttcn"/>
+    <FileResource projectRelativePath="DIAMETER_SCTP_Client_Demo.cfg" relativeURI="DIAMETER_SCTP_Client_Demo.cfg"/>
+    <FileResource projectRelativePath="DIAMETER_SCTP_Server_Demo.cfg" relativeURI="DIAMETER_SCTP_Server_Demo.cfg"/>
+    <FileResource projectRelativePath="DIAMETER_TCP_Client_Demo.cfg" relativeURI="DIAMETER_TCP_Client_Demo.cfg"/>
+    <FileResource projectRelativePath="DIAMETER_TCP_Server_Demo.cfg" relativeURI="DIAMETER_TCP_Server_Demo.cfg"/>
+    <FileResource projectRelativePath="DIAMETER_Types.ttcn" relativeURI="DIAMETER_Types.ttcn"/>
+    <FileResource projectRelativePath="demo_note.txt" relativeURI="demo_note.txt"/>
+  </Files>
+  <ActiveConfiguration>Default</ActiveConfiguration>
+  <Configurations>
+    <Configuration name="Default">
+      <ProjectProperties>
+        <MakefileSettings>
+          <generateInternalMakefile>true</generateInternalMakefile>
+          <GNUMake>true</GNUMake>
+          <incrementalDependencyRefresh>true</incrementalDependencyRefresh>
+          <targetExecutable>bin/DIAMETER_demo</targetExecutable>
+        </MakefileSettings>
+        <LocalBuildSettings>
+          <workingDirectory>bin</workingDirectory>
+        </LocalBuildSettings>
+        <NamingCoventions>
+          <enableProjectSpecificSettings>true</enableProjectSpecificSettings>
+          <globalConstant>.*</globalConstant>
+          <externalConstant>.*</externalConstant>
+          <function>.*</function>
+          <externalFunction>.*</externalFunction>
+          <moduleParameter>.*</moduleParameter>
+          <globalPort>.*</globalPort>
+          <globalTimer>.*</globalTimer>
+          <localVariable>.*</localVariable>
+          <formalParameter>.*</formalParameter>
+          <componentConstant>.*</componentConstant>
+          <componentVariable>.*</componentVariable>
+          <componentTimer>.*</componentTimer>
+        </NamingCoventions>
+      </ProjectProperties>
+    </Configuration>
+  </Configurations>
+</TITAN_Project_File_Information>

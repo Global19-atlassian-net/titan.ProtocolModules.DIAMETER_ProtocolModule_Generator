@@ -1,0 +1,322 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Gabor Szalai - initial implementation and initial documentation
+******************************************************************************/
+
+module DIAMETER_Demo
+{
+
+  //=========================================================================
+  // Import Part
+  //=========================================================================
+
+  import from DIAMETER_Types all;
+//  import from TCPasp_Types all;
+  import from TCPasp_PortType all;
+//  import from SCTPasp_Types all;
+  import from SCTPasp_PortType all;
+  import from DIAMETER_Mapping all;
+
+  //=========================================================================
+  // Component Types
+  //=========================================================================
+
+  type component MTC_CT {};
+  
+  type component DIA_SCT
+  {
+    port TCPasp_PT  TCP_PCO;
+    port SCTPasp_PT SCTP_PCO;
+  }
+
+  //=========================================================================
+  // Templates
+  //=========================================================================
+
+  // Please note, that the messages doesn't contain any meaningful data,
+  // they are solely for demonstartional purposes.
+
+  template PDU_DIAMETER t_DIAMETER_CER (
+    octetstring p_hopbyhop, 
+    octetstring p_endtoend) := 
+  {
+      version := 1,
+      message_length := 0,
+      RPETxxxx := '10000000'B,
+      command_code := Capabilities_Exchange,
+      application_id := '00000000'O,
+      hop_by_hop_id := p_hopbyhop,
+      end_to_end_id := p_endtoend,
+      avps := {
+          {
+            avp := {
+              avp_header := {
+                  avp_code := c_AVP_Code_BASE_NONE_Origin_Host,
+                  VMPxxxxx := '01000000'B,
+                  avp_length := 0,
+                  vendor_id := omit
+              },
+              avp_data := {
+                  avp_BASE_NONE_Origin_Host := "ccf1.ccf.ericsson.se"
+              }
+            }
+          },
+          {
+            avp := {
+              avp_header := {
+                  avp_code := c_AVP_Code_BASE_NONE_Origin_Realm,
+                  VMPxxxxx := '01000000'B,
+                  avp_length := 0,
+                  vendor_id := omit
+              },
+              avp_data := {
+                  avp_BASE_NONE_Origin_Realm := "ccf.ericsson.se"
+              }
+            }
+          },
+          {
+            avp := {
+              avp_header := {
+                  avp_code := c_AVP_Code_BASE_NONE_Host_IP_Address,
+                  VMPxxxxx := '01000000'B,
+                  avp_length := 0,
+                  vendor_id := omit
+              },
+              avp_data := {
+                avp_BASE_NONE_Host_IP_Address := {
+                  address_type := IP,
+                  address_data := '7F000002'O
+                }
+              }
+            }
+          },
+          {
+            avp := {
+              avp_header := {
+                  avp_code := c_AVP_Code_BASE_NONE_Vendor_Id,
+                  VMPxxxxx := '01000000'B,
+                  avp_length := 0,
+                  vendor_id := omit
+              },
+              avp_data := {
+                  avp_BASE_NONE_Vendor_Id := '000028AF'O
+              }
+            }
+          }
+      }
+  }
+
+  template PDU_DIAMETER tr_DIAMETER_CEA := 
+  {
+      version := 1,
+      message_length := ?,
+      RPETxxxx := '00000000'B,
+      command_code := Capabilities_Exchange,
+      application_id := '00000000'O,
+      hop_by_hop_id := ?,
+      end_to_end_id := ?,
+      avps := ?
+  }
+  //=========================================================================
+  // Functions
+  //=========================================================================
+
+  // Using this function the mapping user component can subscribe for
+  // notifications at the mapping component
+  function f_RegisterClient() runs on DIAMETER_CT
+  {
+    DIA_PCO.send(ASP_DIA_Mapping_Registration:REGISTER);
+    alt
+    {
+      [] DIA_PCO.receive(ASP_DIA_Mapping_Registration:REGISTER_ACK) {}
+      [] DIA_PCO.receive {repeat;}
+    }
+  }
+  
+  // Using this function the mapping user component can unsubscribe for
+  // notifications at the mapping component
+  function f_DeRegisterClient() runs on DIAMETER_CT
+  {
+    DIA_PCO.send(ASP_DIA_Mapping_Registration:DEREGISTER);
+    alt
+    {
+      [] DIA_PCO.receive(ASP_DIA_Mapping_Registration:DEREGISTER_ACK) {}
+      [] DIA_PCO.receive {repeat;}
+    }
+  }
+  
+  function f_WaitForConnectionUp() runs on DIAMETER_CT
+  {
+    alt
+    {
+      [] DIA_PCO.receive(t_notification(CONNECTION_IS_UP, omit, omit)) {}
+      [] DIA_PCO.receive {repeat;}
+    }
+  }
+  
+  // Main client function that runs on the DIAMETER_CT mapping user component
+  function f_DIAMETER_Client() runs on DIAMETER_CT
+  {
+    var PDU_DIAMETER vl_dia;
+    var ASP_DIA_Mapping_Notification vl_notif;
+    var integer i;
+    
+    f_RegisterClient();
+    f_WaitForConnectionUp();
+
+    for (i:=0; i<20; i:=i+1) {
+      // Sending DIAMETER message:
+      DIA_PCO.send(t_DIAMETER_CER(
+        f_DIAMETER_genHopByHop(), 
+        f_DIAMETER_genEndToEnd()
+      ));
+      alt
+      {
+        [] DIA_PCO.receive(PDU_DIAMETER:tr_DIAMETER_CEA) -> value vl_dia
+          {
+            setverdict(pass);
+          }
+        [] DIA_PCO.receive(ASP_DIA_Mapping_Notification:?) -> value vl_notif
+          {
+            log("DIAMETER_Client: Notification arrived: ", vl_notif);
+            repeat;
+          }
+        [] DIA_PCO.receive
+          {
+            log("Unexpected message arrived from port: dropping");
+            repeat;
+          }
+      }
+    }
+    f_DeRegisterClient();
+  }
+
+  // Main server function that runs on the DIAMETER_CT mapping user component  
+  function f_DIAMETER_Server() runs on DIAMETER_CT
+  {
+    var PDU_DIAMETER_Server vl_dia;
+    var ASP_DIA_Mapping_Notification vl_notif;
+    
+    alt
+    {
+      [] DIA_PCO.receive(PDU_DIAMETER_Server:?) -> value vl_dia
+        {
+          log("DIAMETER_Server: Message arrived: ", vl_dia);
+          vl_dia.data.RPETxxxx := '00000000'B;
+          DIA_PCO.send(vl_dia);
+          repeat;
+        }
+      [] DIA_PCO.receive(ASP_DIA_Mapping_Notification:?) -> value vl_notif
+        {
+          log("DIAMETER_Server: Notification arrived: ", vl_notif);
+          repeat;
+        }
+      [] DIA_PCO.receive
+        {
+          log("Unexpected message arrived from port: dropping");
+          repeat;
+        }
+    }
+  }
+  
+  //=========================================================================
+  // Testcases
+  //=========================================================================
+  
+  // Testcase for Diameter client over SCTP
+  testcase tc_DIAMETER_SCTP_Client_Demo() runs on MTC_CT system DIA_SCT
+  {
+    const integer cl_num := 10;
+    var DIAMETER_CT Client[cl_num];
+    var DIAMETER_Mapping_CT Mapping;
+    var integer i;
+    
+    Mapping := DIAMETER_Mapping_CT.create;
+    map(Mapping:SCTP_PCO, system:SCTP_PCO);
+    
+    for (i:=0; i<cl_num; i:=i+1) {
+      Client[i] := DIAMETER_CT.create;
+      connect(Mapping:DIA_PCO, Client[i]:DIA_PCO);
+    }
+    
+    Mapping.start(f_DIA_SCTP_Mapping_Client());
+  
+    for (i:=0; i<cl_num; i:=i+1) {
+      Client[i].start(f_DIAMETER_Client());
+    }
+    
+    for (i:=0; i<cl_num; i:=i+1) {
+      Client[i].done;
+    }
+  }
+
+  // Testcase for Diameter server over SCTP  
+  testcase tc_DIAMETER_SCTP_Server_Demo() runs on MTC_CT system DIA_SCT
+  {
+    var DIAMETER_CT Server;
+    var DIAMETER_Mapping_CT Mapping;
+    
+    Mapping := DIAMETER_Mapping_CT.create;
+    map(Mapping:SCTP_PCO, system:SCTP_PCO);
+    
+    Server := DIAMETER_CT.create;
+    connect(Mapping:DIA_PCO, Server:DIA_PCO);
+    
+    Mapping.start(f_DIA_SCTP_Mapping_Server());
+    Server.start(f_DIAMETER_Server());
+    
+    Server.done;
+  }
+
+  // Testcase for Diameter client over TCP
+  testcase tc_DIAMETER_TCP_Client_Demo() runs on MTC_CT system DIA_SCT
+  {
+    const integer cl_num := 10;
+    var DIAMETER_CT Client[cl_num];
+    var DIAMETER_Mapping_CT Mapping;
+    var integer i;
+    
+    Mapping := DIAMETER_Mapping_CT.create;
+    map(Mapping:TCP_PCO, system:TCP_PCO);
+    
+    for (i:=0; i<cl_num; i:=i+1) {
+      Client[i] := DIAMETER_CT.create;
+      connect(Mapping:DIA_PCO, Client[i]:DIA_PCO);
+    }
+    
+    Mapping.start(f_DIA_TCP_Mapping_Client());
+  
+    for (i:=0; i<cl_num; i:=i+1) {
+      Client[i].start(f_DIAMETER_Client());
+    }
+    
+    for (i:=0; i<cl_num; i:=i+1) {
+      Client[i].done;
+    }
+  }
+
+  // Testcase for Diameter server over TCP
+  testcase tc_DIAMETER_TCP_Server_Demo() runs on MTC_CT system DIA_SCT
+  {
+    var DIAMETER_CT Server;
+    var DIAMETER_Mapping_CT Mapping;
+    
+    Mapping := DIAMETER_Mapping_CT.create;
+    map(Mapping:TCP_PCO, system:TCP_PCO);
+    
+    Server := DIAMETER_CT.create;
+    connect(Mapping:DIA_PCO, Server:DIA_PCO);
+    
+    Mapping.start(f_DIA_TCP_Mapping_Server());
+    Server.start(f_DIAMETER_Server());
+    
+    Server.done;
+  }
+  
+}

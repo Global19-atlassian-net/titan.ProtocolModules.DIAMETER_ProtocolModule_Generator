@@ -1,0 +1,59 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               WgInterface_3GPP_TS29234_910.ddf
+//  Description:        DDF for 3GPP to WLAN interworking according to 3GPP TS 29.234 V9.1.0
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: WA
+// APPLICATION-REVISION: V9.4.0
+
+// AVP implementations according to: 
+// 3GPP TS 29.234 V9.1.0 - 3GPP system to Wireless Local Area Network (WLAN) interworking
+
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+
+
+// 3GPP 29.234 V9.1.0
+// AVP: 3GPP-AAA-Server-Name (318) 3GPP (10415)
+// 10.1.34
+type AVP_DiameterIdentity 3GPP_AAA_Server_Name
+

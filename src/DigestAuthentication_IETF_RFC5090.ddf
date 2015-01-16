@@ -1,0 +1,149 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               DigestAuthentication_IETF_RFC5090.ddf
+//  Description:        DDF for DIGEST according to RFC 5090
+//  Rev:                R29A
+//  Prodnr:             CNL 1134 62
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: DIGEST
+// APPLICATION-REVISION: RFC5090
+
+// AVP implementations according to: 
+// RFC 5090 - RADIUS Extension for Digest Authentication
+//
+
+// RFC 5090
+// AVP: Digest-Response (103)
+// 3.1
+type AVP_OctetString Digest_Response;
+
+// RFC 5090
+// AVP: Digest-Realm (104)
+// 3.2
+type AVP_UTF8String Digest_Realm;
+
+// RFC 5090
+// AVP: Digest-Nonce (105)
+// 3.3
+type AVP_OctetString Digest_Nonce;
+
+// RFC 5090
+// AVP: Digest-Response-Auth (106)
+// 3.4
+type AVP_OctetString Digest_Response_Auth;
+
+// RFC 5090
+// AVP: Digest_Nextnonce (107)
+// 3.5
+type AVP_OctetString Digest_Nextnonce;
+
+// RFC 5090
+// AVP: Digest-Method (108)
+// 3.6
+type AVP_UTF8String Digest_Method;
+
+// RFC 5090
+// AVP: Digest-URI (109)
+// 3.7
+type AVP_UTF8String Digest_URI;
+
+// RFC 5090
+// AVP: Digest-Qop (110)
+// 3.8
+type AVP_UTF8String Digest_Qop;
+
+// RFC 5090
+// AVP: Digest-Algorithm (111)
+// 3.9
+type AVP_UTF8String Digest_Algorithm;
+
+// RFC 5090
+// AVP: Digest-Entity-Body-Hash (112)
+// 3.10
+type AVP_OctetString Digest_Entity_Body_Hash;
+
+// RFC 5090
+// AVP: Digest-CNonce (113)
+// 3.11
+type AVP_OctetString Digest_CNonce;
+
+// RFC 5090
+// AVP: Digest-Nonce-Count (114)
+// 3.12
+type AVP_OctetString Digest_Nonce_Count;
+
+// RFC 5090
+// AVP: Digest-Username (115)
+// 3.13
+type AVP_UTF8String Digest_Username;
+
+// RFC 5090
+// AVP: Digest-Opaque (116)
+// 3.14
+type AVP_OctetString Digest_Opaque;
+
+// RFC 5090
+// AVP: Digest-Auth-Param (117)
+// 3.15
+type AVP_UTF8String Digest_Auth_Param;
+
+// RFC 5090
+// AVP: Digest-AKA-Auts (118)
+// 3.16
+type AVP_OctetString Digest_AKA_Auts;
+
+// RFC 5090
+// AVP: Digest-Domain (119)
+// 3.17
+type AVP_UTF8String Digest_Domain;
+
+// RFC 5090
+// AVP: Digest-Stale (120)
+// 3.18
+type AVP_UTF8String Digest_Stale;
+
+// RFC 5090
+// AVP: Digest-HA1 (121)
+// 3.19
+type AVP_OctetString Digest_HA1;
+
+// RFC 5090
+// AVP: SIP-AOR (122)
+// 3.20
+type AVP_UTF8String SIP_AOR;

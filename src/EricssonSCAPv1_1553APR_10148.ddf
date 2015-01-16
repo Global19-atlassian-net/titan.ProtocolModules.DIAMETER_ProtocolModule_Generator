@@ -1,0 +1,182 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               EricssonSCAPv1_1553APR_10148.ddf
+//  Description:        DDF for SCAPv1 according to 2/1553-APR 101 48/2
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: SCAPv1
+// APPLICATION-REVISION: EricssonSCAPv1
+
+// AVP implementations according to: 
+// 2/1553-APR 101 48/2
+//
+
+// 2/1553-APR 101 48/2
+type enumerated Command_Code {
+  Credit_Control (272)
+}
+
+
+
+// 2/1553-APR 101 48/2
+// AVP: Abnormal-Termination-Reason (600) Ericsson (193)
+// 3.3.3
+type enumerated Abnormal_Termination_Reason
+{
+  SERVING_ELEMENT_TERMINATION (0),
+  CONNECTION_TO_USER_BROKEN (1)
+}
+
+// 2/1553-APR 101 48/2
+// AVP: Accounting-Correlation-Id (605) Ericsson (193)
+// 3.3.3
+type AVP_UTF8String Accounting_Correlation_Id;
+
+// 2/1553-APR 101 48/2
+// AVP: Cost (603) Ericsson (193)
+// 3.3.3
+type AVP_Float64 Cost;
+
+// 2/1553-APR 101 48/2
+// AVP: Cost-Information (604) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Cost_Information;
+
+// 2/1553-APR 101 48/2
+// AVP: Currency-Code (544) Ericsson (193)
+// 3.3.3
+type AVP_Unsigned32 Currency_Code;
+
+// 2/1553-APR 101 48/2
+// AVP: Event-Timestamp (610) Ericsson (193)
+// 3.3.3
+type AVP_Time Event_Timestamp;
+
+// 2/1553-APR 101 48/2
+// AVP: Exponent (616) Ericsson (193)
+// 3.3.3
+type AVP_Integer32 Exponent;
+
+// 2/1553-APR 101 48/2
+// AVP: Granted-Service-Unit (602) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Granted_Service_Unit;
+
+// 2/1553-APR 101 48/2
+// AVP: Original-Subscription-Id (559) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Original_Subscription_Id;
+
+// 2/1553-APR 101 48/2
+// AVP: Requested-Action (615) Ericsson (193)
+// 3.3.3
+type enumerated Requested_Action
+{
+  DIRECT_DEBITING         (0),
+  REFUND_ACCOUNT          (1) 
+}
+
+// 2/1553-APR 101 48/2
+// AVP: Requested-Service-Unit (606) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Requested_Service_Unit;
+
+// 2/1553-APR 101 48/2
+// AVP: Service-Parameter-Info (607) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Service_Parameter_Info;
+
+// 2/1553-APR 101 48/2
+// AVP: Service-Parameter-Type (608) Ericsson (193)
+// 3.3.3
+type AVP_Unsigned32 Service_Parameter_Type;
+
+// 2/1553-APR 101 48/2
+// AVP: Service-Parameter-Value (609) Ericsson (193)
+// 3.3.3
+type AVP_UTF8String Service_Parameter_Value;
+
+// 2/1553-APR 101 48/2
+// AVP: Subscription-Id (553) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Subscription_Id;
+
+// 2/1553-APR 101 48/2
+// AVP: Subscription-Id-Data (554) Ericsson (193)
+// 3.3.3
+type AVP_UTF8String Subscription_Id_Data;
+
+// 2/1553-APR 101 48/2
+// AVP: Subscription-Id-Type (555) Ericsson (193)
+// 3.3.3
+type enumerated Subscription_Id_Type
+{
+  END_USER_MSISDN (0),
+  END_USER_IMSI (1),
+  END_USER_SIP_URL (2),
+  END_USER_NAI (3),
+  END_USER_PRIVATE (4)
+}
+
+// 2/1553-APR 101 48/2
+// AVP: Unit-Type (611) Ericsson (193)
+// 3.3.3
+type enumerated Unit_Type
+{
+  SERVICE_CREDIT_TIME (0),
+  SERVICE_CREDIT_VOLUME (1),
+  SERVICE_CREDIT_EVENT (2),
+  SERVICE_CREDIT_MONEY (3)
+}
+
+// 2/1553-APR 101 48/2
+// AVP: Unit-Value (612) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Unit_Value;
+
+// 2/1553-APR 101 48/2
+// AVP: Used-Service-Unit (613) Ericsson (193)
+// 3.3.3
+type AVP_Grouped Used_Service_Unit;
+
+// 2/1553-APR 101 48/2
+// AVP: Value-Digits (617) Ericsson (193)
+// 3.3.3
+type AVP_Unsigned64 Value_Digits;

@@ -1,0 +1,79 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               a2Interface_ETSI_ES183059_1_211.ddf
+//  Description:        DDF for a2 Interface according to ETSI ES 183 059-1 V2.1.1
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: a2
+// APPLICATION-REVISION: 
+
+// AVP implementations according to: 
+// ETSI ES 183 059-1 V2.1.1
+
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+
+
+type enumerated Command_Code 
+{
+  User_Data (306),
+  Push_Notification (309)
+}
+
+
+// ETSI ES 183 059-1 V2.1.1
+// AVP: CNGCF-Address (600) ETSI (13019)
+// 7.3.5
+type AVP_Grouped CNGCF_Address;
+
+// ETSI ES 183 059-1 V2.1.1
+// AVP: SIP-Outbound-Proxy (601) ETSI (13019)
+// 7.3.6
+type AVP_OctetString SIP_Outbound_Proxy;
+
+// ETSI ES 183 059-1 V2.1.1
+// AVP: TFTP-Server (602) ETSI (13019)
+// 7.3.9
+type AVP_UTF8String TFTP_Server;
+
+// ETSI ES 183 059-1 V2.1.1
+// AVP: ACS-Server (603) ETSI (13019)
+// 7.3.10
+type AVP_UTF8String ACS_Server;

@@ -1,0 +1,216 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               Acision_Specific.ddf
+//  Description:        Acision specific AVP definitions
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+//  Reference:          
+//
+
+// APPLICATION-NAME: AC
+// APPLICATION-REVISION: 1
+
+// SMS-Information
+// AVP: SMS-Information (29) Acision (3830)
+type AVP_Grouped SMS_Information;
+
+// SMS-Network-Info
+// AVP: SMS-Network-Info (32) Acision (3830)
+type AVP_Grouped SMS_Network_Info;
+
+// SMS-Network-Technology
+// AVP: SMS-Network-Technology (35) Acision (3830)
+type enumerated SMS_Network_Technology
+{
+  OTHER (0),
+  NMT (1),
+  GSM (2),
+  GPRS (3),
+  UMTS (4),
+  CDMA (5),
+  TDMA (6),
+  IDEN (7),
+  PDC (8),
+  GAIT (9)
+};
+
+// SMS-Originator-Info
+// AVP: SMS-Originator-Info (37) Acision (3830)
+type AVP_Grouped SMS_Originator_Info;
+
+// SMS-Recipient-Info
+// AVP: SMS-Recipient-Info (39) Acision (3830)
+type AVP_Grouped SMS_Recipient_Info;
+
+// SMS-Time-Submission
+// AVP: SMS-Time-Submission (50) Acision (3830)
+type AVP_Time SMS_Time_Submission;
+
+// SMS-Trajectory-Info
+// AVP: SMS-Trajectory-Info (55) Acision (3830)
+type AVP_Grouped SMS_Trajectory_Info;
+
+// SMS-Trajectory-Message-Id
+// AVP: SMS-Trajectory-Message-Id (56) Acision (3830)
+type AVP_UTF8String SMS_Trajectory_Message_Id;
+
+// SMS-Trajectory-Type
+// AVP: SMS-Trajectory-Type (61) Acision (3830)
+type enumerated SMS_Trajectory_Type
+{
+  MO (1),
+  MT (2)
+};
+
+// Originating-Identity
+// AVP: Originating-Identity (1009) Acision (3830)
+type AVP_Grouped Originating_Identity;
+
+// MSC-Address
+// AVP: MSC-Address (10004) Acision (3830)
+type AVP_UTF8String MSC_Address;
+
+// SMS-Content-CM-Reference
+// AVP: SMS-Content-CM-Reference (19) Acision (3830) 
+type AVP_Unsigned32 SMS_Content_CM_Reference;
+
+// SMS-Content-CM-Segment
+// AVP: SMS-Content-CM-Segment (20) Acision (3830) 
+type AVP_Unsigned32 SMS_Content_CM_Segment;
+
+// SMS-Content-CM-Size
+// AVP: SMS-Content-CM-Size (21) Acision (3830) 
+type AVP_Unsigned32 SMS_Content_CM_Size;
+
+// SMS-Content-CM-Total
+// AVP: SMS-Content-CM-Total (22) Acision (3830) 
+type AVP_Unsigned32 SMS_Content_CM_Total;
+
+// SMS-Content-Data
+// AVP: SMS-Content-Data (23) Acision (3830)
+type AVP_OctetString SMS_Content_Data;
+
+// SMS-Content-DCS
+// AVP: SMS-Content-DCS (24) Acision (3830)
+type AVP_OctetString SMS_Content_DCS;
+
+// SMS-Content-Info
+// AVP: SMS-Content-Info (25) Acision (3830)
+type AVP_Grouped SMS_Content_Info;
+
+// SMS-Address-TON
+// AVP: SMS-Address-TON (67) Acision (3830)
+type AVP_UTF8String SMS_Address_TON;
+
+// SMS-Address-NPI
+// AVP: SMS-Address-NPI (68) Acision (3830)
+type AVP_UTF8String SMS_Address_NPI;
+
+// Arm-Future-Notification
+// AVP: Arm-Future-Notification (1000) Acision (3830)
+type enumerated Arm_Future_Notification
+{
+  All_any (0),
+  Pre_submission (1),
+  Post_submission (2),
+  Pre_delivery (3),
+  Post_delivery (4)
+};
+
+// Destination-Identity
+// AVP: Destination-Identity (1001) Acision (3830)
+type AVP_Grouped Destination_Identity;
+
+// Msg-Content
+// AVP: Msg-Content (1005) Acision (3830)
+type AVP_Grouped Msg_Content;
+
+// Notification-Point
+// AVP: Notification-Point (1006) Acision (3830)
+type enumerated Notification_Point
+{
+  Pre_submission (1),
+  Post_submission (2),
+  Pre_delivery (3),
+  Post_delivery (4),
+  Subscriber_status_change (100)
+};
+
+// Opaque-Data
+// AVP: Opaque-Data (1007) Acision (3830)
+type AVP_OctetString Opaque_Data;
+
+// Originating-Identity
+// AVP: Originating-Identity (1009) Acision (3830)
+type AVP_Grouped Originating_Identity;
+
+// Recommended-Decision
+// AVP: Recommended-Decision (1011) Acision (3830)
+type enumerated Recommended_Decision
+{
+  Proceed (0),
+  Reject (1),
+  Complete (2),
+  Drop (3)
+};
+
+// SMS-Error-Code
+// AVP: SMS-Error-Code (1012) Acision (3830) 
+type AVP_Integer32 SMS_Error_Code;
+
+// SMS-Info
+// AVP: SMS-Info (1013) Acision (3830)
+type AVP_Grouped SMS_Info;
+
+// SMS-Message-Text
+// AVP: SMS-Message-Text (1018) Acision (3830)
+type AVP_UTF8String SMS_Message_Text;
+
+// Service-Type
+// AVP: Service-Type (1028) Acision (3830)
+type enumerated Service_Type
+{
+  SMS (0),
+  MMS (1),
+  Email (2)
+};
+
+// Service-Info
+// AVP: Service-Info (1029) Acision (3830)
+type AVP_Grouped Service_Info;
+

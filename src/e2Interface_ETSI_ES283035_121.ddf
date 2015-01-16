@@ -1,0 +1,96 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               e2Interface_ETSI_ES283035_121.ddf
+//  Description:        DDF for e2 Interface according to ETSI ES 283 035 V1.2.1
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: e2
+// APPLICATION-REVISION: 
+
+// AVP implementations according to: 
+// ETSI ES 283 035 V1.2.1
+//
+// Dependant applications
+
+// IETF RFC 3588   - Diameter Base Protocol
+// 3GPP TS 29.229  - Cx/Dx specification
+// 3GPP TS 29.209  - Policy control over Gq interface
+// ETSI ES 283.034      - e4 interface based on DIAMETER protocol
+
+// ETSI ES 283 035 V1.2.1
+type enumerated Command_Code 
+{
+  User_Data (306)
+}
+
+// ETSI ES 283 035 V1.2.1
+// AVP: Location-Information (350) ETSI (13019)
+// 7.3.1
+type AVP_Grouped Location_Information;
+
+// ETSI ES 283 035 V1.2.1
+// AVP: RACS-Contact-Point (351) ETSI (13019)
+// 7.3.2
+type AVP_DiameterIdentity RACS_Contact_Point;
+
+// ETSI ES 283 035 V1.2.1
+// AVP: Terminal-Type (352) ETSI (13019)
+// 7.3.3
+type AVP_OctetString Terminal_Type;
+
+// ETSI ES 283 035 V1.2.1
+// AVP: Requested-Information (353) ETSI (13019)
+// 7.3.4
+type enumerated Requested_Information
+{
+  SUBSCRIBER_ID          (0),
+  LOCATION_INFORMATION   (1),
+  RACS_CONTACT_POINT     (2),
+  ACCESS_NETWORK_TYPE    (3),
+  TERMINAL_TYPE          (4) /*,
+  LOGICAL_ACCESS_ID      (5),
+  PHYSICAL_ACCESS_ID     (6),
+  ACCESS_NETWORK_TYPE    (7),
+  INITIAL_GATE_SETTING   (8),
+  QOS_PROFILE            (9),
+  IP_CONNECTIVITY_STATUS (10) */
+}
+

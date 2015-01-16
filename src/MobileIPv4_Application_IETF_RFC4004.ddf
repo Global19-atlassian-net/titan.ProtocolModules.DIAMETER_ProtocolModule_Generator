@@ -1,0 +1,194 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               MobileIPv4_Application_IETF_RFC4004.ddf
+//  Description:        DDF for Mobile IPv4 Application
+//  Rev:                R29A
+//  Prodnr:             CNL 113 462
+//  Reference:          IETF RFC 4004
+//
+//
+
+// APPLICATION-NAME: MIPv4
+// APPLICATION-REVISION: RFC4004
+
+// RFC 4004 7.1
+// AVP: MIP-Reg-Request (320)
+type AVP_OctetString MIP_Reg_Request
+
+// RFC 4004 7.2
+// AVP: MIP-Reg-Reply (321)
+type AVP_OctetString  MIP_Reg_Reply
+
+// RFC 4004 7.3
+// AVP: MIP-Mobile-Node-Address (333)
+type AVP_Address MIP_Mobile_Node_Address
+
+// RFC 4004 7.4
+// AVP: MIP-Home-Agent-Address (334)
+type AVP_Address MIP_Home_Agent_Address
+
+// RFC 4004 7.5
+// AVP: MIP-Feature-Vector (337)
+type AVP_Unsigned32 MIP_Feature_Vector
+
+// RFC 4004 7.6
+// AVP: MIP-MN-AAA-Auth (322)
+type AVP_Grouped MIP_MN_AAA_Auth
+
+// RFC 4004 7.6.1
+// AVP: MIP-MN-AAA-SPI (341)
+type AVP_Unsigned32 MIP_MN_AAA_SPI
+
+// RFC 4004 7.6.2
+// AVP: MIP-Auth-Input-Data-Length (338)
+type AVP_Unsigned32 MIP_Auth_Input_Data_Length
+
+
+// RFC 4004 7.6.3
+// AVP: MIP-Authenticator-Length (339)
+type AVP_Unsigned32 MIP_Authenticator_Length
+
+// RFC 4004 7.6.4
+// AVP: MIP-Authenticator-Offset (340)
+type AVP_Unsigned32 MIP_Authenticator_Offset
+
+// RFC 4004 7.7
+// AVP: MIP-FA-Challenge (344)
+type AVP_OctetString MIP_FA_Challenge
+
+// RFC 4004 7.8
+// AVP: MIP-Filter-Rule (342)
+type AVP_IPFilterRule MIP_Filter_Rule
+
+// RFC 4004 7.9
+// AVP: MIP-Candidate-Home-Agent-Host (336)
+type AVP_DiameterIdentity MIP_Candidate_Home_Agent_Host
+
+// RFC 4004 7.10
+// AVP: MIP-Originating-Foreign-AAA (347)
+type AVP_Grouped MIP_Originating_Foreign_AAA
+
+// RFC 4004 7.11
+// AVP: MIP-Home-Agent-Host (348)
+type AVP_Grouped MIP_Home_Agent_Host
+
+// RFC 4004 9.1
+// AVP: MIP-FA-to-MN-MSA (326)
+type AVP_Grouped MIP_FA_to_MN_MSA
+
+// RFC 4004 9.2
+// AVP: MIP-FA-to-HA-MSA (328)
+type AVP_Grouped MIP_FA_to_HA_MSA
+
+// RFC 4004 9.3
+// AVP: MIP-HA-to-FA-MSA (329)
+type AVP_Grouped MIP_HA_to_FA_MSA
+
+// RFC 4004 9.4
+// AVP: MIP-HA-to-MN-MSA (332)
+type AVP_Grouped  MIP_HA_to_MN_MSA
+
+// RFC 4004 9.5
+// AVP: MIP-MN-to-FA-MSA (325)
+type AVP_Grouped MIP_MN_to_FA_MSA
+
+// RFC 4004 9.6
+// AVP: MIP-MN-to-HA-MSA (331)
+type AVP_Grouped MIP_MN_to_HA_MSA
+
+// RFC 4004 9.7
+// AVP: MIP-Session-Key (343)
+type AVP_OctetString MIP_Session_Key
+
+// RFC 4004 9.8
+// AVP: MIP-Algorithm-Type (345)
+type enumerated MIP_Algorithm_Type {
+  HMAC_SHA_1 (2)
+}
+
+// RFC 4004 9.9
+// AVP: MIP-Replay-Mode (346)
+type enumerated MIP_Replay_Mode {
+  None            (1),
+  Timestamps      (2),
+  Nonces          (3)
+}
+
+// RFC 4004 9.10
+// AVP: MIP-FA-to-MN-SPI (319)
+type AVP_Unsigned32 MIP_FA_to_MN_SPI
+
+// RFC 4004 9.11
+// AVP: MIP-FA-to-HA-SPI (318)
+type AVP_Unsigned32 MIP_FA_to_HA_SPI
+
+// RFC 4004 9.12
+// AVP: MIP-Nonce (335)
+type AVP_OctetString MIP_Nonce
+
+// RFC 4004 9.13
+// AVP: MIP-MSA-Lifetime (367)
+type AVP_Unsigned32 MIP_MSA_Lifetime
+
+// RFC 4004 9.14
+// AVP: MIP-HA-to-FA-SPI (323)
+type AVP_Unsigned32 MIP_HA_to_FA_SPI
+
+// RFC 4004 10.1
+// AVP: Accounting-Input-Octets (363)
+type AVP_Unsigned64 Accounting_Input_Octets
+
+// RFC 4004 10.2
+// AVP: Accounting-Output-Octets (364)
+type AVP_Unsigned64 Accounting_Output_Octets
+
+// RFC 4004 10.3
+// AVP: Acct-Session-Time (46)
+type AVP_Unsigned32 Acct_Session_Time
+
+// RFC 4004 10.4
+// AVP: Accounting-Input-Packets (365)
+type AVP_Unsigned64 Accounting_Input_Packets
+
+// RFC 4004 10.5
+// AVP: Accounting-Output-Packets (366)
+type AVP_Unsigned64 Accounting_Output_Packets
+
+// RFC 4004 10.6
+// AVP: Event-Timestamp (55)
+type AVP_Time Event_Timestamp

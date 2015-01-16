@@ -1,0 +1,538 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               NetworkAccessServer_IETF_RFC4005.ddf
+//  Description:        DDF for NAS according to RFC 4005
+//  Rev:                R29A
+//  Prodnr:             CNL113462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: DNAS
+// APPLICATION-REVISION: RFC4005
+
+// AVP implementations according to: 
+// RFC 4005 - Diameter Network Access Server Application
+//
+
+// RFC 4005 3
+type enumerated Command_Code {
+  Authorize_Authenticate (265),
+  Re_Auth                (258),
+  Session_Termination    (275),
+  Abort_Session          (274),
+  Accounting             (271)
+}
+
+// RFC 4005  
+// AVP: NAS-Port (5) 
+// 4.2
+type AVP_Unsigned32 NAS_Port;
+
+// RFC 4005  
+// AVP: NAS-Port-Id (87) 
+// 4.3
+type AVP_UTF8String NAS_Port_Id;
+
+// RFC 4005  
+// AVP: NAS-Port-Type (61) 
+// 4.4
+type AVP_Unsigned32 NAS_Port_Type;
+
+// RFC 4005  
+// AVP: Called-Station-Id (30) 
+// 4.5
+type AVP_UTF8String Called_Station_Id;
+
+// RFC 4005  
+// AVP: Calling-Station-Id (31) 
+// 4.6
+type AVP_UTF8String Calling_Station_Id;
+
+// RFC 4005  
+// AVP: Connect-Info (77) 
+// 4.7
+type AVP_UTF8String Connect_Info;
+
+// RFC 4005  
+// AVP: Originating-Line-Info (94) 
+// 4.8
+type AVP_OctetString Originating_Line_Info;
+
+// RFC 4005  
+// AVP: Reply-Message (18) 
+// 4.9
+type AVP_UTF8String Reply_Message;
+
+
+
+// RFC 4005  
+// AVP: User-Password (2) 
+// 5.1
+type AVP_OctetString User_Password;
+
+// RFC 4005  
+// AVP: Password-Retry (75) 
+// 5.2
+type AVP_Unsigned32 Password_Retry;
+
+// RFC 4005  
+// AVP: Prompt (76)
+// 5.3
+type enumerated Prompt
+{
+  NO_ECHO (0),
+  ECHO (1)
+}
+
+// RFC 4005  
+// AVP: CHAP-Auth (402) 
+// 5.4
+type AVP_Grouped CHAP_Auth;
+
+// RFC 4005  
+// AVP: CHAP-Algorithm (403)
+// 5.5
+type enumerated CHAP_Algorithm
+{
+  CHAP_with_MD5 (5)
+}
+
+// RFC 4005  
+// AVP: CHAP-Ident (404) 
+// 5.6
+type AVP_OctetString CHAP_Ident;
+
+// RFC 4005  
+// AVP: CHAP-Response (405) 
+// 5.7
+type AVP_OctetString CHAP_Response;
+
+// RFC 4005  
+// AVP: CHAP-Challenge (60) 
+// 5.8
+type AVP_OctetString CHAP_Challenge;
+
+// RFC 4005  
+// AVP: ARAP-Password (70) 
+// 5.9
+type AVP_OctetString ARAP_Password;
+
+// RFC 4005  
+// AVP: ARAP-Challenge-Response (84) 
+// 5.10
+type AVP_OctetString ARAP_Challenge_Response;
+
+// RFC 4005  
+// AVP: ARAP-Security (73) 
+// 5.11
+type AVP_Unsigned32 ARAP_Security;
+
+// RFC 4005  
+// AVP: ARAP-Security-Data (74) 
+// 5.12
+type AVP_OctetString ARAP_Security_Data;
+
+
+
+// RFC 4005  
+// AVP: Service-Type (6) 
+// 6.1
+type AVP_Unsigned32 Service_Type;
+
+// RFC 4005  
+// AVP: Callback-Number (19) 
+// 6.2
+type AVP_UTF8String Callback_Number;
+
+// RFC 4005  
+// AVP: Callback-Id (20) 
+// 6.3
+type AVP_UTF8String Callback_Id;
+
+// RFC 4005  
+// AVP: Idle-Timeout (28) 
+// 6.4
+type AVP_Unsigned32 Idle_Timeout;
+
+// RFC 4005  
+// AVP: Port-Limit (62) 
+// 6.5
+type AVP_Unsigned32 Port_Limit;
+
+// RFC 4005  
+// AVP: NAS-Filter-Rule (400) 
+// 6.6
+type AVP_IPFilterRule NAS_Filter_Rule;
+
+// RFC 4005  
+// AVP: Filter-Id (11) 
+// 6.7
+type AVP_UTF8String Filter_Id;
+
+// RFC 4005  
+// AVP: Configuration-Token (78) 
+// 6.8
+type AVP_OctetString Configuration_Token;
+
+// RFC 4005  
+// AVP: QoS-Filter-Rule (407) 
+// 6.9
+type AVP_QoSFilterRule QoS_Filter_Rule;
+
+// RFC 4005  
+// AVP: Framed-Protocol (7) 
+// 6.10.1
+type enumerated Framed_Protocol
+{
+  PPP (1),
+  SLIP (2),
+  ARAP (3),
+  GANDALF (4),
+  XYLOGICS (5),
+  X_75_SYNCHRONOUS (6),
+  GPRS_PDP_CONTEXT (7)
+}
+
+// RFC 4005  
+// AVP: Framed-Routing (10) 
+// 6.10.2
+type enumerated Framed_Routing
+{
+  NONE (0),
+  SEND_ROUTING_PACKETS (1),
+  LISTEN_FOR_ROUTING_PACKETS (2),
+  SEND_AND_LISTEN (3)
+}
+
+// RFC 4005  
+// AVP: Framed-MTU (12) 
+// 6.10.3
+type AVP_Unsigned32 Framed_MTU;
+
+// RFC 4005  
+// AVP: Framed-Compression (13) 
+// 6.10.4
+type enumerated Framed_Compression
+{
+  NONE (0),
+  VJ_TCP_IP_HEADER_COMPRESSION (1),
+  IPX_HEADER_COMPRESSION (2),
+  STAC_LZS_COMPRESSION (3)
+}
+
+// RFC 4005  
+// AVP: Framed-IP-Address (8) 
+// 6.11.1
+type AVP_OctetString Framed_IP_Address;
+
+// RFC 4005  
+// AVP: Framed-IP-Netmask (9) 
+// 6.11.2
+type AVP_OctetString Framed_IP_Netmask;
+
+// RFC 4005  
+// AVP: Framed-Route (22) 
+// 6.11.3
+type AVP_UTF8String Framed_Route;
+
+// RFC 4005  
+// AVP: Framed-Pool (88) 
+// 6.11.4
+type AVP_OctetString Framed_Pool;
+
+// RFC 4005  
+// AVP: Framed-Interface-Id (96) 
+// 6.11.5
+type AVP_Unsigned64 Framed_Interface_Id;
+
+// RFC 4005  
+// AVP: Framed-IPv6-Prefix (97) 
+// 6.11.6
+type AVP_OctetString Framed_IPv6_Prefix;
+
+// RFC 4005  
+// AVP: Framed-IPv6-Route (99) 
+// 6.11.7
+type AVP_UTF8String Framed_IPv6_Route;
+
+// RFC 4005  
+// AVP: Framed-IPv6-Pool (100) 
+// 6.11.8
+type AVP_OctetString Framed_IPv6_Pool;
+
+// RFC 4005  
+// AVP: Framed-IPX-Network (23) 
+// 6.12.1
+type AVP_UTF8String Framed_IPX_Network;
+
+// RFC 4005  
+// AVP: Framed-Appletalk-Link (37) 
+// 6.13.1
+type AVP_Unsigned32 Framed_Appletalk_Link;
+
+// RFC 4005  
+// AVP: Framed-Appletalk-Network (38) 
+// 6.13.2
+type AVP_Unsigned32 Framed_Appletalk_Network;
+
+// RFC 4005  
+// AVP: Framed-Appletalk-Zone (39) 
+// 6.13.3
+type AVP_OctetString Framed_Appletalk_Zone;
+
+// RFC 4005  
+// AVP: ARAP-Features (71) 
+// 6.14.1
+type AVP_OctetString ARAP_Features;
+
+// RFC 4005  
+// AVP: ARAP-Zone-Access (72) 
+// 6.14.2
+type enumerated ARAP_Zone_Access
+{
+  ONLY_ALLOW_ACCESS_TO_DEFAULT_ZONE (1),
+  USE_ZONE_FILTER_INCLUSIVELY (2),
+  USE_ZONE_FILTER_EXCLUSIVELY (4)
+}
+
+// RFC 4005  
+// AVP: Login-IP-Host (14) 
+// 6.15.1
+type AVP_OctetString Login_IP_Host;
+
+// RFC 4005  
+// AVP: Login-IPv6-Host (98) 
+// 6.15.2
+type AVP_OctetString Login_IPv6_Host;
+
+// RFC 4005  
+// AVP: Login-Service (15) 
+// 6.15.3
+type enumerated Login_Service
+{
+  TELNET (0),
+  RLOGIN (1),
+  TCP_CLEAR (2),
+  PORTMASTER (3),
+  LAT (4),
+  X25_PAD (5),
+  X25_T3POS (6),
+  TCP_CLEAR_QUIET (8)
+}
+
+// RFC 4005  
+// AVP: Login-TCP-Port (16) 
+// 6.16.1
+type AVP_Unsigned32 Login_TCP_Port;
+
+// RFC 4005  
+// AVP: Login-LAT-Service (34) 
+// 6.17.1
+type AVP_OctetString Login_LAT_Service;
+
+// RFC 4005  
+// AVP: Login-LAT-Node (35) 
+// 6.17.2
+type AVP_OctetString Login_LAT_Node;
+
+// RFC 4005  
+// AVP: Login-LAT-Group (36) 
+// 6.17.3
+type AVP_OctetString Login_LAT_Group;
+
+// RFC 4005  
+// AVP: Login-LAT-Port (63) 
+// 6.17.4
+type AVP_OctetString Login_LAT_Port;
+
+
+
+// RFC 4005  
+// AVP: Tunneling (401) 
+// 7.1
+type AVP_Grouped Tunneling;
+
+// RFC 4005  
+// AVP: Tunnel-Type (64)
+// 7.2
+type AVP_Unsigned32 Tunnel_Type;
+
+// RFC 4005  
+// AVP: Tunnel-Medium-Type (65) 
+// 7.3
+type AVP_Unsigned32 Tunnel_Medium_Type;
+
+// RFC 4005  
+// AVP: Tunnel-Client-Endpoint (66) 
+// 7.4
+type AVP_UTF8String Tunnel_Client_Endpoint;
+
+// RFC 4005  
+// AVP: Tunnel-Server-Endpoint (67) 
+// 7.5
+type AVP_UTF8String Tunnel_Server_Endpoint;
+
+// RFC 4005  
+// AVP: Tunnel-Password (69) 
+// 7.6
+type AVP_OctetString Tunnel_Password;
+
+// RFC 4005  
+// AVP: Tunnel-Private-Group-Id (81) 
+// 7.7
+type AVP_OctetString Tunnel_Private_Group_Id;
+
+// RFC 4005  
+// AVP: Tunnel-Assignment-Id (82) 
+// 7.8
+type AVP_OctetString Tunnel_Assignment_Id;
+
+// RFC 4005  
+// AVP: Tunnel-Preference (83) 
+// 7.9
+type AVP_Unsigned32 Tunnel_Preference;
+
+// RFC 4005  
+// AVP: Tunnel-Client-Auth-Id (90) 
+// 7.10
+type AVP_UTF8String Tunnel_Client_Auth_Id;
+
+// RFC 4005  
+// AVP: Tunnel-Server-Auth-Id (91) 
+// 7.11
+type AVP_UTF8String Tunnel_Server_Auth_Id;
+
+
+
+// RFC 4005  
+// AVP: Accounting-Input-Octets (363) 
+// 8.1
+type AVP_Unsigned64 Accounting_Input_Octets;
+
+// RFC 4005  
+// AVP: Accounting-Output-Octets (364) 
+// 8.2
+type AVP_Unsigned64 Accounting_Output_Octets;
+
+// RFC 4005  
+// AVP: Accounting-Input-Packets (365) 
+// 8.3
+type AVP_Unsigned64 Accounting_Input_Packets;
+
+// RFC 4005  
+// AVP: Accounting-Output-Packets (366) 
+// 8.4
+type AVP_Unsigned64 Accounting_Output_Packets;
+
+// RFC 4005  
+// AVP: Acct-Session-Time (46) 
+// 8.5
+type AVP_Unsigned32 Acct_Session_Time;
+
+// RFC 4005  
+// AVP: Acct-Authentic (45) 
+// 8.6
+type enumerated Acct_Authentic
+{
+  RADIUS (1),
+  LOCAL (2),
+  REMOTE (3),
+  DIAMETER (4)
+}
+
+// RFC 4005  
+// AVP: Accounting-Auth-Method (406) 
+// 8.7
+type enumerated Accounting_Auth_Method
+{
+   PAP (1),
+   CHAP (2),
+   MS_CHAP_1 (3),
+   MS_CHAP_2 (4),
+   EAP (5),
+   None (7)   
+}
+
+// RFC 4005  
+// AVP: Acct-Delay-Time (41)
+// 8.8
+type AVP_Unsigned32 Acct_Delay_Time;
+
+// RFC 4005  
+// AVP: Acct-Link-Count (51) 
+// 8.9
+type AVP_Unsigned32 Acct_Link_Count;
+
+// RFC 4005  
+// AVP: Acct-Tunnel-Connection (68) 
+// 8.10
+type AVP_OctetString Acct_Tunnel_Connection;
+
+// RFC 4005  
+// AVP: Acct-Tunnel-Packets-Lost (86)
+// 8.11
+type AVP_Unsigned32 Acct_Tunnel_Packets_Lost;
+
+
+
+// RFC 4005  
+// AVP: NAS-Identifier (32)
+// 9.3.1
+type AVP_UTF8String NAS_Identifier;
+
+// RFC 4005  
+// AVP: NAS-IP-Address (4)
+// 9.3.2
+type AVP_OctetString NAS_IP_Address;
+
+// RFC 4005  
+// AVP: NAS-IPv6-Address (95)
+// 9.3.3
+type AVP_OctetString NAS_IPv6_Address;
+
+// RFC 4005  
+// AVP: State (24)
+// 9.3.4
+type AVP_OctetString State;
+
+// RFC 4005  
+// AVP: Origin-AAA-Protocol (408)
+// 9.3.6
+type enumerated Origin_AAA_Protocol
+{
+  RADIUS (1)
+}
