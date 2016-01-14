@@ -1,0 +1,196 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Roland Gecse - initial implementation and initial documentation
+*   Akos Pernek
+*   Antal Wuh.Hen.Chang
+*   Attila Fulop
+*   Balazs Barcsik
+*   Bence Molnar
+*   Csaba Koppany
+*   David Juhasz
+*   Eduard Czimbalmos
+*   Elemer Lelik
+*   Endre Kiss
+*   Endre Kulcsar
+*   Gabor Szalai
+*   Gabor Tatarka
+*   Gergely Futo
+*   Istvan Sandor
+*   Krisztian Pandi
+*   Kulcsár Endre
+*   Laszlo Tamas Zeke
+*   Norbert Pinter
+*   Roland Gecse
+*   Tibor Bende
+*   Tibor Szabo
+*   Timea Moder
+*   Zoltan Medve
+*   Zsolt Nandor Torok
+*   Zsolt Szalai
+******************************************************************************/
+//
+//  File:               EricssonProprietaryCxDx.ddf
+//  Description:        DDF for Cx according to 1551-FAY 301 0059 Uen
+//  Rev:                R34A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: ECX
+// APPLICATION-REVISION: PC26
+
+// AVP implementations according to: 
+// 1551-FAY 301 0059 Uen PC26 - Service Contract, Diameter Cx Application
+// Protocol details
+// IETF RFC 3588 - Diameter Base Protocol
+
+// 1551-FAY 301 0059 Uen PC26 	
+// AVP:	Application-Server-Name	(1001)	
+type AVP_OctetString Application_Server_Name;
+
+// 1551-FAY 301 0059 Uen PC26 	
+// AVP:	Authenticate (1019)	
+type AVP_OctetString Authenticate;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Authentication-Context (1024)	
+type AVP_OctetString Authentication_Context;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Auth-Data-Item (1018)	
+type AVP_Grouped Auth_Data_Item;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Authentication-Info (1023)	
+type AVP_OctetString Authentication_Info;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Authorization (1022)	
+type AVP_OctetString Authorization;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Authentication-Scheme (1020)	
+type AVP_Unsigned32 Authentication_Scheme;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Condition-Negated (1033)	
+type enumerated Condition_Negated
+{
+  FALSE (0),
+  TRUE  (1)
+}
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Condition-Type-CNF (1038)	
+type enumerated Condition_Type_CNF
+{
+  FALSE (0),
+  TRUE  (1)
+}
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Indication (1002)	
+type AVP_Unsigned32 Indication;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Item-Number (1021)	
+type AVP_Unsigned32 Item_Number;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Max-No-Call-Legs-Per-Sessions (1003)	
+type AVP_Unsigned32 Max_No_Call_Legs_Per_Sessions;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Max-No-Simultaneous-Sessions-Allowed (1004)	
+type AVP_Unsigned32 Max_No_Simultaneous_Sessions_Allowed;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Method (1037)	
+type AVP_OctetString Method;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Number-Authentication-Items (1026)	
+type AVP_Unsigned32 Number_Authentication_Items;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: P-CSCF-Name (1005)	
+type AVP_OctetString P_CSCF_Name;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: S-CSCF-Name-Originating	(1008)	
+type AVP_OctetString S_CSCF_Name_Originating;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: S-CSCF-Name-Terminating	(1009)	
+type AVP_OctetString S_CSCF_Name_Terminating;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Server-Capability (1010)
+type AVP_OctetString Server_Capability;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Session-Case (1034)	
+type AVP_Unsigned32 Session_Case;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: SIP-Server-Capabilities (1011)	
+type AVP_Grouped SIP_Server_Capabilities;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	SIP-Server-Name (1012)	
+type AVP_Grouped SIP_Server_Name;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: SIP-Server-Operator-Preference (1013)	
+type AVP_Grouped SIP_Server_Operator_Preference;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Trigger-Detection-Point (1014)	
+type AVP_Grouped Trigger_Detection_Point;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Type-Of-Trigger	(1015)	
+type AVP_Grouped Type_Of_Trigger;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Trigger	(1016)	
+type AVP_Grouped Trigger;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	User-Data (1017)	
+type AVP_Grouped User_Data;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	SIP-Header (1027)	
+type AVP_Grouped SIP_Header;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	SIP-Header-Name (1028)	
+type AVP_OctetString SIP_Header_Name;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: SIP-Header-Content (1029)	
+type AVP_OctetString SIP_Header_Content;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Request-Uri (1030)	
+type AVP_Grouped Request_Uri;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Request-Uri-SPT (1039)	
+type AVP_OctetString Request_Uri_SPT;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP: Trigger-Priority (1031)	
+type AVP_Unsigned32 Trigger_Priority;
+
+// 1551-FAY 301 0059 Uen PC26	
+// AVP:	Phone-Context (1032)	
+type AVP_OctetString Phone_Context;
+

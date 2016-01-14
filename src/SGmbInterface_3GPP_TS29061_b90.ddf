@@ -1,54 +1,28 @@
 /******************************************************************************
-* Copyright (c) 2004, 2014  Ericsson AB
+* Copyright (c) 2004, 2015  Ericsson AB
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*   Roland Gecse - initial implementation and initial documentation
-*   Akos Pernek
-*   Antal Wuh.Hen.Chang
-*   Attila Fulop
-*   Balazs Barcsik
-*   Bence Molnar
-*   Csaba Koppany
-*   David Juhasz
-*   Eduard Czimbalmos
-*   Elemer Lelik
-*   Endre Kiss
-*   Endre Kulcsar
-*   Gabor Szalai
-*   Gabor Tatarka
-*   Gergely Futo
-*   Istvan Sandor
-*   Krisztian Pandi
-*   Kulcsár Endre
-*   Laszlo Tamas Zeke
-*   Norbert Pinter
-*   Roland Gecse
-*   Tibor Bende
-*   Tibor Szabo
 *   Timea Moder
-*   Zoltan Medve
-*   Zsolt Nandor Torok
-*   Zsolt Szalai
 ******************************************************************************/
 //
-//  File:               SGmbInterface_3GPP_TS29061_980.ddf
-//  Description:        DDF for SGmb according to 3GPP TS 29.061 V9.8.0
+//  File:               SGmbInterface_3GPP_TS29061_b90.ddf
+//  Description:        DDF for SGmb according to 3GPP TS 29.061 V11.9.0
 //  Rev:                R34A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
 
 // APPLICATION-NAME: SGMB
-// APPLICATION-REVISION: V9_8_0
+// APPLICATION-REVISION: V11_9_0
 
 // AVP implementations according to: 
-// 3GPP TS 29.061 V9.8.0 - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
+// 3GPP TS 29.061 V11.9.0 - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
 
-// 3GPP TS 29.061 V9.8.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: MBMS-Access-Indicator (923) 3GPP (10415)
 // 20.5a.1
 type enumerated MBMS_Access_Indicator
@@ -58,30 +32,40 @@ type enumerated MBMS_Access_Indicator
   UTRAN_AND_E_UTRAN     (2)
 }
 
-// 3GPP TS 29.061 V9.8.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: MBMS-GW-SSM-IP-Address (924) 3GPP (10415)
 // 20.5a.2
 type AVP_OctetString MBMS_GW_SSM_IP_Address;
 
-// 3GPP TS 29.061 V9.8.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: MBMS-GW-SSM-IPv6-Address (925) 3GPP (10415)
 // 20.5a.3
 type AVP_OctetString MBMS_GW_SSM_IPv6_Address;
 
-// 3GPP TS 29.061 V9.8.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: MBMS-BMSC-SSM-UDP-Port (926) 3GPP (10415)
 // 20.5a.4
 type AVP_OctetString MBMS_BMSC_SSM_UDP_Port;
 
-// 3GPP TS 29.061 V9.8.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: MBMS-GW-UDP-Port (927) 3GPP (10415)
 // 20.5a.5
 type AVP_OctetString MBMS_GW_UDP_Port;
 
-// 3GPP TS 29.061 V9.8.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: MBMS-GW-UDP-Port-Indicator (928) 3GPP (10415) 
 // 20.5a.6
 type enumerated MBMS_GW_UDP_Port_Indicator
 {
   UDP_PORT_REQUIRED (1)
 }
+
+// 3GPP TS 29.061 V11.9.0
+// AVP: MBMS-Data-Transfer-Start (929) 3GPP (10415)
+// 20.5a.7
+type AVP_Unsigned64 MBMS_Data_Transfer_Start;
+
+// 3GPP TS 29.061 V11.9.0
+// AVP: MBMS-Data-Transfer-Stop (930) 3GPP (10415)
+// 20.5a.8
+type AVP_Unsigned64 MBMS_Data_Transfer_Stop;

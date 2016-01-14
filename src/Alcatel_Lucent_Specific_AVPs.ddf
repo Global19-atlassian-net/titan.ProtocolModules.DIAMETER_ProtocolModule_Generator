@@ -37,7 +37,7 @@
 //
 //  File:               Alcatel_Lucent_Specific_AVPs.ddf
 //  Description:        Alcatel Lucent (ALU) specific AVP definitions
-//  Rev:                R29A
+//  Rev:                R34A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -82,10 +82,8 @@ type enumerated Call_Direction
 // Diameter Offline Charging in MTAS
 // AVP: Call-Type (12) ALU (1751)
 // 5.2.11 
-type enumerated Call_Type
-{
-  Mobile   (32) 
-}
+type AVP_Unsigned32 Call_Type;
+
 
 // Diameter Offline Charging in MTAS
 // AVP: Service-ID (5) ALU (1751)

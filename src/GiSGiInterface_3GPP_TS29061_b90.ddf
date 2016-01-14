@@ -1,58 +1,33 @@
 /******************************************************************************
-* Copyright (c) 2004, 2014  Ericsson AB
+* Copyright (c) 2004, 2015  Ericsson AB
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *
 * Contributors:
-*   Roland Gecse - initial implementation and initial documentation
-*   Akos Pernek
-*   Antal Wuh.Hen.Chang
-*   Attila Fulop
-*   Balazs Barcsik
-*   Bence Molnar
-*   Csaba Koppany
-*   David Juhasz
-*   Eduard Czimbalmos
-*   Elemer Lelik
-*   Endre Kiss
-*   Endre Kulcsar
-*   Gabor Szalai
-*   Gabor Tatarka
-*   Gergely Futo
-*   Istvan Sandor
-*   Krisztian Pandi
-*   Kulcsár Endre
-*   Laszlo Tamas Zeke
-*   Norbert Pinter
-*   Roland Gecse
-*   Tibor Bende
-*   Tibor Szabo
 *   Timea Moder
-*   Zoltan Medve
-*   Zsolt Nandor Torok
-*   Zsolt Szalai
 ******************************************************************************/
 //
-//  File:               GiSGiInterface_3GPP_TS29061_930.ddf
-//  Description:        DDF for Gi/SGi according to 3GPP TS 29.061 V9.3.0
+//  File:               GiSGiInterface_3GPP_TS29061_b90.ddf
+//  Description:        DDF for Gi/SGi according to 3GPP TS 29.061 V11.9.0
 //  Rev:                R34A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
 
 // APPLICATION-NAME: GI
-// APPLICATION-REVISION: V9_3_0
+// APPLICATION-REVISION: V11_9_0
 
 // AVP implementations according to: 
-// 3GPP TS 29.061 V9.3.0 - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
+// 3GPP TS 29.061 V11.9.0 - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
 //
 //
 // Dependant applications
 // -
 
-// 3GPP TS 29.061 V9.3.0 16a.4
+
+// 3GPP TS 29.061 V11.9.0 16a.4
 type enumerated Command_Code 
 {
   Authorize_Authenticate (265),
@@ -63,19 +38,19 @@ type enumerated Command_Code
 
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-IMSI (1) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_IMSI;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Charging-Id (2) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_Charging_Id;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-PDP-Type (3) 3GPP (10415)
 // 16.4.7
 type enumerated 3GPP_PDP_Type
@@ -87,139 +62,158 @@ type enumerated 3GPP_PDP_Type
 }
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-CG-Address (4) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_CG_Address;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-GPRS-Negotiated-QoS-Profile (5) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_GPRS_Negotiated_QoS_Profile;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-SGSN-Address (6) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_SGSN_Address;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-GGSN-Address (7) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_GGSN_Address;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-IMSI-MCC-MNC (8) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_IMSI_MCC_MNC;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-GGSN-MCC-MNC (9) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_GGSN_MCC_MNC;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-NSAPI (10) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_NSAPI;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Session-Stop-Indicator (11) 3GPP (10415)
 type AVP_UTF8String 3GPP_Session_Stop_Indicator;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Selection-Mode (12) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_Selection_Mode;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Charging-Characteristics (13) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_Charging_Characteristics;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-CG-IPv6-Address (14) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_CG_IPv6_Address;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-SGSN-IPv6-Address (15) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_SGSN_IPv6_Address;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-GGSN-IPv6-Address (16) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_GGSN_IPv6_Address;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-IPv6-DNS-Servers (17) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_IPv6_DNS_Servers;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-SGSN-MCC-MNC (18) 3GPP (10415)
 // 16.4.7
 type AVP_UTF8String 3GPP_SGSN_MCC_MNC;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-IMEISV (20) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_IMEISV;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-RAT-Type (21) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_RAT_Type;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-User-Location-Info (22) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_User_Location_Info;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-MS-TimeZone (23) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_MS_TimeZone;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-CAMEL-Charging-Info (24) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_CAMEL_Charging_Info;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Packet-Filter (25) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_Packet_Filter;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Negotiated-DSCP (26) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_Negotiated_DSCP;
 
 
-// 3GPP TS 29.061 V9.3.0
+// 3GPP TS 29.061 V11.9.0
 // AVP: 3GPP-Allocate-IP-Type (27) 3GPP (10415)
 // 16.4.7
 type AVP_OctetString 3GPP_Allocate_IP_Type;
+
+// 3GPP TS 29.061 V11.9.0
+// AVP: External-Identifier (28) 3GPP (10415)
+// 16.4.7
+type AVP_UTF8String External_Identifier;
+
+
+// 3GPP TS 29.061 V11.9.0
+// AVP: TWAN-Identifier (29) 3GPP (10415)
+// 16.4.7
+type AVP_OctetString TWAN_Identifier;
+
+
+// 3GPP TS 29.061 V11.9.0
+// AVP: 3GPP-User-Location-Info-Time (30) 3GPP (10415)
+// 16.4.7
+type AVP_Unsigned32 3GPP_User_Location_Info_Time;
+
+
 

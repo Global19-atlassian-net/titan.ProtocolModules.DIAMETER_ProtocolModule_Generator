@@ -23,7 +23,7 @@
 *   Gergely Futo
 *   Istvan Sandor
 *   Krisztian Pandi
-*   Kulcs·r Endre
+*   Kulcs√°r Endre
 *   Laszlo Tamas Zeke
 *   Norbert Pinter
 *   Roland Gecse
@@ -36,9 +36,13 @@
 ******************************************************************************/
 
 #include "DIAMETER_Types.hh"
-#include <sys/time.h>
 #define BUF_SIZE 65536          // this buffer is used on data reception and outgoing encoding
 #include <math.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdint.h>
 
 
 namespace DIAMETER__Types{
@@ -259,16 +263,48 @@ void encode_float_8byte(unsigned char* &p, const double data) {
   p+=8;
 }
 
+
+INTEGER f__DIAMETER__genEndToEnd__int()
+{
+  timeval precise;                        // requires <sys/time.h>
+  static bool inititalized = false;
+  static uint32_t l_value = 0;
+  if(!inititalized){
+    long int seed = getpid();
+    if ( gettimeofday(&precise, NULL) != -1 ) {
+      seed <<= 8;
+      seed +=  (precise.tv_sec) & 0xFF;
+      seed <<= 8;
+      seed +=  (precise.tv_usec) & 0xFF;
+    }
+    srand48(seed);
+    l_value =lrand48();
+    if ( gettimeofday(&precise, NULL) != -1 ) {
+      l_value = (((uint32_t)precise.tv_sec) << 20) + ( l_value >> 12);
+    }
+    inititalized = true;
+  }
+  
+  l_value+=1;  // unsigned int -> can be overflowed safely
+  
+  if(l_value==0){
+    l_value+=1;
+  }
+  
+  INTEGER ret;
+  ret.set_long_long_val(l_value);
+  return ret;
+}
+
+
+OCTETSTRING f__DIAMETER__genEndToEnd__oct()
+{
+  return int2oct(f__DIAMETER__genEndToEnd__int(),4);
+}
+
 INTEGER f__DIAMETER__genHopByHop__int()
 {
-  INTEGER ret = 0;
-  timeval precise;                        // requires <sys/time.h>
-  if ( gettimeofday(&precise, NULL) != -1 ) {
-    srand48(precise.tv_sec + precise.tv_usec);
-    ret.set_long_long_val(lrand48());
-  }
-  else TTCN_warning("f_DIAMETER_genHopByHop() returns with 0");
-  return ret;
+  return f__DIAMETER__genEndToEnd__int();
 }
   
 
@@ -278,24 +314,6 @@ OCTETSTRING f__DIAMETER__genHopByHop__oct()
   return int2oct(f__DIAMETER__genHopByHop__int(),4);
 }
 
-INTEGER f__DIAMETER__genEndToEnd__int()
-{
-  INTEGER ret = 0;
-  timeval precise;                        // requires <sys/time.h>
-  if ( gettimeofday(&precise, NULL) != -1 ) {
-    srand48(precise.tv_sec + precise.tv_usec);
-    unsigned int l_value = (precise.tv_sec << 20) + (lrand48() >> 12);
-    ret.set_long_long_val(l_value);
-  }
-  else TTCN_warning("f_DIAMETER_genEndToEnd() returns with 0");
-  return ret;
-}
-
-
-OCTETSTRING f__DIAMETER__genEndToEnd__oct()
-{
-  return int2oct(f__DIAMETER__genEndToEnd__int(),4);
-}
 
 bool chk_zero(const INTEGER& var) {return var==0;}
 bool chk_zero(const OCTETSTRING& var) {return var==os_h_or_e_id_oct;}
