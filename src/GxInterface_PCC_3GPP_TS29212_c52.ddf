@@ -37,7 +37,7 @@
 //
 //  File:               GxInterface_PCC_3GPP_TS29212_c52.ddf
 //  Description:        DDF for Gx according to 3GPP TS 29.212 V12.5.2
-//  Rev:                R34A
+//  Rev:                R40A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -738,7 +738,11 @@ type AVP_Grouped Redirect_Information;
 // 3GPP TS 29.212 V12.5.2
 // AVP: Redirect-Support (1086) 3GPP (10415)
 // 5.3.83
-type AVP_Grouped Redirect_Support;
+type enumerated Redirect_Support
+{
+  REDIRECTION_DISABLED (0),
+  REDIRECTION_ENABLED (1)
+}
 
 
 // 3GPP TS 29.212 V12.5.2

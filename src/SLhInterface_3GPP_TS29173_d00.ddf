@@ -1,0 +1,103 @@
+/******************************************************************************
+* Copyright (c) 2004, 2016  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Gabor Szalai - initial implementation
+******************************************************************************/
+//
+//  File:               SLhInterface_3GPP_TS29173_d00.ddf
+//  Description:        DDF for SLh according to 3GPP TS 29.173 d.0.0
+//  Rev:                R40A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+
+// APPLICATION-NAME: SLh
+// APPLICATION-REVISION: V13_0_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.173 13.0.0 - Diameter-based SLh interface for Control Plane LCS
+//
+//
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+//
+// Notes: 
+// Present application has its own vendor specific Diameter application id: 16777291 
+//
+//
+
+// 3GPP TS 29.173 13.0.0 6.2.2
+type enumerated Command_Code
+{
+  LCS_Routing_Info (8388622)
+}
+
+// 3GPP TS 29.173 13.0.0
+// AVP: LMSI (2400) 3GPP (10415)
+// 6.4.2
+type AVP_OctetString LMSI;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: Serving-Node (2401) 3GPP (10415)
+// 6.4.3
+type AVP_Grouped Serving_Node;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: MME-Name (2402) 3GPP (10415)
+// 6.4.4
+type AVP_DiameterIdentity MME_Name;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: MSC-Number (2403) 3GPP (10415)
+// 6.4.5
+type AVP_OctetString MSC_Number;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: LCS-Capabilities-Sets (2404) 3GPP (10415)
+// 6.4.6
+type AVP_Unsigned32 LCS_Capabilities_Sets;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: GMLC-Address (2405) 3GPP (10415)
+// 6.4.7
+type AVP_Address GMLC_Address;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: Additional-Serving-Node (2406) 3GPP (10415)
+// 6.4.8
+type AVP_Grouped Additional_Serving_Node;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: PPR-Address (2407) 3GPP (10415)
+// 6.4.9
+type AVP_Address PPR_Address;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: MME-Realm (2408) 3GPP (10415)
+// 6.4.12
+type AVP_DiameterIdentity MME_Realm;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: SGSN-Name (2409) 3GPP (10415)
+// 6.4.13
+type AVP_DiameterIdentity SGSN_Name;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: SGSN-Realm (2410) 3GPP (10415)
+// 6.4.14
+type AVP_DiameterIdentity SGSN_Realm;
+
+// 3GPP TS 29.173 13.0.0
+// AVP: RIA-Flags (2411) 3GPP (10415)
+// 6.4.15
+type AVP_Unsigned32 RIA_Flags;
+
+
+
+

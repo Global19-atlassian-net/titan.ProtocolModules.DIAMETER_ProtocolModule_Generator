@@ -37,7 +37,7 @@
 //
 //  File:               Vodafone_Specific.ddf
 //  Description:        Vodafone specific AVPs
-//  Rev:                R34A
+//  Rev:                R40A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -82,3 +82,48 @@ type AVP_Unsigned32 Remove_After_Timer_DL;
 // AVP: Remove-After-Timer-UL (505) Vodafone (12645)
 type AVP_Unsigned32 Remove_After_Timer_UL;
 
+// AVP: Announcement-Instructions (700) Vodafone (12645)
+type AVP_Grouped Announcement_Instructions;
+
+// AVP: Announcement-Number (701) Vodafone (12645)
+type AVP_Unsigned32 Announcement_Number;
+
+// AVP: Announcement-Order (702) Vodafone (12645)
+type AVP_Unsigned32 Announcement_Order;
+
+// Values from 5.2.11 - 11/155 19-AVA 901 18 - Diameter Online Charging in MTAS
+// AVP: Announcement-Prompt-Collect-Interruptible (709) Vodafone (12645)
+type enumerated Announcement_Prompt_Collect_Interruptible
+{
+  FALSE (0),
+  TRUE (1)
+}
+
+// AVP: Announcement-Prompt-Collect-MaxDigits (711) Vodafone (12645)
+type AVP_Unsigned32 Announcement_Prompt_Collect_MaxDigits;
+
+// AVP: Announcement-Prompt-Collect-MinDigits (710) Vodafone (12645)
+type AVP_Unsigned32 Announcement_Prompt_Collect_MinDigits;
+
+// AVP: Announcement-Prompt-Collect-Parameter (708) Vodafone (12645)
+type AVP_Grouped Announcement_Prompt_Collect_Parameter;
+
+// AVP: Announcement-Type (703) Vodafone (12645)
+type AVP_Unsigned32 Announcement_Type;
+
+// AVP: Announcement-Variable-Part (704) Vodafone (12645)
+type AVP_Grouped Announcement_Variable_Part;
+
+// AVP: Announcement-Variable-Part-Data (705) Vodafone (12645)
+type AVP_UTF8String Announcement_Variable_Part_Data;
+
+// Values from 5.2.18 - 11/155 19-AVA 901 18 - Diameter Online Charging in MTAS
+// AVP: Announcement-Variable-Part-Type (706) Vodafone (12645)
+type enumerated Announcement_Variable_Part_Type;
+{
+  INTEGER (0),
+  NUMBER (1),
+  TIME (2),
+  DATE (3),
+  PRICE (4)
+}

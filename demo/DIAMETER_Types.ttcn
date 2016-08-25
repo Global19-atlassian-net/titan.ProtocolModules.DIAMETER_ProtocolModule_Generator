@@ -40,7 +40,7 @@ module DIAMETER_Types {
 //
 //  File:               BaseTypes_IETF_RFC3588.ddf
 //  Description:	DDF for the Diameter base types
-//  Rev:                R34A
+//  Rev:                R40A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 

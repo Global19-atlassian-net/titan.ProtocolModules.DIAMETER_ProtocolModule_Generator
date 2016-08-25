@@ -37,7 +37,7 @@
 //
 //  File:               DIAMETER_EncDec.cc
 //  Description:	Encoder/Decoder and external functions for DPMG
-//  Rev:                R34A
+//  Rev:                R40A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 

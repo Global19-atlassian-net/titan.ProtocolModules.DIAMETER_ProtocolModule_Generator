@@ -1,0 +1,384 @@
+/******************************************************************************
+* Copyright (c) 2004, 2016  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Gabor Szalai - initial implementation
+******************************************************************************/
+//
+//  File:               SLgInterface_3GPP_TS29172_d10.ddf
+//  Description:        DDF for SLg according to 3GPP TS 29.172 d.1.0
+//  Rev:                R40A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+
+// APPLICATION-NAME: SLg
+// APPLICATION-REVISION: V13_0_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.172 13.1.0 - Diameter-based SLg interface for Control Plane LCS
+//
+//
+// Dependant applications
+// IETF RFC 3588   - Diameter Base Protocol
+//
+// Notes: 
+// Present application has its own vendor specific Diameter application id: 16777255 
+//
+//
+
+// 3GPP TS 29.172 13.1.0 7.2
+type enumerated Command_Code
+{
+  Provide_Location (8388620),
+  Location_Report (8388621)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: SLg-Location-Type (2500) 3GPP (10415)
+// 7.4.2
+type enumerated SLg_Location_Type {
+  CURRENT_LOCATION (0),
+  CURRENT_OR_LAST_KNOWN_LOCATION (1),
+  INITIAL_LOCATION (2) ,
+  ACTIVATE_DEFERRED_LOCATION (3),
+  CANCEL_DEFERRED_LOCATION (4),
+  NOTIFICATION_VERIFICATION_ONLY (5) 
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-EPS-Client-Name (2501) 3GPP (10415)
+// 7.4.3
+type AVP_Grouped LCS_EPS_Client_Name;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Requestor-Name (2502) 3GPP (10415)
+// 7.4.4
+type AVP_Grouped LCS_Requestor_Name;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Priority (2503) 3GPP (10415)
+// 7.4.5
+type AVP_Unsigned32 LCS_Priority;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-QoS (2504) 3GPP (10415)
+// 7.4.6
+type AVP_Grouped LCS_QoS;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Horizontal-Accuracy (2505) 3GPP (10415)
+// 7.4.7
+type AVP_Unsigned32 Horizontal_Accuracy;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Vertical-Accuracy (2506) 3GPP (10415)
+// 7.4.8
+type AVP_Unsigned32 Vertical_Accuracy;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Vertical-Requested (2507) 3GPP (10415)
+// 7.4.9
+type enumerated Vertical_Requested {
+  VERTICAL_COORDINATE_IS_NOT_REQUESTED (0),
+	VERTICAL_COORDINATE_IS_REQUESTED (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Velocity-Requested (2508) 3GPP (10415)
+// 7.4.10
+type enumerated Velocity_Requested {
+  VELOCITY_IS_NOT_REQUESTED (0), 
+  VELOCITY_IS_REQUESTED (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Response-Time (2509) 3GPP (10415)
+// 7.4.11
+type enumerated Response_Time {
+  LOW_DELAY (0),
+  DELAY_TOLERANT (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Supported-GAD-Shapes (2510) 3GPP (10415)
+// 7.4.12
+type AVP_Unsigned32 Supported_GAD_Shapes;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Codeword (2511) 3GPP (10415)
+// 7.4.13
+type AVP_UTF8String LCS_Codeword;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Privacy-Check (2512) 3GPP (10415)
+// 7.4.14
+type enumerated LCS_Privacy_Check {
+  ALLOWED_WITHOUT_NOTIFICATION (0),
+  ALLOWED_WITH_NOTIFICATION (1),
+  ALLOWED_IF_NO_RESPONSE (2),
+  RESTRICTED_IF_NO_RESPONSE (3),
+  NOT_ALLOWED (4)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Accuracy-Fulfilment-Indicator (2513) 3GPP (10415)
+// 7.4.15
+type enumerated Accuracy_Fulfilment_Indicator {
+  REQUESTED_ACCURACY_FULFILLED (0),
+  REQUESTED_ACCURACY_NOT_FULFILLED (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Age-Of-Location-Estimate (2514) 3GPP (10415)
+// 7.4.16
+type AVP_Unsigned32 Age_Of_Location_Estimate;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Velocity-Estimate (2515) 3GPP (10415)
+// 7.4.17
+type AVP_OctetString Velocity_Estimate;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: EUTRAN-Positioning-Data (2516) 3GPP (10415)
+// 7.4.18
+type AVP_OctetString EUTRAN_Positioning_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: ECGI (2517) 3GPP (10415)
+// 7.4.19
+type AVP_OctetString ECGI;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Location-Event (2518) 3GPP (10415)
+// 7.4.20
+type enumerated Location_Event {
+  EMERGENCY_CALL_ORIGINATION (0),
+  EMERGENCY_CALL_RELEASE (1),
+  MO_LR (2),
+  EMERGENCY_CALL_HANDOVER (3),
+  DEFERRED_MT_LR_RESPONSE (4),
+  DEFERRED_MO_LR_TTTP_INITIATION (5),
+  DELAYED_LOCATION_REPORTING (6)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Pseudonym-Indicator (2519) 3GPP (10415)
+// 7.4.21
+type enumerated Pseudonym_Indicator {
+  PSEUDONYM_NOT_REQUESTED (0),
+  PSEUDONYM_REQUESTED (1) 
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Service-Type-ID (2520) 3GPP (10415)
+// 7.4.22
+type AVP_Unsigned32 LCS_Service_Type_ID;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Privacy-Check-Non-Session (2521) 3GPP (10415)
+// 7.4.23
+type AVP_Grouped LCS_Privacy_Check_Non_Session;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Privacy-Check-Session (2522) 3GPP (10415)
+// 7.4.24
+type AVP_Grouped LCS_Privacy_Check_Session;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-QoS-Class (2523) 3GPP (10415)
+// 7.4.27
+type enumerated LCS_QoS_Class {
+  ASSURED (0),
+  BEST_EFFORT (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: GERAN-Positioning-Info (2524) 3GPP (10415)
+// 7.4.29
+type AVP_Grouped GERAN_Positioning_Info;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: GERAN-Positioning-Data (2525) 3GPP (10415)
+// 7.4.30
+type AVP_OctetString GERAN_Positioning_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: GERAN-GANSS-Positioning-Data (2526) 3GPP (10415)
+// 7.4.31
+type AVP_OctetString GERAN_GANSS_Positioning_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: UTRAN-Positioning-Info (2527) 3GPP (10415)
+// 7.4.32
+type AVP_Grouped UTRAN_Positioning_Info;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: UTRAN-Positioning-Data (2528) 3GPP (10415)
+// 7.4.33
+type AVP_OctetString UTRAN_Positioning_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: UTRAN-GANSS-Positioning-Data (2529) 3GPP (10415)
+// 7.4.34
+type AVP_OctetString UTRAN_GANSS_Positioning_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LRR-Flags (2530) 3GPP (10415)
+// 7.4.35
+type AVP_Unsigned32 LRR_Flags;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LCS-Reference-Number (2531) 3GPP (10415)
+// 7.4.37
+type AVP_OctetString LCS_Reference_Number;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Deferred-Location-Type (2532) 3GPP (10415)
+// 7.4.36
+type AVP_Unsigned32 Deferred_Location_Type;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Area-Event-Info (2533) 3GPP (10415)
+// 7.4.38
+type AVP_Grouped Area_Event_Info;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Area-Definition (2534) 3GPP (10415)
+// 7.4.39
+type AVP_Grouped Area_Definition;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Area (2535) 3GPP (10415)
+// 7.4.40
+type AVP_Grouped Area;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Area-Type (2536) 3GPP (10415)
+// 7.4.41
+type AVP_Unsigned32 Area_Type;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Area-Identification (2537) 3GPP (10415)
+// 7.4.42
+type AVP_Grouped Area_Identification;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Occurrence-Info (2538) 3GPP (10415)
+// 7.4.43
+type enumerated Occurrence_Info {
+  ONE_TIME_EVENT (0),
+  MULTIPLE_TIME_EVENT (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Interval-Time (2539) 3GPP (10415)
+// 7.4.44
+type AVP_Unsigned32 Interval_Time;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Periodic-LDR-Information (2540) 3GPP (10415)
+// 7.4.45
+type AVP_Grouped Periodic_LDR_Information;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Reporting-Amount (2541) 3GPP (10415)
+// 7.4.46
+type AVP_Unsigned32 Reporting_Amount;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Reporting-Interval (2542) 3GPP (10415)
+// 7.4.47
+type AVP_Unsigned32 Reporting_Interval;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Reporting-PLMN-List (2543) 3GPP (10415)
+// 7.4.48
+type AVP_Grouped Reporting_PLMN_List;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: PLMN-ID-List (2544) 3GPP (10415)
+// 7.4.49
+type AVP_Grouped PLMN_ID_List;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: PLR-Flags (2545) 3GPP (10415)
+// 7.4.52
+type AVP_Unsigned32 PLR_Flags;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: PLA-Flags (2546) 3GPP (10415)
+// 7.4.53
+type AVP_Unsigned32 PLA_Flags;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Deferred-MT-LR-Data (2547) 3GPP (10415)
+// 7.4.54
+type AVP_Grouped Deferred_MT_LR_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Termination-Cause (2548) 3GPP (10415)
+// 7.4.55
+type AVP_Unsigned32 Termination_Cause;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: LRA-Flags (2549) 3GPP (10415)
+// 7.4.56
+type AVP_Unsigned32 LRA_Flags;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Periodic-Location-Support-Indicator (2550) 3GPP (10415)
+// 7.4.50
+type enumerated Periodic_Location_Support_Indicator {
+  NOT_SUPPORTED (0),
+  SUPPORTED (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Prioritized-List-Indicator (2551) 3GPP (10415)
+// 7.4.51
+type enumerated Prioritized_List_Indicator {
+  NOT_PRIORITIZED  (0),
+  PRIORITIZED (1)
+}
+
+// 3GPP TS 29.172 13.1.0
+// AVP: ESMLC-Cell-Info (2552) 3GPP (10415)
+// 7.4.57
+type AVP_Grouped ESMLC_Cell_Info;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Cell-Portion-ID (2553) 3GPP (10415)
+// 7.4.58
+type AVP_Unsigned32 Cell_Portion_ID;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: 1xRTT-RCID (2554) 3GPP (10415)
+// 7.4.59
+type AVP_OctetString 1xRTT_RCID;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Delayed-Location-Reporting-Data (2555) 3GPP (10415)
+// 7.4.60
+type AVP_Grouped Delayed_Location_Reporting_Data;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Civic-Address (2556) 3GPP (10415)
+// 7.4.61
+type AVP_UTF8String Civic_Address;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: Barometric-Pressure (2557) 3GPP (10415)
+// 7.4.62
+type AVP_Unsigned32 Barometric_Pressure;
+
+// 3GPP TS 29.172 13.1.0
+// AVP: UTRAN-Additional-Positioning-Data (2558) 3GPP (10415)
+// 7.4.63
+type AVP_OctetString UTRAN_Additional_Positioning_Data;
+

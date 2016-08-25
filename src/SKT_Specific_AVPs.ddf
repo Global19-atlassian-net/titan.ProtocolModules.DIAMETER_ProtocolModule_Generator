@@ -1,0 +1,27 @@
+/******************************************************************************
+* Copyright (c) 2004, 2016  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder - initial implementation and initial documentation
+******************************************************************************/
+//
+//  File:               SKT_Specific_AVPs.ddf
+//  Description:        SKT Specific AVP definitions
+//  Rev:                R40A
+//  Prodnr:             CNL 113 462
+
+
+// APPLICATION-NAME: SKT
+// APPLICATION-REVISION: 1
+
+// AVP implementations according to: 
+// 109/0363-1/FCP111392-1 SUB-Feature Description SKT-Zone
+
+
+// Zone-Info 
+// AVP: Zone-Info (9104) SKT (5806)
+type AVP_UTF8String Zone_Info;
