@@ -36,7 +36,6 @@
 ******************************************************************************/
 
 #include "DIAMETER_Types.hh"
-#define BUF_SIZE 65536          // this buffer is used on data reception and outgoing encoding
 #include <math.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -49,23 +48,23 @@ namespace DIAMETER__Types{
 static const unsigned char os_h_or_e_id_octets[] = { 0, 0, 0, 0 };
 static const OCTETSTRING os_h_or_e_id_oct(4, os_h_or_e_id_octets);
 
-int encode_AVP_OctetString(unsigned char* & p, const AVP__OctetString& avp);
-int encode_AVP_Integer(unsigned char* & p, const AVP__Integer32& avp);
-int encode_AVP_Integer64(unsigned char* & p, const AVP__Integer64& avp);
-int encode_AVP_Unsigned32(unsigned char* & p, const AVP__Unsigned32& avp);
-int encode_AVP_Unsigned64(unsigned char* & p, const AVP__Unsigned64& avp);
-int encode_AVP_Float32(unsigned char* & p, const AVP__Float32& avp);
-int encode_AVP_Float64(unsigned char* & p, const AVP__Float64& avp);
-int encode_AVP_Grouped(unsigned char* & p, const AVP__Grouped& avp);
-int encode_AVP_Address(unsigned char* & p, const AVP__Address& avp);
-int encode_AVP_IP_Address(unsigned char* & p, const AVP__IP__Address& avp);
-int encode_AVP_Time(unsigned char* & p, const AVP__Time& avp);
-int encode_AVP_UTF8String(unsigned char* & p, const AVP__UTF8String& avp);
-int encode_AVP_DiameterIdentity(unsigned char* & p, const AVP__DiameterIdentity& avp);
-int encode_AVP_DiameterURI(unsigned char* & p, const AVP__DiameterURI& avp);
-int encode_AVP_IPFilterRule(unsigned char* & p, const AVP__IPFilterRule& avp);
-int encode_AVP_QoSFilterRule(unsigned char* & p, const AVP__QoSFilterRule& avp);
-int encode_AVP_enumerated(unsigned char* & p, const int& avp);
+int encode_AVP_OctetString(TTCN_Buffer &p, const AVP__OctetString& avp);
+int encode_AVP_Integer(TTCN_Buffer &p, const AVP__Integer32& avp);
+int encode_AVP_Integer64(TTCN_Buffer &p, const AVP__Integer64& avp);
+int encode_AVP_Unsigned32(TTCN_Buffer &p, const AVP__Unsigned32& avp);
+int encode_AVP_Unsigned64(TTCN_Buffer &p, const AVP__Unsigned64& avp);
+int encode_AVP_Float32(TTCN_Buffer &p, const AVP__Float32& avp);
+int encode_AVP_Float64(TTCN_Buffer &p, const AVP__Float64& avp);
+int encode_AVP_Grouped(TTCN_Buffer &p, const AVP__Grouped& avp);
+int encode_AVP_Address(TTCN_Buffer &p, const AVP__Address& avp);
+int encode_AVP_IP_Address(TTCN_Buffer &p, const AVP__IP__Address& avp);
+int encode_AVP_Time(TTCN_Buffer &p, const AVP__Time& avp);
+int encode_AVP_UTF8String(TTCN_Buffer &p, const AVP__UTF8String& avp);
+int encode_AVP_DiameterIdentity(TTCN_Buffer &p, const AVP__DiameterIdentity& avp);
+int encode_AVP_DiameterURI(TTCN_Buffer &p, const AVP__DiameterURI& avp);
+int encode_AVP_IPFilterRule(TTCN_Buffer &p, const AVP__IPFilterRule& avp);
+int encode_AVP_QoSFilterRule(TTCN_Buffer &p, const AVP__QoSFilterRule& avp);
+int encode_AVP_enumerated(TTCN_Buffer &p, const int& avp);
 bool decode_AVP_OctetString(const unsigned char* & p,  AVP__OctetString& avp, int length);
 bool decode_AVP_Integer(const unsigned char* & p,  AVP__Integer32& avp, int length);
 bool decode_AVP_Integer64(const unsigned char* & p,  AVP__Integer64& avp, int length);
@@ -89,82 +88,40 @@ bool decode_AVP(const unsigned char* &p, AVP &avptype, const unsigned char* buf_
 
 
 ////////////////////////////////////////////////////////////
-void encode_bits_1byte(unsigned char* &p,
+void encode_bits_1byte(TTCN_Buffer &p,
 		const BITSTRING& bit1, const BITSTRING& bit2, const BITSTRING& therest) {
-	unsigned char ctemp;
-	BITSTRING datas = therest + (bit2 + bit1); // actually backwards
-	if (datas.lengthof() != 8)
-		TTCN_warning("Bitstring length %d is not exactly a byte.",
-				datas.lengthof());
-	ctemp = *(bit1);
-	*p = 0; // just in case
-	*p += (ctemp << 7) & 0x80; // 1000 0000
-	ctemp = *(bit2);
-	*p += (ctemp << 6) & 0x40; // 0100 0000
-	ctemp = *(therest); // needs flipping
-	*p += ((ctemp & 0x20) >> 5); // 0010 0000
-	*p += ((ctemp & 0x10) >> 3); // 0001 0000
-	*p += ((ctemp & 0x08) >> 1); // 0000 1000
-	*p += ((ctemp & 0x04) << 1); // 0000 0100
-	*p += ((ctemp & 0x02) << 3); // 0000 0010
-	*p += ((ctemp & 0x01) << 5); // 0000 0001
-	p++; // advance by a byte
+	BITSTRING datas = bit1 + bit2 + therest;
+	if (datas.lengthof() != 8){
+		TTCN_warning("Bitstring length %d is not exactly a byte.", datas.lengthof());
+  }
+  p.put_string(bit2oct(datas));
 }
 
 ////////////////////////////////////////////////////////////
-void encode_bits_1byte(unsigned char* &p,
+void encode_bits_1byte(TTCN_Buffer &p,
 		const BITSTRING& bit1, const BITSTRING& bit2, const BITSTRING& bit3,
 		const BITSTRING& therest) {
-	unsigned char ctemp;
-	BITSTRING datas = (therest + bit3) + (bit2 + bit1); // backwards?
-	if (datas.lengthof() != 8)
-		TTCN_warning("Bitstring length %d is not exactly a byte.",
-				datas.lengthof());
-	ctemp = *(bit1);
-	*p = 0; // just in case
-	*p += (ctemp << 7) & 0x80; // 1000 0000
-	ctemp = *(bit2);
-	*p += (ctemp << 6) & 0x40; // 0100 0000
-	ctemp = *(bit3);
-	*p += (ctemp << 5) & 0x20; // 0010 0000
-	ctemp = *(therest); // needs flipping
-	*p += ((ctemp & 0x10) >> 4); // 0001 0000
-	*p += ((ctemp & 0x08) >> 2); // 0000 1000
-	*p += ((ctemp & 0x04)); // 0000 0100
-	*p += ((ctemp & 0x02) << 2); // 0000 0010
-	*p += ((ctemp & 0x01) << 4); // 0000 0001
-	p++; // advance by a byte
+	BITSTRING datas = bit1 + bit2 + bit3 + therest;
+	if (datas.lengthof() != 8){
+		TTCN_warning("Bitstring length %d is not exactly a byte.", datas.lengthof());
+  }
+  p.put_string(bit2oct(datas));
 }
 
 ////////////////////////////////////////////////////////////
-void encode_bits_1byte(unsigned char* &p,
+void encode_bits_1byte(TTCN_Buffer &p,
 		const BITSTRING& bit1, const BITSTRING& bit2, const BITSTRING& bit3,
 		const BITSTRING& bit4, const BITSTRING& therest) {
-	unsigned char ctemp;
-	BITSTRING datas = ((((therest + bit4) + bit3) + bit2) + bit1); // backwards?
-	if (datas.lengthof() != 8)
-		TTCN_warning("Bitstring length %d is not exactly a byte.",
-				datas.lengthof());
-	ctemp = *(bit1);
-	*p = 0; // just in case
-	*p += (ctemp << 7) & 0x80; // 1000 0000
-	ctemp = *(bit2);
-	*p += (ctemp << 6) & 0x40; // 0100 0000
-	ctemp = *(bit3);
-	*p += (ctemp << 5) & 0x20; // 0010 0000
-	ctemp = *(bit4);
-	*p += (ctemp << 4) & 0x10; // 0001 0000
-	ctemp = *(therest); // needs flipping
-	*p += ((ctemp & 0x08) >> 3); // 0000 1000
-	*p += ((ctemp & 0x04) >> 1); // 0000 0100
-	*p += ((ctemp & 0x02) << 1); // 0000 0010
-	*p += ((ctemp & 0x01) << 3); // 0000 0001
-	p++; // advance by a byte
+	BITSTRING datas = bit1 + bit2 + bit3 + bit4 + therest;
+	if (datas.lengthof() != 8){
+		TTCN_warning("Bitstring length %d is not exactly a byte.", datas.lengthof());
+  }
+  p.put_string(bit2oct(datas));
 }
 
 
 ////////////////////////////////////////////////////////////
-void encode_octets(int len, unsigned char* &p,
+void encode_octets(int len, TTCN_Buffer &p,
 		const OCTETSTRING& data) {
 	if (data.lengthof() > len){
 		TTCN_error(
@@ -173,94 +130,80 @@ void encode_octets(int len, unsigned char* &p,
   }
   int padd=len-data.lengthof();
   for(;padd>0;padd--){
-    *(p++)='\0';
+    p.put_c('\0');
   }
-	memcpy(p, (const unsigned char*) data, data.lengthof());
-	p += data.lengthof();
+  p.put_string(data);
 }
 
 ////////////////////////////////////////////////////////////
-void encode_octets(unsigned char* &p, const OCTETSTRING& data) {
-	memcpy(p, (const unsigned char*) data, data.lengthof());
-	p += data.lengthof();
+void encode_octets(TTCN_Buffer &p, const OCTETSTRING& data) {
+  p.put_string(data);
 }
 
 ////////////////////////////////////////////////////////////
-void pad_oct_if_needed(unsigned char* &p, int unpaddedsize) { //if called, pads unpaddedsize's distance to closest 4-octet boundary
+void pad_oct_if_needed(TTCN_Buffer &p, int unpaddedsize) { //if called, pads unpaddedsize's distance to closest 4-octet boundary
 	encode_octets(p, OCTETSTRING((4 - unpaddedsize % 4) % 4,
 			(const unsigned char*) "\0\0\0"));
 }
 
 ////////////////////////////////////////////////////////////
-void encode_chars(unsigned char* &p, const CHARSTRING& data) {
-	memcpy(p, (const char*) data, data.lengthof());
-	p += data.lengthof();
+void encode_chars(TTCN_Buffer &p, const CHARSTRING& data) {
+  p.put_string(data);
 }
 
 ////////////////////////////////////////////////////////////
-void encode_int_1byte(unsigned char* &p, unsigned int data) {
+void encode_int_1byte(TTCN_Buffer &p, unsigned int data) {
 	if ((data >> 8) != 0)
 		TTCN_error("Integer value %d is too long to fit in 1 byte.", data);
-	*(p++) = data & 0xFF;
+  p.put_c(data & 0xFF);
 }
 
 ////////////////////////////////////////////////////////////
-void encode_int_2byte(unsigned char* &p, unsigned int data) {
+void encode_int_2byte(TTCN_Buffer &p, unsigned int data) {
 	if ((data >> 16) != 0)
 		TTCN_error("Integer value %d is too long to fit in 2 bytes.", data);
-	*(p++) = (data >> 8) & 0xFF;
-	*(p++) = data & 0xFF;
+  p.put_c((data >> 8) & 0xFF);
+  p.put_c(data & 0xFF);
 }
 
 ////////////////////////////////////////////////////////////
-void encode_int_3byte(unsigned char* &p, unsigned int data) {
+void encode_int_3byte(TTCN_Buffer &p, unsigned int data) {
 	if ((data >> 24) != 0)
 		TTCN_error("Integer value %d is too long to fit in 3 bytes.", data);
-	*(p++) = (data >> 16) & 0xFF;
-	*(p++) = (data >> 8) & 0xFF;
-	*(p++) = data & 0xFF;
+  p.put_c((data >> 16) & 0xFF);
+  p.put_c((data >> 8) & 0xFF);
+  p.put_c(data & 0xFF);
 }
 
 ////////////////////////////////////////////////////////////
-void encode_int_4byte(unsigned char* &p, unsigned int data) {
-	*(p++) = (data >> 24) & 0xFF;
-	*(p++) = (data >> 16) & 0xFF;
-	*(p++) = (data >> 8) & 0xFF;
-	*(p++) = data & 0xFF;
+void encode_int_4byte(TTCN_Buffer &p, unsigned int data) {
+  p.put_c((data >> 24) & 0xFF);
+  p.put_c((data >> 16) & 0xFF);
+  p.put_c((data >> 8) & 0xFF);
+  p.put_c(data & 0xFF);
 }
 
-void encode_u32_4byte(unsigned char* &p, const INTEGER& data) {
-  if(data.is_native()){
-    const int data2=data;
-	  *(p++) = (data2 >> 24) & 0xFF;
-	  *(p++) = (data2 >> 16) & 0xFF;
-	  *(p++) = (data2 >> 8) & 0xFF;
-	  *(p++) = data2 & 0xFF;
-  } else {
-	  OCTETSTRING os = int2oct(data, 4);
-	  memcpy(p, (const unsigned char*) os, 4);
-	  p += 4;
-  }
+void encode_u32_4byte(TTCN_Buffer &p, const INTEGER& data) {
+  p.put_string(int2oct(data, 4));
 } // encode_u32_4byte
 
 
 ////////////////////////////////////////////////////////////
-void encode_signed_int_4byte(unsigned char* &p, const int data) {
-	*(p++) = (data >> 24) & 0xFF;
-	*(p++) = (data >> 16) & 0xFF;
-	*(p++) = (data >> 8) & 0xFF;
-	*(p++) = data & 0xFF;
+void encode_signed_int_4byte(TTCN_Buffer &p, const int data) {
+  p.put_c((data >> 24) & 0xFF);
+  p.put_c((data >> 16) & 0xFF);
+  p.put_c((data >> 8) & 0xFF);
+  p.put_c(data & 0xFF);
 }
 
 ////////////////////////////////////////////////////////////
-void encode_float_8byte(unsigned char* &p, const double data) {
+void encode_float_8byte(TTCN_Buffer &p, const double data) {
 	unsigned char* poi = (unsigned char*) &data;
 #if defined __sparc__ || defined __sparc
-    memcpy(p,poi,8);
+    p.put_s(8,poi);
 #else
-    for (int i = 0, k = 7; i < 8; i++, k--) p[i] = poi[k];
+    for (int i = 0, k = 7; i < 8; i++, k--) p.put_c(poi[k]);
 #endif
-  p+=8;
 }
 
 
@@ -321,21 +264,10 @@ bool chk_zero(const OCTETSTRING& var) {return var==os_h_or_e_id_oct;}
 
 
 void f__DIAMETER__Enc__fast(const PDU__DIAMETER& pl__pdu, OCTETSTRING& pl__oct){
-  int message_length=0;
-  int encoded_length=0;
   
-  TTCN_Buffer buf;
-  buf.clear();
-  size_t len=BUF_SIZE; // header length
-  unsigned char* p;
-  buf.get_end(p,len);
-	unsigned char *start_ptr = p;
-
-
-	encode_int_1byte(p, (unsigned int) pl__pdu.version());
-	unsigned char *length_ptr = p;
-	p += 3; // save *length for later use
-  
+  TTCN_Buffer p;
+  p.clear();
+ 
 #ifdef DPMG_USE_DETAILED_BITS
 	encode_bits_1byte(p, pl__pdu.R__bit(), pl__pdu.P__bit(), pl__pdu.E__bit(),
 			pl__pdu.T__bit(), pl__pdu.r__bits());
@@ -385,13 +317,12 @@ void f__DIAMETER__Enc__fast(const PDU__DIAMETER& pl__pdu, OCTETSTRING& pl__oct){
 #endif
   }
 
-  encoded_length=encode_AVP_Grouped(p, pl__pdu.avps());
- 
-  message_length = p - start_ptr; // TP must calc it
-	encode_int_3byte(length_ptr, (unsigned int) message_length);
+  encode_AVP_Grouped(p, pl__pdu.avps());
 
-  buf.increase_length(message_length);
-  buf.get_string(pl__oct);
+
+  OCTETSTRING tmp; 
+  p.get_string(tmp);
+  pl__oct = int2oct(pl__pdu.version(),1) + int2oct(tmp.lengthof()+4,3) + tmp;
   return;
 }
 
@@ -403,7 +334,13 @@ OCTETSTRING f__DIAMETER__Enc(const PDU__DIAMETER& pl__pdu)
   return ret_val;
 }
 
-
+void f_DIAMETER_log_hex(const char *prompt, const unsigned char *msg,
+  size_t length)
+{
+    if (prompt != NULL) TTCN_Logger::log_event_str(prompt);
+    TTCN_Logger::log_event("Size: %lu, Msg:", (unsigned long)length);
+    for (size_t i = 0; i < length; i++) TTCN_Logger::log_event(" %02x", msg[i]);
+}
 
 OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int data_len,  const integerList& pl__codeList){
   const unsigned char *endp=temp+data_len;
@@ -411,17 +348,25 @@ OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int d
   unsigned int avpCode = 0;
 
   int codelist_size=pl__codeList.size_of();
-     
-  while(temp < endp)
-  { 
+
+  // an AVP is at least 8 bytes long - see RFC 3588 / 4.1.  AVP Header
+  while(temp + 8 < endp)
+  {
     /* reading the avp code value*/
-    avpCode = ((unsigned int)(*temp) << 24) + ((unsigned int)(*(temp + 1)) << 16)	+ ((unsigned int)(*(temp + 2)) << 8) + (unsigned int)(*(temp + 3));
-    
+    avpCode = ((unsigned int)(*temp) << 24) + ((unsigned int)(*(temp + 1)) << 16) + ((unsigned int)(*(temp + 2)) << 8) + (unsigned int)(*(temp + 3));
+
     temp+=5; // AVP code & VMPxxxxx octets (checked later)
              // tmp now points to the first length octet
 
     /* calculating the length of the next AVP*/
-    avpLength = ((unsigned int)(*temp) << 16) + ((unsigned int)(*(temp + 1)) << 8)	+ (unsigned int)(*(temp + 2));
+    avpLength = ((unsigned int)(*temp) << 16) + ((unsigned int)(*(temp + 1)) << 8) + (unsigned int)(*(temp + 2));
+    if(avpLength < 8) {
+      TTCN_Logger::begin_event( TTCN_WARNING );
+      TTCN_Logger::log_event("Invalid AVP length: %d; ",avpLength);
+      f_DIAMETER_log_hex("AVP octets: ", temp - 5, endp - (temp + 5));
+      TTCN_Logger::end_event();
+      break;
+    }
     avpLength-=8;          // length of AVP data = AVP length - 4 - Vendor ID length (calculated below)
     if(*(temp-1) & 0x80){  // skip vendor id, VMPxxxxx is just before the first length octet
       avpLength-=4;
@@ -434,19 +379,19 @@ OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int d
     {
       if((const int)(pl__codeList[i]) == (int)avpCode)
       {
-        return OCTETSTRING(avpLength, temp);
+        return OCTETSTRING(avpLength > 0? avpLength:0, temp);
       }
     }
-    
+
     // skip to the next avp
     if(avpLength % 4 != 0)  // AVP padding
-    { 
+    {
       avpLength = avpLength + (4 - (avpLength % 4));
     }
-    temp+=avpLength;  
+    temp+=avpLength;
   }
   /* no AVP was found, returns an empty octetstring*/  
-  unsigned char noResult[0];      
+  unsigned char noResult[0];
   return OCTETSTRING(0, noResult);
 }
 
@@ -454,23 +399,31 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesCombined(const OCTETSTRING& pl__oct,
 {
   const unsigned char *temp= (const unsigned char *)pl__oct;
   const unsigned char *endp=temp+pl__oct.lengthof();
-  
+
   temp += 20; // skip the DIAMETER header
   int avpLength = 0;
   unsigned int avpCode = 0;
 
   int codelist_size=pl__codeList.size_of();
   int groupcodeList_size=pl__groupcodeList.size_of();
-     
-  while(temp < endp)
-  { 
+
+  // an AVP is at least 8 bytes long - see RFC 3588 / 4.1.  AVP Header
+  while(temp + 8 < endp)
+  {
     /* reading the avp code value*/
-    avpCode = ((unsigned int)(*temp) << 24) + ((unsigned int)(*(temp + 1)) << 16)	+ ((unsigned int)(*(temp + 2)) << 8) + (unsigned int)(*(temp + 3));
+    avpCode = ((unsigned int)(*temp) << 24) + ((unsigned int)(*(temp + 1)) << 16) + ((unsigned int)(*(temp + 2)) << 8) + (unsigned int)(*(temp + 3));
     temp+=5; // AVP code & VMPxxxxx octets
              // tmp now points to the first length octet
 
     /* calculating the length of the next AVP*/
-    avpLength = ((unsigned int)(*temp) << 16) + ((unsigned int)(*(temp + 1)) << 8)	+ (unsigned int)(*(temp + 2));
+    avpLength = ((unsigned int)(*temp) << 16) + ((unsigned int)(*(temp + 1)) << 8) + (unsigned int)(*(temp + 2));
+    if(avpLength < 8) {
+      TTCN_Logger::begin_event( TTCN_WARNING );
+      TTCN_Logger::log_event("Invalid AVP length: %d; msg: ",avpLength);
+      pl__oct.log();
+      TTCN_Logger::end_event();
+      break;
+    }
     avpLength-=8;          // length of AVP data = AVP length - 4 - Vendor ID length (calculated below)
     if(*(temp-1) & 0x80){  // skip vendor id, VMPxxxxx is just before the first length octet
       avpLength-=4;
@@ -483,10 +436,10 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesCombined(const OCTETSTRING& pl__oct,
     {
       if((const int)(pl__codeList[i]) == (int)avpCode)
       {
-        return OCTETSTRING(avpLength, temp);
+        return OCTETSTRING(avpLength > 0? avpLength:0, temp);
       }
     }
-    
+
     // Chek for the groupped AVP to search in
     for(int i = 0; i < groupcodeList_size; i++)
     {
@@ -504,12 +457,13 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesCombined(const OCTETSTRING& pl__oct,
     { 
       avpLength = avpLength + (4 - (avpLength % 4));
     }
-    temp+=avpLength;  
+    temp+=avpLength;
   }
-  /* no AVP was found, returns an empty octetstring*/  
-  unsigned char noResult[0];      
+  /* no AVP was found, returns an empty octetstring*/
+  unsigned char noResult[0];
   return OCTETSTRING(0, noResult);
 }
+
 OCTETSTRING f__DIAMETER__GetAVPByListOfCodes(const OCTETSTRING& pl__oct, const integerList& pl__codeList) 
 {
   integerList glist=NULL_VALUE;
@@ -522,21 +476,17 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesFromGroupedAVP(const OCTETSTRING& pl
 }
 
 
-
-
-int encode_AVP_OctetString(unsigned char* & p, const AVP__OctetString& avp){ 
-  unsigned char* start=p;
+int encode_AVP_OctetString(TTCN_Buffer &p, const AVP__OctetString& avp){ 
   encode_octets(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof() ;
 }
 
-int encode_AVP_Integer32(unsigned char* & p, const AVP__Integer32& avp){ 
+int encode_AVP_Integer32(TTCN_Buffer &p, const AVP__Integer32& avp){ 
   encode_signed_int_4byte(p, avp);
   return 4;
 }
-int encode_AVP_Integer64(unsigned char* & p, const AVP__Integer64& avp){
+int encode_AVP_Integer64(TTCN_Buffer &p, const AVP__Integer64& avp){
 #ifdef DPMG_USE_INTEGER_FOR_UINT32_INT64
 	encode_octets(8, p, int2oct(avp,8));
 #else
@@ -544,23 +494,15 @@ int encode_AVP_Integer64(unsigned char* & p, const AVP__Integer64& avp){
 #endif
   return 8;
 }
-int encode_AVP_Unsigned32(unsigned char* & p, const AVP__Unsigned32& avp){
+int encode_AVP_Unsigned32(TTCN_Buffer &p, const AVP__Unsigned32& avp){
 #ifdef DPMG_USE_INTEGER_FOR_UINT32_INT64
-  if(avp.is_native()){
-    const int data=avp;
-	  *(p++) = (data >> 24) & 0xFF;
-	  *(p++) = (data >> 16) & 0xFF;
-	  *(p++) = (data >> 8) & 0xFF;
-	  *(p++) = data & 0xFF;
-  } else {
-  	encode_octets(4, p, int2oct(avp,4));
-  }
+  encode_octets(4, p, int2oct(avp,4));
 #else
 	encode_octets(4, p, avp);
 #endif
   return 4;
 }
-int encode_AVP_Unsigned64(unsigned char* & p, const AVP__Unsigned64& avp){
+int encode_AVP_Unsigned64(TTCN_Buffer &p, const AVP__Unsigned64& avp){
 #ifdef DPMG_USE_INTEGER_FOR_UINT32_INT64
 	encode_octets(8, p, int2oct(avp,8));
 #else
@@ -568,8 +510,9 @@ int encode_AVP_Unsigned64(unsigned char* & p, const AVP__Unsigned64& avp){
 #endif
   return 8;
 }
-int encode_AVP_Float32(unsigned char* & p, const AVP__Float32& avp){
+int encode_AVP_Float32(TTCN_Buffer &buff, const AVP__Float32& avp){
     double tmp = avp;
+    unsigned char p[4];
     if (tmp == 0.0) memset(p, 0, 4);
     else if (tmp == -0.0) {
       memset(p, 0, 4);
@@ -612,79 +555,64 @@ int encode_AVP_Float32(unsigned char* & p, const AVP__Float32& avp){
       index += adj;
       p[3] = ((dv[index] & 0x1F) << 3) | ((dv[index + adj] & 0xE0) >> 5);
   }
-  p+=4;
+  buff.put_s(4,p);
   return 4;
 }
-int encode_AVP_Float64(unsigned char* & p, const AVP__Float64& avp){
+int encode_AVP_Float64(TTCN_Buffer &p, const AVP__Float64& avp){
   encode_float_8byte(p, avp);
   return 8;
 }
-int encode_AVP_Address(unsigned char* & p, const AVP__Address& avp){
-  unsigned char* start=p;
+int encode_AVP_Address(TTCN_Buffer &p, const AVP__Address& avp){
   encode_int_2byte(p,avp.address__type());
   encode_octets(p, avp.address__data());
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.address__data().lengthof()+2);
-  return ret_val;
+  return avp.address__data().lengthof()+2;
 }
-int encode_AVP_IP_Address(unsigned char* & p, const AVP__IP__Address& avp){
-  unsigned char* start=p;
+int encode_AVP_IP_Address(TTCN_Buffer &p, const AVP__IP__Address& avp){
   encode_octets(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof();
 }
-int encode_AVP_Time(unsigned char* & p, const AVP__Time& avp){
+int encode_AVP_Time(TTCN_Buffer &p, const AVP__Time& avp){
   encode_octets(4,p, avp);
   return 4;
 }
-int encode_AVP_UTF8String(unsigned char* & p, const AVP__UTF8String& avp){
+int encode_AVP_UTF8String(TTCN_Buffer &p, const AVP__UTF8String& avp){
 #ifdef DPMG_USE_UTF8_ENC 
    TTCN_Buffer buf;    
    avp.encode_utf8(buf);
    int length = buf.get_len();
-   memcpy(p,buf.get_data(),length); 
-   p += length;
+   p.put_buf(buf);
    pad_oct_if_needed(p, length);   
    return length;       
 #else 
-  unsigned char* start=p;
   encode_octets(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof();
 #endif    
   
 }
-int encode_AVP_DiameterIdentity(unsigned char* & p, const AVP__DiameterIdentity& avp){
-  unsigned char* start=p;
+int encode_AVP_DiameterIdentity(TTCN_Buffer &p, const AVP__DiameterIdentity& avp){
   encode_chars(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof();
 }
-int encode_AVP_DiameterURI(unsigned char* & p, const AVP__DiameterURI& avp){
-  unsigned char* start=p;
+int encode_AVP_DiameterURI(TTCN_Buffer &p, const AVP__DiameterURI& avp){
   encode_chars(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof();
 }
-int encode_AVP_IPFilterRule(unsigned char* & p, const AVP__IPFilterRule& avp){
-  unsigned char* start=p;
+int encode_AVP_IPFilterRule(TTCN_Buffer &p, const AVP__IPFilterRule& avp){
   encode_chars(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof();
 }
-int encode_AVP_QoSFilterRule(unsigned char* & p, const AVP__QoSFilterRule& avp){
-  unsigned char* start=p;
+int encode_AVP_QoSFilterRule(TTCN_Buffer &p, const AVP__QoSFilterRule& avp){
   encode_chars(p, avp);
-  int ret_val=p-start;
   pad_oct_if_needed(p, avp.lengthof());
-  return ret_val;
+  return avp.lengthof();
 }
-int encode_AVP_enumerated(unsigned char* & p, const int& avp){
+int encode_AVP_enumerated(TTCN_Buffer &p, const int& avp){
   encode_int_4byte(p, avp);
   return 4;
 }

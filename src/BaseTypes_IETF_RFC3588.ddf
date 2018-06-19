@@ -37,7 +37,7 @@
 //
 //  File:               BaseTypes_IETF_RFC3588.ddf
 //  Description:	DDF for the Diameter base types
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -60,7 +60,7 @@ external function f_DIAMETER_GetAVPByListOfCodesFromGroupedAVP(in octetstring pl
 
 function f_get_R_bit(in PDU_DIAMETER pl_pdu) return boolean
 {
-!3   return pl_pdu.RPETxxxx[7]=='1'B;
+!3   return pl_pdu.RPETxxxx[0]=='1'B;
 !4   return pl_pdu.R_bit=='1'B;
 }
 
@@ -169,14 +169,14 @@ type charstring QoSFilterRule;
 // 4.2. Basic AVP Data Formats
 //
 
-type octetstring AVP_OctetString;
-type INT32 AVP_Integer32;
-type INT64 AVP_Integer64;
-type UINT32 AVP_Unsigned32;
-type UINT64 AVP_Unsigned64;
-type FLOAT32 AVP_Float32;
-type FLOAT64 AVP_Float64;
-type AVP_list AVP_Grouped;
+type octetstring AVP_OctetString with {variant ""};
+type INT32 AVP_Integer32 with {variant ""};
+type INT64 AVP_Integer64 with {variant ""};
+type UINT32 AVP_Unsigned32 with {variant ""};
+type UINT64 AVP_Unsigned64 with {variant ""};
+type FLOAT32 AVP_Float32 with {variant ""};
+type FLOAT64 AVP_Float64 with {variant ""};
+type AVP_list AVP_Grouped with {variant ""};
 
 //
 // 4.3. Derived AVP Data Formats

@@ -1,0 +1,61 @@
+/******************************************************************************
+* Copyright (c) 2004, 2018  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder - initial implementation
+******************************************************************************/
+//
+//  File:               DOIC_RFC7683.ddf
+//  Description:        DDF for Diameter Overload Indication Conveyance AVPs
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+// APPLICATION-NAME: DOIC
+// APPLICATION-REVISION: RFC7683
+
+// AVP implementations according to: 
+// RFC7683 - Diameter Overload Indication Conveyance
+//
+// RFC 7683
+// 7.1.
+// AVP: OC-Supported-Features (621)
+type AVP_Grouped OC_Supported_Features;
+
+// RFC 7683
+// 7.2.
+// AVP: OC-Feature-Vector (622)
+type AVP_Unsigned64 OC_Feature_Vector;
+
+// RFC 7683
+// 7.3.
+// AVP: OC-OLR (623)
+type AVP_Grouped OC_OLR;
+
+// RFC 7683
+// 7.4.
+// AVP: OC-Sequence-Number (624)
+type AVP_Unsigned64 OC_Sequence_Number;
+
+// RFC 7683
+// 7.5.
+// AVP: OC-Validity-Duration (625)
+type AVP_Unsigned32 OC_Validity_Duration;
+
+// RFC 7683
+// 7.6.
+// AVP: OC-Report-Type (626)
+type enumerated OC_Report_Type
+{
+  HOST_REPORT  (0),
+  REALM_REPORT (1)
+}
+
+// RFC 7683
+// 7.7.
+// AVP: OC-Reduction-Percentage (627)
+type AVP_Unsigned32 OC_Reduction_Percentage;

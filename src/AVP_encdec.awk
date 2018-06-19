@@ -78,9 +78,8 @@ BEGIN {
   } 
 
 
-  print "int encode_AVP_Grouped(unsigned char* & p, const AVP__Grouped& avp){" 
-  print "  int avp_len=0;"
-  print "  unsigned char* start =p;"
+  print "int encode_AVP_Grouped(TTCN_Buffer & p, const AVP__Grouped& avp){" 
+  print "   size_t start_len =p.get_len();"
   print " 	for (int count = 0; count < avp.size_of(); count++) {"
   print "    switch(avp[count].get_selection()){"
   print "      case GenericAVP::ALT_avp__undefined:{"
@@ -107,20 +106,9 @@ BEGIN {
   print "          const AVP& avptype=avp[count].avp();"
   print "          const AVP__Header& avphdr=avptype.avp__header();"
 	        
-  print "          encode_int_4byte(p, get_AVP_code_val(avphdr.avp__code()));"
-  print "#ifdef DPMG_USE_DETAILED_BITS"
-  print "          encode_bits_1byte(p, avphdr.V__bit(), avphdr.M__bit(), avphdr.P__bit(),"
-  print "	 		                         avphdr.r__bits());"
-  print "#else"
-  print "          encode_octets(p, bit2oct(avphdr.VMPxxxxx()));"
-  print "#endif "         
-  print "          unsigned char* length_field=p;"
-  print "          p+=3;"
-  print "          if (avphdr.vendor__id().ispresent()){"
-  print "             encode_int_4byte(p, avphdr.vendor__id()());"
-  print "          }"
           
   print "          int encoded_octets=0;"
+  print "          TTCN_Buffer avp_buffer;"
   print "          switch(avptype.avp__data().get_selection()){"
 
 
@@ -182,20 +170,20 @@ BEGIN {
    if($2 == "enumerated") {
       if(enum_2_Unsigned32 || ((new_avp_code SP new_avp_vendor_id_code) in enum_replace_list)) {
         AVP_type[new_avp_code SP new_avp_vendor_id_code] = "AVP_Unsigned32"
-        BUFFER = "(p, "
+        BUFFER = "(avp_buffer, "
         TYPE = "AVP_Unsigned32"
         printCaseCommand(BUFFER, TYPE)
 
       } else {
         AVP_type[new_avp_code SP new_avp_vendor_id_code] = "enumerated"
-        BUFFER = "(p,(int)"
+        BUFFER = "(avp_buffer,(int)"
         TYPE = "AVP_enumerated"
         printCaseCommand(BUFFER, TYPE)
       }
       next
     } else {
         AVP_type[new_avp_code SP new_avp_vendor_id_code] = $2
-        BUFFER = "(p,"
+        BUFFER = "(avp_buffer,"
         TYPE = $2
         printCaseCommand(BUFFER, TYPE)
     }
@@ -206,9 +194,19 @@ END {
   print "            default:"
   print "              break;"
   print "          }"
-  print "          int avphdr_size = 8 + 4 * (avphdr.vendor__id().ispresent());"
-  print "          avp_len=avphdr_size+encoded_octets;"
-  print "          encode_int_3byte(length_field, (unsigned int) avp_len);"
+
+  print "          encode_int_4byte(p, get_AVP_code_val(avphdr.avp__code()));"
+  print "#ifdef DPMG_USE_DETAILED_BITS"
+  print "          encode_bits_1byte(p, avphdr.V__bit(), avphdr.M__bit(), avphdr.P__bit(),"
+  print "	 		                         avphdr.r__bits());"
+  print "#else"
+  print "          encode_octets(p, bit2oct(avphdr.VMPxxxxx()));"
+  print "#endif "         
+  print "          encode_int_3byte(p, (unsigned int) (8 + 4 * (avphdr.vendor__id().ispresent())+encoded_octets));"
+  print "          if (avphdr.vendor__id().ispresent()){"
+  print "             encode_int_4byte(p, avphdr.vendor__id()());"
+  print "          }"
+  print "          p.put_buf(avp_buffer);"
   print "   "       
   print "        }"
   print "        break;"
@@ -218,7 +216,7 @@ END {
   print "    }"
   print "	} // for AVPs"
   print " "
-  print "return p-start;" 
+  print "return p.get_len()-start_len;" 
   print "}"
   print ""
   print "int get_AVP_code_val(const AVP__Code& avpcodes){"

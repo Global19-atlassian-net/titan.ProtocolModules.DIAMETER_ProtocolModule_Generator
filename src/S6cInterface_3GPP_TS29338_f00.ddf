@@ -1,0 +1,113 @@
+/******************************************************************************
+* Copyright (c) 2004, 2017  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder
+******************************************************************************/
+//
+//  File:               S6cInterface_3GPP_TS29338_f00.ddf
+//  Description:        DDF for S6c Interface according to 3GPP TS 29.338 V15.0.0
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+
+
+// APPLICATION-NAME: S6C
+// APPLICATION-REVISION: V15_0_0
+
+// 5.3.2.2
+type enumerated Command_Code 
+{
+  Send_Routing_Info_for_SM (8388647),
+  Alert_Service_Centre (8388648),
+  Report_SM_Delivery_Status (8388649)
+}
+
+// 5.3.3.2
+// AVP: SM-RP-MTI (3308) 3GPP (10415)
+type enumerated SM_RP_MTI
+{
+  SM_DELIVER (0),
+  SM_STATUS_REPORT (1)
+}
+
+// 5.3.3.3
+// AVP: SM-RP-SMEA (3309) 3GPP (10415)
+type AVP_OctetString SM_RP_SMEA;
+
+// 5.3.3.4
+// AVP: SRR-Flags (3310) 3GPP (10415)
+type AVP_Unsigned32 SRR_Flags;
+
+// 5.3.3.5
+// AVP: SM-Delivery-Not-Intended (3311) 3GPP (10415)
+type enumerated SM_Delivery_Not_Intended
+{
+  ONLY_IMSI_REQUESTED (0),
+  ONLY_MCC_MNC_REQUESTED (1)
+}
+
+// 5.3.3.8
+// AVP: MWD-Status (3312) 3GPP (10415)
+type AVP_Unsigned32 MWD_Status;
+
+// 5.3.3.9
+// AVP: MME-Absent-User-Diagnostic-SM (3313) 3GPP (10415)
+type AVP_Unsigned32 MME_Absent_User_Diagnostic_SM;
+
+// 5.3.3.10
+// AVP: MSC-Absent-User-Diagnostic-SM (3314) 3GPP (10415)
+type AVP_Unsigned32 MSC_Absent_User_Diagnostic_SM;
+
+// 5.3.3.11
+// AVP: SGSN-Absent-User-Diagnostic-SM (3315) 3GPP (10415)
+type AVP_Unsigned32 SGSN_Absent_User_Diagnostic_SM;
+
+// 5.3.3.14
+// AVP: SM-Delivery-Outcome (3316) 3GPP (10415)
+type AVP_Grouped SM_Delivery_Outcome;
+
+// 5.3.3.15
+// AVP: MME-SM-Delivery-Outcome (3317) 3GPP (10415)
+type AVP_Grouped MME_SM_Delivery_Outcome;
+
+// 5.3.3.16
+// AVP: MSC-SM-Delivery-Outcome (3318) 3GPP (10415)
+type AVP_Grouped MSC_SM_Delivery_Outcome;
+
+// 5.3.3.17
+// AVP: SGSN-SM-Delivery-Outcome (3319) 3GPP (10415)
+type AVP_Grouped SGSN_SM_Delivery_Outcome;
+
+// 5.3.3.18
+// AVP: IP-SM-GW-SM-Delivery-Outcome (3320) 3GPP (10415)
+type AVP_Grouped IP_SM_GW_SM_Delivery_Outcome;
+
+// 5.3.3.19
+// AVP: SM-Delivery-Cause (3321) 3GPP (10415)
+type enumerated SM_Delivery_Cause
+{
+  UE_MEMORY_CAPACITY_EXCEEDED (0),
+  ABSENT_USER (1),
+  SUCCESSFUL_TRANSFER (2)
+}
+
+// 5.3.3.20
+// AVP: Absent-User-Diagnostic-SM (3322) 3GPP (10415)
+type AVP_Unsigned32 Absent_User_Diagnostic_SM;
+
+// 5.3.3.21
+// AVP: RDR-Flags (3323) 3GPP (10415)
+type AVP_Unsigned32 RDR_Flags;
+
+// 5.3.3.22
+// AVP: Maximum-UE-Availability-Time (3329) 3GPP (10415)
+type AVP_Time Maximum_UE_Availability_Time;
+
+// 5.3.3.23
+// AVP: SMS-GMSC-Alert-Event (3333) 3GPP (10415)
+type AVP_Unsigned32 SMS_GMSC_Alert_Event;
+

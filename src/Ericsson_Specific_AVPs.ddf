@@ -37,7 +37,7 @@
 //
 //  File:               Ericsson_Specific_AVPs.ddf
 //  Description:        Ericsson specific AVP definitions
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 //  Reference:          http://snmp.ericsson.se/diameter-assignments.html
 //
@@ -54,6 +54,12 @@ type enumerated Command_Code {
   User_Data_Ericsson          (502),       // User-Data-Request (UDR) or User-Data-Answer (UDA)
   Location_Info_Ericsson      (503),       // Location-Info-Request (LIR) or Location-Info-Answer (LIA)
   Multimedia_Auth_Ericsson    (506),       // Multimedia-Auth-Request (MAR) or Multimedia-Auth-Answer (MAA)
+  Update_Location_Ericsson    (650),
+  Authentication_Information_Ericsson  (651),
+  Insertsubscriber_Data_Ericsson       (652),
+  Cancel_Location_Ericsson             (653),
+  Purge_UE_Ericsson                    (654),
+  System_Information_Ericsson          (655),      
   Spending_Limit_Official                     (656),
   Spending_Status_Notification_Official       (657),  
   Spending_Limit                              (8388633),
@@ -2685,6 +2691,146 @@ type AVP_OctetString Additional_User_Category
 type AVP_OctetString Flexible_Charging_Info
 
 
+// AVP: Original-Transferred-Amount (1400) Ericsson (193)
+type AVP_Grouped Original_Transferred_Amount
+
+
+// AVP: Original-Fee (1401) Ericsson (193)
+type AVP_Grouped Original_Fee
+
+
+// AVP: Transaction-Role (1402) Ericsson (193)
+type AVP_Unsigned32 Transaction_Role
+
+
+// AVP: Charging-Region (1403) Ericsson (193)
+type AVP_UTF8String Charging_Region
+
+
+// AVP: Used-Offer-Id (1404) Ericsson (193)
+type AVP_Unsigned32 Used_Offer_Id
+
+
+// AVP: Forward-TTC-Charging-Parameters (1406) Ericsson (193)
+type AVP_UTF8String Forward_TTC_Charging_Parameters
+
+
+// AVP: Backward-TTC-Charging-Parameters (1407) Ericsson (193)
+type AVP_UTF8String Backward_TTC_Charging_Parameters 
+
+
+// AVP: Synchronization-Data (1408) Ericsson (193)
+type AVP_Grouped Synchronization_Data
+
+
+// AVP: Session-Binding-Function (1409) Ericsson (193)
+type enumerated Session_Binding_Function
+{
+  INITIALIZE (0),
+  TERMINATE  (1),
+  BIND (2)
+}
+
+
+// AVP: Binding-Info (1410) Ericsson (193)
+type AVP_Grouped Binding_Info
+
+
+// AVP: Session-Info (1411) Ericsson (193)
+type AVP_Grouped Session_Info
+
+
+// AVP: Binding-Key (1412) Ericsson (193)
+type AVP_OctetString Binding_Key
+
+
+// AVP: First-Request-Timestamp (1413) Ericsson (193)
+type AVP_Unsigned64 First_Request_Timestamp
+
+
+// AVP: Selected-Server (1414) Ericsson (193)
+type AVP_DiameterIdentity Selected_Server
+
+
+// AVP: Session-Binding-Profile (1415) Ericsson (193)
+type AVP_Grouped Session_Binding_Profile
+
+
+// AVP: Profile-Name (1416) Ericsson (193)
+type AVP_UTF8String Profile_Name
+
+
+// AVP: Profile-Data (1417) Ericsson (193)
+type AVP_OctetString Profile_Data
+
+
+// AVP: Session-Client (1418) Ericsson (193)
+type AVP_DiameterIdentity Session_Client
+
+
+// AVP: Session-Client-Origin-State-Id (1419) Ericsson (193)
+type AVP_Unsigned32 Session_Client_Origin_State_Id
+
+
+// AVP: Session-Server (1420) Ericsson (193)
+type AVP_DiameterIdentity Session_Server
+
+
+// AVP: Session-Server-Origin-State-Id (1421) Ericsson (193)
+type AVP_Unsigned32 Session_Server_Origin_State_Id
+
+
+// AVP: Last-Session-Activity-Timestamp (1422) Ericsson (193)
+type AVP_Unsigned64 Last_Session_Activity_Timestamp
+
+
+// AVP: Mated-DSC (1423) Ericsson (193)
+type AVP_Grouped Mated_DSC
+
+
+// AVP: Additional-Service-Information (1424) Ericsson (193)
+type AVP_Grouped Additional_Service_Information
+
+
+// AVP: Additional-Service-Information-Name (1425) Ericsson (193)
+type AVP_UTF8String Additional_Service_Information_Name
+
+
+// AVP: Additional-Service-Information-Type (1426) Ericsson (193)
+type AVP_UTF8String Additional_Service_Information_Type
+
+
+// AVP: Additional-Service-Information-Value (1427) Ericsson (193)
+type AVP_UTF8String Additional_Service_Information_Value
+
+
+// AVP: Mate-Hostname (1428) Ericsson (193)
+type AVP_DiameterIdentity Mate_Hostname
+
+
+// AVP: Mate-DMI-Session-Binding-Result (1429) Ericsson (193)
+type enumerated Mate_DMI_Session_Binding_Result
+{
+  No_DMI  (0),
+  Success (1),
+  Failure (2),
+  Drop    (3),
+  Reject  (4),
+  ForwardToMate (5)
+}
+
+
+// AVP: ISUP-Cause-Location (1430) Ericsson (193)
+type AVP_Unsigned32 ISUP_Cause_Location
+
+
+// AVP: ISUP-Cause-Value (1431) Ericsson (193)
+type AVP_Unsigned32 ISUP_Cause_Value
+
+
+// AVP: ISUP-Cause (1432) Ericsson (193)
+type AVP_Grouped ISUP_Cause
+
 
 // AVP: AS-Type (1433) Ericsson (193)
 type enumerated AS_Type
@@ -2695,6 +2841,161 @@ type enumerated AS_Type
   SCC_AS                        (3),
   PARLAY_X_AS                   (4),
   ST_AS                         (5)
+}
+
+
+// AVP: Number-Of-Days-Since-Activation (1434) Ericsson (193)
+type AVP_Unsigned32 Number_Of_Days_Since_Activation
+
+
+// AVP: Re-Routing-Address (1435) Ericsson (193)
+type AVP_Grouped Re_Routing_Address
+
+
+// AVP: Last-Access-Network-Information (1436) Ericsson (193)
+type AVP_OctetString Last_Access_Network_Information
+
+
+// AVP: Successive-Call (1437) Ericsson (193)
+type AVP_OctetString Successive_Call
+
+
+// AVP: Other-Party-Id-Prefix (1438) Ericsson (193)
+type AVP_UTF8String Other_Party_Id_Prefix
+
+
+// AVP: Ericsson-Requested-Data (1439) Ericsson (193)
+type enumerated Ericsson_Requested_Data
+{
+  IRS_Data (0)
+}
+
+
+// AVP: Ext-Bearer-Service-Code (1440) Ericsson (193)
+type AVP_Unsigned32 Ext_Bearer_Service_Code
+
+
+// AVP: Announcement-Instructions (1441) Ericsson (193)
+type AVP_Grouped Announcement_Instructions
+
+
+// AVP: Announcement-Number (1442) Ericsson (193)
+type AVP_Unsigned32 Announcement_Number
+
+
+// AVP: Announcement-Order (1443) Ericsson (193)
+type AVP_Unsigned32 Announcement_Order
+
+
+// AVP: Announcement-Prompt-Collect-Interruptible (1444) Ericsson (193)
+type enumerated Announcement_Prompt_Collect_Interruptible
+{
+  FALSE (0),
+  TRUE  (1)
+}
+
+
+// AVP: Announcement-Prompt-Collect-MaxDigits (1445) Ericsson (193)
+type AVP_Unsigned32 Announcement_Prompt_Collect_MaxDigits
+
+
+// AVP: Announcement-Prompt-Collect-MinDigits (1446) Ericsson (193)
+type AVP_Unsigned32 Announcement_Prompt_Collect_MinDigits
+
+
+// AVP: Announcement-Prompt-Collect-Parameter (1447) Ericsson (193)
+type AVP_Grouped Announcement_Prompt_Collect_Parameter
+
+
+// AVP: Announcement-Type (1448) Ericsson (193)
+type AVP_Unsigned32 Announcement_Type
+
+
+// AVP: Announcement-Variable-Part (1449) Ericsson (193)
+type AVP_Grouped Announcement_Variable_Part
+
+
+// AVP: Announcement-Variable-Part-Data (1450) Ericsson (193)
+type AVP_UTF8String Announcement_Variable_Part_Data
+
+
+// AVP: Announcement-Variable-Part-Type (1451) Ericsson (193)
+type enumerated Announcement_Variable_Part_Type
+{
+  INTEGER (0),
+  NUMBER  (1),
+  TIME    (2),
+  DATE    (3),
+  PRICE   (4)
+}
+
+
+// AVP: Trace-Report (1452) Ericsson (193)
+type AVP_Grouped Trace_Report
+
+
+// AVP: Trace-Report-Type (1453) Ericsson (193)
+type enumerated Trace_Report_Type
+{
+  TRACE_STATE_UPDATE (0),
+  TRACE_SESSION_INFO (1),
+  TRACE_DATA_REPORT  (2)
+}
+
+
+// AVP: Trace-Profile (1454) Ericsson (193)
+type AVP_Grouped Trace_Profile
+
+
+// AVP: Trace-Name (1455) Ericsson (193)
+type AVP_UTF8String Trace_Name
+
+
+// AVP: Trace-Pattern (1456) Ericsson (193)
+type AVP_UTF8String Trace_Pattern
+
+
+// AVP: Trace-Duration (1457) Ericsson (193)
+type AVP_Unsigned32 Trace_Duration
+
+
+// AVP: Tracing-State (1458) Ericsson (193)
+type enumerated Tracing_State
+{
+  INACTIVE (0),
+  ACTIVE   (1)
+}
+
+
+// AVP: Trace-Data (1459) Ericsson (193)
+type AVP_UTF8String Trace_Data
+
+
+// AVP: Transaction-SIP-Message (1460) Ericsson (193)
+type AVP_UTF8String Transaction_SIP_Message
+
+
+// AVP: Ericsson-Access-Classification-Location (1461) Ericsson (193)
+type AVP_OctetString Ericsson_Access_Classification_Location
+
+
+// AVP: Additional-Subscription-Id-Information (1462) Ericsson (193)
+type AVP_Grouped Additional_Subscription_Id_Information
+
+
+// AVP: Subscriber-Type (1463) Ericsson (193)
+type enumerated Subscriber_Type
+{
+  BUSINESS (0)
+}
+
+
+// AVP: UC-Mobility-Call-Leg (1464) Ericsson (193)
+type enumerated UC_Mobility_Call_Leg
+{
+  ORIGINATING_ACCESS  (0),
+  TERMINATING_TRUNK   (1),
+  TERMINATING_CONNECT (2)
 }
 
 

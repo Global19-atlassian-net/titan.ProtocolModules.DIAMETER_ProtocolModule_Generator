@@ -1,0 +1,324 @@
+/******************************************************************************
+* Copyright (c) 2004, 2017  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder
+******************************************************************************/
+//
+//  File:               S6Interfaces_3GPP_TS29336_f00.ddf
+//  Description:        DDF for S6m, S6n and S6t Interfaces according to 3GPP TS 29.336 V15.0.0
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+
+
+// APPLICATION-NAME: S6
+// APPLICATION-REVISION: V15_0_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.336 V15.0.0 - Home Subscriber Server (HSS) diameter interfaces for interworking with packet data networks and applications
+
+// 8.2.2
+type enumerated Command_Code 
+{
+  Subscriber_Information    (8388641),
+  Configuration_Information (8388718),
+  Reporting_Information     (8388719),
+  NIDD_Information          (8388726)
+}
+
+//S6m/S6n specific Diameter AVPs
+
+// 6.4.14
+// AVP: IP-SM-GW-Number (3100) 3GPP (10415)
+type AVP_OctetString IP_SM_GW_Number;
+
+// 6.4.15
+// AVP: IP-SM-GW-Name (3101) 3GPP (10415)
+type AVP_DiameterIdentity IP_SM_GW_Name;
+
+// 6.4.2
+// AVP: User-Identifier (3102) 3GPP (10415)
+type AVP_Grouped User_Identifier;
+
+// 6.4.3
+// AVP: Service-ID (3103) 3GPP (10415)
+type enumerated Service_ID
+{
+  DEVICE_TRIGGER (0),
+  SMS_MO (1)
+}
+
+// 6.4.4
+// AVP: SCS-Identity (3104) 3GPP (10415)
+type AVP_OctetString SCS_Identity;
+
+// 6.4.5
+// AVP: Service-Parameters (3105) 3GPP (10415)
+type AVP_Grouped Service_Parameters;
+
+// 6.4.6
+// AVP: T4-Parameters (3106) 3GPP (10415)
+type AVP_Grouped T4_Parameters;
+
+// 6.4.7
+// AVP: Service-Data (3107) 3GPP (10415)
+type AVP_Grouped Service_Data;
+
+// 6.4.8
+// AVP: T4-Data (3108) 3GPP (10415)
+type AVP_Grouped T4_Data;
+
+// 6.4.9
+// AVP: HSS-Cause (3109) 3GPP (10415)
+type AVP_Unsigned32 HSS_Cause;
+
+// 6.4.10
+// AVP: SIR-Flags (3110) 3GPP (10415)
+type AVP_Unsigned32 SIR_Flags;
+
+// 6.4.11
+// AVP: External-Identifier (3111) 3GPP (10415)
+type AVP_UTF8String External_Identifier;
+
+// 6.4.18
+// AVP: IP-SM-GW-Realm (3112) 3GPP (10415)
+type AVP_DiameterIdentity IP_SM_GW_Realm;
+
+
+
+//S6t specific Diameter AVPs
+
+// 8.4.25
+// AVP: AESE-Communication-Pattern (3113) 3GPP (10415)
+type AVP_Grouped AESE_Communication_Pattern;
+
+// 8.4.26
+// AVP: Communication-Pattern-Set (3114) 3GPP (10415)
+type AVP_Grouped Communication_Pattern_Set;
+
+// 8.4.27
+// AVP: Periodic-Communication-Indicator (3115) 3GPP (10415)
+type AVP_Unsigned32 Periodic_Communication_Indicator;
+
+// 8.4.28
+// AVP: Communication-Duration-Time (3116) 3GPP (10415)
+type AVP_Unsigned32 Communication_Duration_Time;
+
+// 8.4.29
+// AVP: Periodic-Time (3117) 3GPP (10415)
+type AVP_Unsigned32 Periodic_Time;
+
+// 8.4.30
+// AVP: Scheduled-Communication-Time (3118) 3GPP (10415)
+type AVP_Grouped Scheduled_Communication_Time;
+
+// 8.4.31
+// AVP: Stationary-Indication (3119) 3GPP (10415)
+type AVP_Unsigned32 Stationary_Indication;
+
+// 8.4.32
+// AVP: AESE-Communication-Pattern-Config-Status (3120) 3GPP (10415)
+type AVP_Grouped AESE_Communication_Pattern_Config_Status;
+
+// 8.4.33
+// AVP: AESE-Error-Report (3121) 3GPP (10415)
+type AVP_Grouped AESE_Error_Report;
+
+// 8.4.2
+// AVP: Monitoring-Event-Configuration (3122) 3GPP (10415)
+type AVP_Grouped Monitoring_Event_Configuration;
+
+// 8.4.3
+// AVP: Monitoring-Event-Report (3123) 3GPP (10415)
+type AVP_Grouped Monitoring_Event_Report;
+
+// 8.4.4
+// AVP: SCEF-Reference-ID (3124) 3GPP (10415)
+type AVP_Unsigned32 SCEF_Reference_ID;
+
+// 8.4.5
+// AVP: SCEF-ID (3125) 3GPP (10415)
+type AVP_DiameterIdentity SCEF_ID;
+
+// 8.4.6
+// AVP: SCEF-Reference-ID-for-Deletion (3126) 3GPP (10415)
+type AVP_Unsigned32 SCEF_Reference_ID_for_Deletion;
+
+// 8.4.7
+// AVP: Monitoring-Type (3127) 3GPP (10415)
+type AVP_Unsigned32 Monitoring_Type;
+
+// 8.4.8
+// AVP: Maximum-Number-of-Reports (3128) 3GPP (10415)
+type AVP_Unsigned32 Maximum_Number_of_Reports;
+
+// 8.4.9
+// AVP: UE-Reachability-Configuration (3129) 3GPP (10415)
+type AVP_Grouped UE_Reachability_Configuration;
+
+// 8.4.10
+// AVP: Monitoring-Duration (3130) 3GPP (10415)
+type AVP_Time Monitoring_Duration;
+
+// 8.4.11
+// AVP: Maximum-Detection-Time (3131) 3GPP (10415)
+type AVP_Unsigned32 Maximum_Detection_Time;
+
+// 8.4.12
+// AVP: Reachability-Type (3132) 3GPP (10415)
+type AVP_Unsigned32 Reachability_Type;
+
+// 8.4.13
+// AVP: Maximum-Latency (3133) 3GPP (10415)
+type AVP_Unsigned32 Maximum_Latency;
+
+// 8.4.14
+// AVP: Maximum-Response-Time (3134) 3GPP (10415)
+type AVP_Unsigned32 Maximum_Response_Time;
+
+// 8.4.15
+// AVP: Location-Information-Configuration (3135) 3GPP (10415)
+type AVP_Grouped Location_Information_Configuration;
+
+// 8.4.16
+// AVP: MONTE-Location-Type (3136) 3GPP (10415)
+type AVP_Unsigned32 MONTE_Location_Type;
+
+// 8.4.17
+// AVP: Accuracy (3137) 3GPP (10415)
+type AVP_Unsigned32 Accuracy;
+
+// 8.4.18
+// AVP: Association-Type (3138) 3GPP (10415)
+type AVP_Unsigned32 Association_Type;
+
+// 8.4.19
+// AVP: Roaming-Information (3139) 3GPP (10415)
+type AVP_Unsigned32 Roaming_Information;
+
+// 8.4.20
+// AVP: Reachability-Information (3140) 3GPP (10415)
+type AVP_Unsigned32 Reachability_Information;
+
+// 8.4.22
+// AVP: IMEI-Change (3141) 3GPP (10415)
+type AVP_Unsigned32 IMEI_Change;
+
+// 8.4.24
+// AVP: Monitoring-Event-Config-Status (3142) 3GPP (10415)
+type AVP_Grouped Monitoring_Event_Config_Status;
+
+// 8.4.40
+// AVP: Supported-Services (3143) 3GPP (10415)
+type AVP_Grouped Supported_Services;
+
+// 8.4.41
+// AVP: Supported-Monitoring-Events (3144) 3GPP (10415)
+type AVP_Unsigned64 Supported_Monitoring_Events;
+
+// 8.4.39
+// AVP: CIR-Flags (3145) 3GPP (10415)
+type AVP_Unsigned32 CIR_Flags;
+
+// 8.4.37
+// AVP: Service-Result (3146) 3GPP (10415)
+type AVP_Grouped Service_Result;
+
+// 8.4.38
+// AVP: Service-Result-Code (3147) 3GPP (10415)
+type AVP_Unsigned32 Service_Result_Code;
+
+// 8.4.42
+// AVP: Reference-ID-Validity-Time (3148) 3GPP (10415)
+type AVP_Time Reference_ID_Validity_Time;
+
+// 8.4.43
+// AVP: Event-Handling (3149) 3GPP (10415)
+type AVP_Unsigned32 Event_Handling;
+
+// 8.4.44
+// AVP: NIDD-Authorization-Request (3150) 3GPP (10415)
+type AVP_Grouped NIDD_Authorization_Request;
+
+// 8.4.45
+// AVP: NIDD-Authorization-Response (3151) 3GPP (10415)
+type AVP_Grouped NIDD_Authorization_Response;
+
+// 8.4.47
+// AVP: Service-Report (3152) 3GPP (10415)
+type AVP_Grouped Service_Report;
+
+// 8.4.48
+// AVP: Node-Type (3153) 3GPP (10415)
+type AVP_Unsigned32 Node_Type;
+
+// 8.4.50
+// AVP: S6t-HSS-Cause (3154) 3GPP (10415)
+type AVP_Unsigned32 S6t_HSS_Cause;
+
+// 8.4.51
+// AVP: Enhanced-Coverage-Restriction (3155) 3GPP (10415)
+type AVP_Grouped Enhanced_Coverage_Restriction;
+
+// 8.4.52
+// AVP: Enhanced-Coverage-Restriction-Data (3156) 3GPP (10415)
+type AVP_Grouped Enhanced_Coverage_Restriction_Data;
+
+// 8.4.53
+// AVP: Restricted-PLMN-List (3157) 3GPP (10415)
+type AVP_Grouped Restricted_PLMN_List;
+
+// 8.4.54
+// AVP: Allowed-PLMN-List (3158) 3GPP (10415)
+type AVP_Grouped Allowed_PLMN_List;
+
+// 8.4.55
+// AVP: Requested-Validity-Time (3159) 3GPP (10415)
+type AVP_Time Requested_Validity_Time;
+
+// 8.4.56
+// AVP: Granted-Validity-Time (3160) 3GPP (10415)
+type AVP_Time Granted_Validity_Time;
+
+// 8.4.57
+// AVP: NIDD-Authorization-Update (3161) 3GPP (10415)
+type AVP_Grouped NIDD_Authorization_Update;
+
+// 8.4.58
+// AVP: Loss-Of-Connectivity-Reason (3162) 3GPP (10415)
+type AVP_Unsigned32 Loss_Of_Connectivity_Reason;
+
+// 8.4.59
+// AVP: Group-Reporting-Guard-Timer (3163) 3GPP (10415)
+type AVP_Unsigned32 Group_Reporting_Guard_Timer;
+
+// 8.4.60
+// AVP: CIA-Flags (3164) 3GPP (10415)
+type AVP_Unsigned32 CIA_Flags;
+
+// 8.4.61
+// AVP: Group-Monitoring-Event-Report (3165) 3GPP (10415)
+type AVP_Grouped Group_Monitoring_Event_Report;
+
+// 8.4.62
+// AVP: Group-Monitoring-Event-Report-Item (3166) 3GPP (10415)
+type AVP_Grouped Group_Monitoring_Event_Report_Item;
+
+// 8.4.63
+// AVP: RIR-Flags (3167) 3GPP (10415)
+type AVP_Unsigned32 RIR_Flags;
+
+// 8.4.64
+// AVP: Type-Of-External-Identifier (3168) 3GPP (10415)
+type AVP_Unsigned32 Type_Of_External_Identifier;
+
+// 8.4.65
+// AVP: APN-Validity-Time (3169) 3GPP (10415)
+type AVP_Grouped APN_Validity_Time;
+
+
+

@@ -1,0 +1,91 @@
+/******************************************************************************
+* Copyright (c) 2004, 2017  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Máté Kovács
+******************************************************************************/
+//
+//  File:               SGmbInterface_3GPP_TS29061_d70.ddf
+//  Description:        DDF for SGmb according to 3GPP TS 29.061 V13.7.0
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: SGMB
+// APPLICATION-REVISION: V13_7_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.061 V13.7.0 - Interworking between the Public Land Mobile Network (PLMN) supporting packet based services and Packet Data Networks (PDN)
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-Access-Indicator (923) 3GPP (10415)
+// 20.5a.1
+type enumerated MBMS_Access_Indicator
+{
+  UTRAN                 (0),
+  E_UTRAN               (1),
+  UTRAN_AND_E_UTRAN     (2)
+}
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-GW-SSM-IP-Address (924) 3GPP (10415)
+// 20.5a.2
+type AVP_OctetString MBMS_GW_SSM_IP_Address;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-GW-SSM-IPv6-Address (925) 3GPP (10415)
+// 20.5a.3
+type AVP_OctetString MBMS_GW_SSM_IPv6_Address;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-BMSC-SSM-UDP-Port (926) 3GPP (10415)
+// 20.5a.4
+type AVP_OctetString MBMS_BMSC_SSM_UDP_Port;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-GW-UDP-Port (927) 3GPP (10415)
+// 20.5a.5
+type AVP_OctetString MBMS_GW_UDP_Port;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-GW-UDP-Port-Indicator (928) 3GPP (10415) 
+// 20.5a.6
+type enumerated MBMS_GW_UDP_Port_Indicator
+{
+  UDP_PORT_REQUIRED (1)
+}
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-Data-Transfer-Start (929) 3GPP (10415)
+// 20.5a.7
+type AVP_Unsigned64 MBMS_Data_Transfer_Start;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-Data-Transfer-Stop (930) 3GPP (10415)
+// 20.5a.8
+type AVP_Unsigned64 MBMS_Data_Transfer_Stop;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-Flag (931) 3GPP (10415)
+// 20.5a.9
+type AVP_Unsigned32 MBMS_Flag;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: Restart-Counter (932) 3GPP (10415)
+// 20.5a.10
+type AVP_Unsigned32 Restart_Counter;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: Diagnostic-Info (933) 3GPP (10415)
+// 20.5a.11
+type AVP_Unsigned32 Diagnostic_Info;
+
+// 3GPP TS 29.061 V13.7.0
+// AVP: MBMS-Cell-List (934) 3GPP (10415)
+// 20.5a.12
+type AVP_OctetString MBMS_Cell_List;

@@ -1,0 +1,130 @@
+/******************************************************************************
+* Copyright (c) 2004, 2017  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder
+******************************************************************************/
+//
+//  File:               T6Interfaces_3GPP_TS29128_f00.ddf
+//  Description:        DDF for T6a and T6b Interfaces according to 3GPP TS 29.128 V15.0.0
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+
+
+// APPLICATION-NAME: T6
+// APPLICATION-REVISION: V15_0_0
+
+// AVP implementations according to: 
+// 3GPP TS 29.128 V15.0.0 - Mobility Management Entity (MME) and Serving GPRS Support Node (SGSN) interfaces for interworking with packet data networks and applications
+
+// 8.2.2
+type enumerated Command_Code 
+{
+  Connection_Management (8388732),
+  MO_Data               (8388733),
+  MT_Data               (8388734)
+}
+
+// 6.4.4
+// AVP: Communication-Failure-Information (4300) 3GPP (10415)
+type AVP_Grouped Communication_Failure_Information;
+
+// 6.4.5
+// AVP: Cause-Type (4301) 3GPP (10415)
+type AVP_Unsigned32 Cause_Type;
+
+// 6.4.6
+// AVP: S1AP-Cause (4302) 3GPP (10415)
+type AVP_Unsigned32 S1AP_Cause;
+
+// 6.4.7
+// AVP: RANAP-Cause (4303) 3GPP (10415)
+type AVP_Unsigned32 RANAP_Cause;
+
+// 6.4.8
+// AVP: BSSGP-Cause (4309) 3GPP (10415)
+type AVP_Unsigned32 BSSGP_Cause;
+
+// 6.4.9
+// AVP: GMM-Cause (4304) 3GPP (10415)
+type AVP_Unsigned32 GMM_Cause;
+
+// 6.4.10
+// AVP: SM-Cause (4305) 3GPP (10415)
+type AVP_Unsigned32 SM_Cause;
+
+// 6.4.11
+// AVP: Number-Of-UE-Per-Location-Configuration (4306) 3GPP (10415)
+type AVP_Grouped Number_Of_UE_Per_Location_Configuration;
+
+// 6.4.12
+// AVP: Number-Of-UE-Per-Location-Report (4307) 3GPP (10415)
+type AVP_Grouped Number_Of_UE_Per_Location_Report;
+
+// 6.4.13
+// AVP: UE-Count (4308) 3GPP (10415)
+type AVP_Unsigned32 UE_Count;
+
+// 6.4.18
+// AVP: Connection-Action (4314) 3GPP (10415)
+type AVP_Unsigned32 Connection_Action;
+
+// 6.4.19
+// AVP: Non-IP-Data (4315) 3GPP (10415)
+type AVP_OctetString Non_IP_Data;
+
+// 6.4.21
+// AVP: Serving-PLMN-Rate-Control (4310) 3GPP (10415)
+type AVP_Grouped Serving_PLMN_Rate_Control;
+
+// 6.4.23
+// AVP: Uplink-Rate-Limit (4311) 3GPP (10415)
+type AVP_Unsigned32 Uplink_Rate_Limit;
+
+// 6.4.22
+// AVP: Downlink-Rate-Limit (4312) 3GPP (10415)
+type AVP_Unsigned32 Downlink_Rate_Limit;
+
+// 6.4.26
+// AVP: Extended-PCO (4313) 3GPP (10415)
+type AVP_OctetString Extended_PCO;
+
+// 6.4.24
+// AVP: SCEF-Wait-Time (4316) 3GPP (10415)
+type AVP_Time SCEF_Wait_Time;
+
+// 6.4.25
+// AVP: CMR-Flags (4317) 3GPP (10415)
+type AVP_Unsigned32 CMR_Flags;
+
+// 6.4.27
+// AVP: RRC-Cause-Counter (4318) 3GPP (10415)
+type AVP_Grouped RRC_Cause_Counter;
+
+// 6.4.28
+// AVP: Counter-Value (4319) 3GPP (10415)
+type AVP_Unsigned32 Counter_Value;
+
+// 6.4.29
+// AVP: RRC-Counter-Timestamp (4320) 3GPP (10415)
+type AVP_Time RRC_Counter_Timestamp;
+
+// 6.4.31
+// AVP: TDA-Flags (4321) 3GPP (10415)
+type AVP_Unsigned32 TDA_Flags;
+
+// 6.4.32
+// AVP: Idle-Status-Indication (4322) 3GPP (10415)
+type AVP_Grouped Idle_Status_Indication;
+
+// 6.4.33
+// AVP: Idle-Status-Timestamp (4323) 3GPP (10415)
+type AVP_Time Idle_Status_Timestamp;
+
+// 6.4.34
+// AVP: Active-Time (4324) 3GPP (10415)
+type AVP_Unsigned32 Active_Time;

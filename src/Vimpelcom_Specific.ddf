@@ -37,7 +37,7 @@
 //
 //  File:               Vimpelcom_Specific.ddf
 //  Description:        Vimpelcom specific AVPs
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -69,4 +69,9 @@ type AVP_Unsigned32 TOA_Adapt_Status;
 // AVP: TOA-Opt-Status (667) Vimpelcom_toa (50001)
 type AVP_Unsigned32 TOA_Opt_Status;
 
+// AVP: DPI-Specific-Flow-Id (668) Vimpelcom_sadpi (50000)
+type AVP_OctetString DPI_Specific_Flow_Id;
+
+// AVP: DPI-Flow-Info (669) Vimpelcom_sadpi (50000)
+type AVP_Grouped DPI_Flow_Info;
 

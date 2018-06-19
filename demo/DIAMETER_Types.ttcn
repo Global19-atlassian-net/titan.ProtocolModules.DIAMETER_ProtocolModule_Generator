@@ -40,7 +40,7 @@ module DIAMETER_Types {
 //
 //  File:               BaseTypes_IETF_RFC3588.ddf
 //  Description:	DDF for the Diameter base types
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -273,7 +273,7 @@ command_code, application_id, hop_by_hop_id, end_to_end_id, avps)";
 //
 //  File:               Base_IETF_RFC3588.ddf
 //  Description:	DDF for the Diameter base AVPs
-//  Rev:                <RnXnn>
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -666,7 +666,7 @@ type AVP_Grouped BASE_NONE_Vendor_Specific_Application_Id
 //
 //  File:               Ericsson_Specific_AVPs.ddf
 //  Description:        Ericsson specific AVP definitions
-//  Rev:                <RnXnn>
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 //  Reference:          http://snmp.ericsson.se/diameter-assignments.html
 //

@@ -11,7 +11,7 @@
 //
 //  File:               SKT_Specific_AVPs.ddf
 //  Description:        SKT Specific AVP definitions
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 
 
@@ -25,3 +25,11 @@
 // Zone-Info 
 // AVP: Zone-Info (9104) SKT (5806)
 type AVP_UTF8String Zone_Info;
+
+// Quota-Noti
+// AVP: Quota-Noti (9105) SKT (5806)
+type AVP_UTF8String Quota_Noti;
+
+// Win-Service-Type
+// AVP: Win-Service-Type (10002) SKT (5806)
+type AVP_Unsigned32 Win_Service_Type;

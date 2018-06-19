@@ -1,0 +1,46 @@
+/******************************************************************************
+* Copyright (c) 2004, 2017  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder - initial implementation and initial documentation
+******************************************************************************/
+//
+//  File:               DiameterRoutingMessagePriority_IETF_RFC7944.ddf
+//  Description:        DDF for Diameter Routing Message Priority according to RFC7944
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+///////////////////////////////////////////////
+
+
+// APPLICATION-NAME: DRMP
+// APPLICATION-REVISION: RFC7944
+
+// AVP implementations according to: 
+// RFC7944 - Diameter Routing Message Priority
+//
+// RFC 7944 
+// 9.
+// AVP: DRMP (301)
+type enumerated DRMP
+{
+  PRIORITY_0   (0),
+  PRIORITY_1   (1),
+  PRIORITY_2   (2),
+  PRIORITY_3   (3),
+  PRIORITY_4   (4),
+  PRIORITY_5   (5),
+  PRIORITY_6   (6),
+  PRIORITY_7   (7),
+  PRIORITY_8   (8),
+  PRIORITY_9   (9),
+  PRIORITY_10  (10),
+  PRIORITY_11  (11),
+  PRIORITY_12  (12),
+  PRIORITY_13  (13),
+  PRIORITY_14  (14),
+  PRIORITY_15  (15)
+}

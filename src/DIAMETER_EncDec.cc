@@ -37,7 +37,7 @@
 //
 //  File:               DIAMETER_EncDec.cc
 //  Description:	Encoder/Decoder and external functions for DPMG
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -196,6 +196,14 @@ INTEGER f__DIAMETER__Dec__fast(const OCTETSTRING& pl__oct, PDU__DIAMETER &pl__pd
   return 0;
 }
 
+void f_DIAMETER_log_hex(const char *prompt, const unsigned char *msg,
+  size_t length)
+{
+  if (prompt != NULL) TTCN_Logger::log_event_str(prompt);
+  TTCN_Logger::log_event("Size: %lu, Msg:", (unsigned long)length);
+  for (size_t i = 0; i < length; i++) TTCN_Logger::log_event(" %02x", msg[i]);
+}
+
 OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int data_len,  const integerList& pl__codeList, const bool orderedList, int& bestFromGrouped){
   const unsigned char *endp=temp+data_len;
   int avpLength = 0;
@@ -210,7 +218,7 @@ OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int d
   //if the f_GetAVPByListOfCodesFromGroupedAVP function was called, the bestFromGrouped variable will be initialized, else:
   if(bestFromGrouped < 0)bestFromGrouped = codelist_size;
      
-  while(temp < endp)
+  while(temp + 8 < endp)
   { 
     /* reading the avp code value*/
     avpCode = ((unsigned int)(*temp) << 24) + ((unsigned int)(*(temp + 1)) << 16)	+ ((unsigned int)(*(temp + 2)) << 8) + (unsigned int)(*(temp + 3));
@@ -220,6 +228,13 @@ OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int d
 
     /* calculating the length of the next AVP*/
     avpLength = ((unsigned int)(*temp) << 16) + ((unsigned int)(*(temp + 1)) << 8)	+ (unsigned int)(*(temp + 2));
+    if(avpLength < 8) {
+      TTCN_Logger::begin_event( TTCN_WARNING );
+      TTCN_Logger::log_event("Invalid AVP length: %d; ",avpLength);
+      f_DIAMETER_log_hex("AVP octets: ", temp - 5, endp - (temp + 5));
+      TTCN_Logger::end_event();
+      break;
+    }
     avpLength-=8;          // length of AVP data = AVP length - 4 - Vendor ID length (calculated below)
     if(*(temp-1) & 0x80){  // skip vendor id, VMPxxxxx is just before the first length octet
       avpLength-=4;
@@ -247,7 +262,7 @@ OCTETSTRING f_GetAVPByListOfCodesFromGroupedAVP(const unsigned char *temp, int d
       {
         if((const int)(pl__codeList[i]) == (int)avpCode)
         {
-          return OCTETSTRING(avpLength, temp);
+          return OCTETSTRING(avpLength > 0? avpLength:0, temp);
         }
       }
     };
@@ -288,7 +303,7 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesCombined(const OCTETSTRING& pl__oct,
   int   bestAVP_length = 0;
   int   bestFromGrouped = codelist_size; //Initializing the bestFromGrouped variable for the f_GetAVPByListOfCodesFromGroupedAVP function
      
-  while(temp < endp)
+  while(temp + 8 < endp)
   { 
     /* reading the avp code value*/
     avpCode = ((unsigned int)(*temp) << 24) + ((unsigned int)(*(temp + 1)) << 16)	+ ((unsigned int)(*(temp + 2)) << 8) + (unsigned int)(*(temp + 3));
@@ -297,6 +312,13 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesCombined(const OCTETSTRING& pl__oct,
 
     /* calculating the length of the next AVP*/
     avpLength = ((unsigned int)(*temp) << 16) + ((unsigned int)(*(temp + 1)) << 8)	+ (unsigned int)(*(temp + 2));
+    if(avpLength < 8) {
+      TTCN_Logger::begin_event( TTCN_WARNING );
+      TTCN_Logger::log_event("Invalid AVP length: %d; msg: ",avpLength);
+      pl__oct.log();
+      TTCN_Logger::end_event();
+      break;
+    }
     avpLength-=8;          // length of AVP data = AVP length - 4 - Vendor ID length (calculated below)
     if(*(temp-1) & 0x80){  // skip vendor id, VMPxxxxx is just before the first length octet
       avpLength-=4;
@@ -309,7 +331,7 @@ OCTETSTRING f__DIAMETER__GetAVPByListOfCodesCombined(const OCTETSTRING& pl__oct,
     {
       if((const int)(pl__codeList[i]) == (int)avpCode)
       {
-        if(i == 0)return OCTETSTRING(avpLength, temp); //Found AVP with highest priority
+        if(i == 0)return OCTETSTRING(avpLength > 0? avpLength:0, temp); //Found AVP with highest priority
         avpFound = true;
         bestAVP = (unsigned char *)temp;
         bestAVP_length = avpLength;

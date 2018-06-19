@@ -1,0 +1,99 @@
+/******************************************************************************
+* Copyright (c) 2004, 2017  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Timea Moder
+******************************************************************************/
+//
+//  File:               SGdGddInterface_3GPP_TS29338_f00.ddf
+//  Description:        DDF for SGd/Gdd Interface according to 3GPP TS 29.338 V15.0.0
+//  Rev:                R55A
+//  Prodnr:             CNL 113 462
+
+
+// APPLICATION-NAME: SGdGdd
+// APPLICATION-REVISION: V15_0_0
+
+// 5.3.2.2
+type enumerated Command_Code 
+{
+  MO_Forward_Short_Message (8388645),
+  MT_Forward_Short_Message (8388646)
+}
+
+// 5.3.3.2
+// AVP: SC-Address (3300) 3GPP (10415)
+type AVP_OctetString SC_Address;
+
+// 5.3.3.3
+// AVP: SM-RP-UI (3301) 3GPP (10415)
+type AVP_OctetString SM_RP_UI;
+
+// 5.3.3.4
+// AVP: TFR-Flags (3302) 3GPP (10415)
+type AVP_Unsigned32 TFR_Flags;
+
+// 5.3.3.5
+// AVP: SM-Delivery-Failure-Cause (3303) 3GPP (10415)
+type AVP_Grouped SM_Delivery_Failure_Cause;
+
+// 5.3.3.6
+// AVP: SM-Enumerated-Delivery-Failure-Cause (3304) 3GPP (10415)
+type enumerated SM_Enumerated_Delivery_Failure_Cause
+{
+  MEMORY_CAPACITY_EXCEEDED  (0),
+  EQUIPMENT_PROTOCOL_ERROR  (1),
+  EQUIPMENT_NOT_SM_EQUIPPED (2),
+  UNKNOWN_SERVICE_CENTRE    (3),
+  SC_CONGESTION             (4),
+  INVALID_SME_ADDRESS       (5),
+  USER_NOT_SC_USER          (6)
+}
+
+// 5.3.3.7
+// AVP: SM-Diagnostic-Info (3305) 3GPP (10415)
+type AVP_OctetString SM_Diagnostic_Info;
+
+// 5.3.3.10
+// AVP: SM-Delivery-Timer (3306) 3GPP (10415)
+type AVP_Unsigned32 SM_Delivery_Timer;
+
+// 5.3.3.11
+// AVP: SM-Delivery-Start-Time (3307) 3GPP (10415)
+type AVP_Time SM_Delivery_Start_Time;
+
+// 5.3.3.13
+// AVP: SMSMI-Correlation-ID (3324) 3GPP (10415)
+type AVP_Grouped SMSMI_Correlation_ID;
+
+// 5.3.3.14
+// AVP: HSS-ID (3325) 3GPP (10415)
+type AVP_OctetString HSS_ID;
+
+// 5.3.3.15
+// AVP: Originating-SIP-URI (3326) 3GPP (10415)
+type AVP_UTF8String Originating_SIP_URI;
+
+// 5.3.3.16
+// AVP: Destination-SIP-URI (3327) 3GPP (10415)
+type AVP_UTF8String Destination_SIP_URI;
+
+// 5.3.3.12
+// AVP: OFR-Flags (3328) 3GPP (10415)
+type AVP_Unsigned32 OFR_Flags;
+
+// 5.3.3.17
+// AVP: Maximum-Retransmission-Time (3330) 3GPP (10415)
+type AVP_Time Maximum_Retransmission_Time;
+
+// 5.3.3.18
+// AVP: Requested-Retransmission-Time (3331) 3GPP (10415)
+type AVP_Time Requested_Retransmission_Time;
+
+// 5.3.3.19
+// AVP: SMS-GMSC-Address (3332) 3GPP (10415)
+type AVP_OctetString SMS_GMSC_Address;

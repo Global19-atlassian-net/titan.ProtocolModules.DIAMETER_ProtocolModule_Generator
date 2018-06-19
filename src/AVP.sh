@@ -145,7 +145,12 @@ while [ $# -ge 1 ]; do
      comm_name=`which $0`
      comm_dir_name=`dirname $comm_name`
      if [ -f "${comm_dir_name}/${AVPSCRIPT}" ]; then
-       echo "// Generated with command:" > ${TTCN3FILE}".ttcn"
+       echo "///////////////////////////////////////////////////" > ${TTCN3FILE}".ttcn"
+       echo "//                                               //" >> ${TTCN3FILE}".ttcn"
+       echo "// !!!!     Generated file, do not edit     !!!! //" >> ${TTCN3FILE}".ttcn"
+       echo "//                                               //" >> ${TTCN3FILE}".ttcn"
+       echo "///////////////////////////////////////////////////" >> ${TTCN3FILE}".ttcn"
+       echo "// Generated with command:" >> ${TTCN3FILE}".ttcn"
        echo "// AVP.sh ${AWKARGS}"  >> ${TTCN3FILE}".ttcn"
        gawk -f ${comm_dir_name}/${AVPSCRIPT} ${AWKARGS} >> ${TTCN3FILE}".ttcn"
      else

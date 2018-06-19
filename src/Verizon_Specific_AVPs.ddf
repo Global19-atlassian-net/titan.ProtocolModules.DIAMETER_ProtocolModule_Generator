@@ -37,7 +37,7 @@
 //
 //  File:               Verizon_Specific_AVPs.ddf
 //  Description:        Verizon specific AVP definitions
-//  Rev:                R40A
+//  Rev:                R55A
 //  Prodnr:             CNL 113 462
 ///////////////////////////////////////////////
 
@@ -71,3 +71,11 @@ type AVP_Unsigned32 Self_Activation_Status;
 // Verizon PGW-Relocation-Indication
 // AVP: PGW-Relocation-Indication (6114) Verizon (12951)
 type AVP_Grouped PGW_Relocation_Indication;
+
+// Verizon Origination-TimeStamp
+// AVP: Origination-TimeStamp (7102) Verizon (12951)
+type AVP_Unsigned64 Origination_TimeStamp;
+
+// Verizon Max-Wait-Time
+// AVP: Max-Wait-Time (7103) Verizon (12951)
+type AVP_Unsigned32 Max_Wait_Time;
