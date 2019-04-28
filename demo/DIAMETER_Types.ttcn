@@ -2,7 +2,7 @@
 // AVP.sh BaseTypes_IETF_RFC3588.ddf Base_IETF_RFC3588.ddf Ericsson_Specific_AVPs.ddf
 module DIAMETER_Types {
 /******************************************************************************
-* Copyright (c) 2000-2018 Ericsson Telecom AB
+* Copyright (c) 2000-2019 Ericsson Telecom AB
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v2.0
 * which accompanies this distribution, and is available at
@@ -235,7 +235,7 @@ variant (message_length) "LENGTHTO(version, message_length,
 command_code, application_id, hop_by_hop_id, end_to_end_id, avps)";
 }
 /******************************************************************************
-* Copyright (c) 2000-2018 Ericsson Telecom AB
+* Copyright (c) 2000-2019 Ericsson Telecom AB
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v2.0
 * which accompanies this distribution, and is available at
@@ -628,7 +628,7 @@ type AVP_Unsigned32 BASE_NONE_Vendor_Id
 type AVP_Grouped BASE_NONE_Vendor_Specific_Application_Id 
 
 /******************************************************************************
-* Copyright (c) 2000-2018 Ericsson Telecom AB
+* Copyright (c) 2000-2019 Ericsson Telecom AB
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v2.0
 * which accompanies this distribution, and is available at
