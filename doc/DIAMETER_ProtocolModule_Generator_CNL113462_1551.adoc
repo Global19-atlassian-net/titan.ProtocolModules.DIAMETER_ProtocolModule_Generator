@@ -392,7 +392,7 @@ The `AVP.sh` shell script runs on Bourne Shell, which is usually available on a 
 First you need to obtain the required DDF files. After you have the DDF files containing the definitions of the selected Diameter applications, you can generate the proper Diameter type definitions module by issuing for example the following command:
 
 [source]
-AVP.sh DiameterBaseAVPs.ddf DiameterBaseTypes.ddf OtherApplications.ddf
+AVP.sh Base_IETF_RFC3588.ddf BaseTypes_IETF_RFC3588.ddf OtherApplications.ddf
 
 The above command generates the TTCN-3 type definition by merging the content of DDF files into module `DIAMETER_Types` into file __DIAMETER_Types.ttcn__. The script filters out duplicate AVP definitions by placing only the first one into the generated TTCN-3 module. Skipped definitions are annotated with warnings.
 
@@ -429,7 +429,7 @@ This option defines AVP_UTF8String as universal charstring which will be encoded
 The next command stores the generated TTCN-3 definitions in module XYZ and translates all enumeration type AVPs to Unsigned32:
 
 [source]
-AVP.sh –v module_id=XYZ –v enum_2_Unsigned32=true DiameterBaseAVPs.ddf DiameterBaseTypes.ddf _OtherApplications.ddf_
+AVP.sh –v module_id=XYZ –v enum_2_Unsigned32=true Base_IETF_RFC3588.ddf BaseTypes_IETF_RFC3588.ddf _OtherApplications.ddf_
 
 
 NOTE: `AVP.sh` requires `AVP.awk` and – in case of specifying the `module_id` option – the __DIAMETER_EncDec.cc__ C++ source file for its operation!
@@ -438,7 +438,7 @@ The next command stores the generated TTCN-3 definitions in module XYZ, generate
 
 [source]
 ----
-AVP.sh –v module_id=XYZ –v custom_enc=DIAMETER_EncDec.cc -v use_UTF8_encoding=true DiameterBaseAVPs.ddf DiameterBaseTypes.ddf _OtherApplications.ddf_
+AVP.sh –v module_id=XYZ –v custom_enc=DIAMETER_EncDec.cc -v use_UTF8_encoding=true Base_IETF_RFC3588.ddf BaseTypes_IETF_RFC3588.ddf _OtherApplications.ddf_
 ----
 
 === ___Makefile___ Preparation
@@ -453,7 +453,7 @@ In case you want to add the task of generation of __DIAMETER_Types.ttcn__ module
 +
 [source]
 ----
-DIAMETER_Types.ttcn: DiameterBaseTypes.ddf DiameterBaseAVPs.ddf <Input FILEs containing AVP definitions>
+DIAMETER_Types.ttcn: BaseTypes_IETF_RFC3588.ddf Base_IETF_RFC3588.ddf <Input FILEs containing AVP definitions>
 
 AVP.sh latexmath:[$(filter %.ddf,$]^)
 ----
@@ -691,7 +691,7 @@ DDFs are separated according to standards. This induces the necessity of using m
 [width="100%",cols="80%,20%",options="header"]
 |=========================================================
 |*DDFs (in obsolete)* |*Refs.*
-|__DiameterBaseAVPs.ddf__ |<<_3, [3]>>
+|__Base_IETF_RFC3588.ddf__ |<<_3, [3]>>
 |__3GPPChargingApplicationAVPs.ddf__ |<<_17, [17]>>
 |__3GPPCreditControlApplicationAVPs_v6110.ddf__ |<<_9, [9]>>
 |__3GPPCreditControlApplicationAVPs_v670.ddf__ |<<_7, [7]>>
@@ -1121,7 +1121,7 @@ AWK=/usr/local/bin/gawk
 a\
 
 a\
-DIAMETER_Types.ttcn: DiameterBaseTypes.ddf DiameterBaseAVPs.ddf AVP.awk
+DIAMETER_Types.ttcn: BaseTypes_IETF_RFC3588.ddf Base_IETF_RFC3588.ddf AVP.awk
 a\
    $(AWK) -f AVP.awk $(filter %.ddf,$^) > $@
 a\
